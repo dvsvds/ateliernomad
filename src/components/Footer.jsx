@@ -21,7 +21,7 @@ export default function Footer() {
             <Link to="/shop">Volledige collectie</Link>
             <Link to="/shop?cat=poufs">Vloerpoufs</Link>
             <Link to="/shop?cat=interieur">Interieur</Link>
-            <Link to="/shop?cat=kleurrijk">Kleurrijk</Link>
+            <Link to="/shop?cat=geweven">Geweven</Link>
           </div>
 
           <div>
