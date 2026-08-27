@@ -49,7 +49,7 @@ export default function Craftsmanship() {
             <span className="eyebrow">De technieken</span>
             <h2 className="h2">Geduld als materiaal</h2>
             <p>
-              Een boucherouite-pouf wordt geknoopt uit gerecyclede stoffen. Wol wordt
+              Een boucherouite-pouf wordt lus voor lus met de hand geknoopt. Wol wordt
               gewassen, gekaard en met de hand geweven. Hout wordt gevormd uit
               laurustak en touw met de hand gevlochten. Niets gaat snel — en dat is precies de bedoeling.
             </p>
@@ -57,7 +57,7 @@ export default function Craftsmanship() {
               <li><span>Wol</span><span style={{ marginLeft: 'auto' }}>Handgeknoopt &amp; geweven</span></li>
               <li><span>Hout</span><span style={{ marginLeft: 'auto' }}>Laurustak, met de hand gevormd</span></li>
               <li><span>Vlechtwerk</span><span style={{ marginLeft: 'auto' }}>Doumpalm &amp; touw</span></li>
-              <li><span>Textiel</span><span style={{ marginLeft: 'auto' }}>Vintage, gerecycled &amp; uniek</span></li>
+              <li><span>Textiel</span><span style={{ marginLeft: 'auto' }}>Vintage, handgeknoopt &amp; uniek</span></li>
             </ul>
             <p style={{ marginTop: '1.5rem' }}>
               <Link to="/shop" className="btn btn--terracotta">Shop het ambacht <span className="btn__icon" aria-hidden>→</span></Link>

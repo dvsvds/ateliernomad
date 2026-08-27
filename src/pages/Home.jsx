@@ -13,7 +13,7 @@ export default function Home() {
   useReveal()
   useSeo({
     title: 'Handcrafted Moroccan Living',
-    description: 'Atelier Nomad — unieke vintage Marokkaanse vloerpoufs van gerecyclede Berberkleden, plus handgeweven wollen kussens en meubilair van laurierhout en doumtouw. Elk stuk bestaat maar één keer.',
+    description: 'Atelier Nomad — unieke vintage Marokkaanse vloerpoufs, geknoopt uit Berberkleden, plus handgeweven wollen kussens en meubilair van laurierhout en doumtouw. Elk stuk bestaat maar één keer.',
   })
 
   return (

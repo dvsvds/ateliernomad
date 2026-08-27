@@ -3,7 +3,7 @@
    ------------------------------------------------------------
    45 stuks: 33 vintage Marokkaanse vloerpoufs, negen handgeweven
    kussens, en drie interieurstukken (stoel, krukje, vloerlamp).
-   Elke pouf is uniek — gemaakt van een gerecycled Berberkleed,
+   Elke pouf is uniek — geknoopt uit een vintage Berberkleed,
    dus geen twee zijn gelijk.
 
    ⚠️  Prijs gewijzigd of product toegevoegd?
@@ -78,43 +78,43 @@ const q = ({ slug, name, label, type = 'interieur', category, price, tag, short,
 export const products = [
   p('pouf-haze', 'Vloerpouf — Haze', 'koel', 245, 'Bestseller',
     'Rookblauw vlak op ongeverfde ecru wol.',
-    'Een rustig stuk: een breed rookblauw vlak dat overloopt in ongeverfde, hoogpolige schapenwol. De kleur is zacht en licht vervaagd door jaren gebruik, alsof je er door een ochtendmist naar kijkt. Past in interieurs waar je niet nóg een felle kleur wil.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Een rustig stuk: een breed rookblauw vlak dat overloopt in ongeverfde, hoogpolige schapenwol. De kleur is zacht en ingehouden, alsof je er door een ochtendmist naar kijkt. Past in interieurs waar je niet nóg een felle kleur wil.',
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-poppy', 'Vloerpouf — Poppy', 'kleurrijk', 245, null,
     'Fel rood met zwarte baan en gele hoek.',
-    'Weinig subtiliteit, en dat is precies de bedoeling. Een diep klaproosrood beslaat het grootste deel van het vlak, doorsneden door een zwarte baan en afgesloten met een gele hoek. Uit een kleed dat generaties in gebruik is geweest — je ziet het aan de plekken waar de pool dunner is geworden.',
-    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+    'Weinig subtiliteit, en dat is precies de bedoeling. Een diep klaproosrood beslaat het grootste deel van het vlak, doorsneden door een zwarte baan en afgesloten met een gele hoek. Het rood is met de hand geverfd, waardoor de tint over het vlak subtiel verspringt — dieper waar de pool dichter geknoopt zit.',
+    'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
   p('pouf-heather', 'Vloerpouf — Heather', 'kleurrijk', 245, null,
     'Zacht paarsroze met gele driehoeken.',
-    'Het paarsroze van bloeiende heide, gebroken door twee gele driehoeken en een enkele zwarte lijn. De hoogpolige wol is aan de randen lichter uitgesleten, wat het stuk een verzachte, gedragen uitstraling geeft.',
-    'Vintage Berberwol, gerecycled kleed', 'Hoge Atlas, Marokko'),
+    'Het paarsroze van bloeiende heide, gebroken door twee gele driehoeken en een enkele zwarte lijn. Langs de randen loopt de hoogpolige wol iets lichter van tint, wat het stuk een zachte, ingetogen uitstraling geeft.',
+    'Vintage Berberwol, handgeknoopt', 'Hoge Atlas, Marokko'),
 
   p('pouf-saffron', 'Vloerpouf — Saffron', 'warm', 245, null,
     'Okergeel met grijs en een roze accent.',
     'Okergeel als saffraan, met een grijs vlak dat de warmte in balans houdt en een klein roze accent langs de rand. Een van de zachtste poufs uit de collectie — dik en losjes geknoopt.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-clay', 'Vloerpouf — Clay', 'warm', 285, null,
     'Koraalrode kelim met fijn zigzagmotief.',
-    'Dicht geknoopt vintage kelimwerk in koraal en gebrande aarde, met een fijn zigzagpatroon dat over het hele vlak doorloopt. Zwaarder en compacter dan de hoogpolige poufs, met de patina van een kleed dat lang op een leemvloer heeft gelegen.',
+    'Dicht geknoopt vintage kelimwerk in koraal en gebrande aarde, met een fijn zigzagpatroon dat over het hele vlak doorloopt. Zwaarder en compacter dan de hoogpolige poufs, in de warme aardetinten die alleen handgeverfde wol krijgt.',
     'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
 
   p('pouf-drift', 'Vloerpouf — Drift', 'naturel', 245, null,
     'Ecru met smalle strepen in inkt, oker en zwart.',
     'Ongeverfde wol als basis, met een band van smalle strepen in inktblauw, oker en zwart langs één zijde. Ingetogen genoeg voor een rustige kamer, met net genoeg lijnenspel om niet saai te worden.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-indigo', 'Vloerpouf — Indigo', 'koel', 245, null,
     'Ivoor met kobaltblauw vlak en groene tekens.',
     'Een helder kobaltblauw vlak op ivoren wol, met twee kleine groene tekens die als vlinders op het vlak zitten en een streep roestrood langs de rand. Grafisch en licht — het blauw haalt de warmte uit een kamer vol aardetinten.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-peach', 'Vloerpouf — Peach', 'kleurrijk', 245, null,
     'Roze en gele ruiten met zwarte krullijn.',
     'Roze en dooiergele ruiten op ivoor, losjes doorsneden door een zwarte krullijn die met de hand is meegeweven. Speels zonder kinderlijk te worden — het gedempte roze houdt het volwassen.',
-    'Vintage Berberwol, gerecycled kleed', 'Hoge Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Hoge Atlas, Marokko'),
 
   p('pouf-chalk', 'Vloerpouf — Chalk', 'naturel', 195, null,
     'Ongeverfd ivoor met één zwarte kruisstreek.',
@@ -124,17 +124,17 @@ export const products = [
   p('pouf-tide', 'Vloerpouf — Tide', 'kleurrijk', 245, null,
     'Banen in blauw, geel, wit en zwart.',
     'Brede banen die als eb en vloed over het vlak lopen: kobalt, dooiergeel, wit en zwart naast elkaar. Uit een kleed met een uitgesproken streepdessin, waardoor deze pouf van elke kant anders oogt.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-blush', 'Vloerpouf — Blush', 'kleurrijk', 285, 'Zeldzaam',
     'Verwassen roze ruitjes over het hele vlak.',
-    'Een fijn ruitjespatroon in verwassen roze en room, over het volledige vlak doorgeweven. De kleur is in de loop der jaren verbleekt tot iets tussen oudroze en poeder — precies wat een vintage stuk zijn charme geeft. Niet na te maken.',
-    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+    'Een fijn ruitjespatroon in verwassen roze en room, over het volledige vlak doorgeweven. De tint zit precies tussen oudroze en poeder in — met de hand geverfd, en daardoor niet exact na te maken.',
+    'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
   p('pouf-cinnamon', 'Vloerpouf — Cinnamon', 'warm', 245, 'Bestseller',
     'Oker en ivoor in een groot dambordpatroon.',
     'Een groot dambordpatroon in kaneeloker en ivoor op het bovenvlak, met een grof gevlochten ivoren zijband eromheen. Het patroon is met de hand geknoopt, dus de vakjes lopen niet strak in de pas — dat is precies het verschil met machinewerk.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-dune', 'Vloerpouf — Dune', 'naturel', 285, null,
     'Zandkleurig met fijn geweven ruitmotieven.',
@@ -143,28 +143,28 @@ export const products = [
 
   p('pouf-rust', 'Vloerpouf — Rust', 'warm', 285, null,
     'Verweerd oranje met groene Berbertekens.',
-    'Roestoranje dat door zon en gebruik ongelijkmatig is verkleurd, met kleine groene Berbertekens langs de randen. Een van de meest getekende stukken uit de partij — als je van patina houdt, is dit hem.',
+    'Roestoranje dat over het vlak van toon verspringt, met kleine groene Berbertekens langs de randen. Een van de meest karaktervolle stukken uit de collectie — als je van warme, levende kleur houdt, is dit hem.',
     'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
 
   p('pouf-pebble', 'Vloerpouf — Pebble', 'naturel', 245, null,
     'Grijs en ecru met kleine donkere spikkels.',
     'Kiezelgrijs naast ongeverfd ecru, met kleine donkere spikkels die door de wol heen zijn meegeweven. Rustig, neutraal en makkelijk te combineren — het soort stuk dat overal past.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-solstice', 'Vloerpouf — Solstice', 'warm', 245, null,
     'Zonnegeel vlak met uitwaaierende lijnen.',
     'Een breed zonnegeel vlak met lichte lijnen die vanuit het midden uitwaaieren als stralen. Het geel is warm en niet schel — dichter bij korenveld dan bij citroen.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-shoal', 'Vloerpouf — Shoal', 'koel', 245, null,
     'Grijsblauw vlak op zandkleurige wol.',
     'Een grijsblauw vlak dat als een ondiepte in zandkleurige wol ligt. Dezelfde rustige familie als Haze, maar met het blauw dichter naar het midden en een koelere ondertoon.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-ember', 'Vloerpouf — Ember', 'kleurrijk', 245, null,
     'Ivoor met roestrode en diepblauwe vlakken.',
     'Op romige, hoogpolige wol liggen een roestrood en een diepblauw vlak naast elkaar, met een dunne zwarte lijn ertussen. De combinatie van die twee kleuren op ivoor maakt dit een van de grafischste stukken uit de collectie.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-meadow', 'Vloerpouf — Meadow', 'naturel', 285, null,
     'Ivoren kelim bezaaid met kleine gekleurde tekens.',
@@ -189,31 +189,31 @@ export const products = [
   p('pouf-signal', 'Vloerpouf — Signal', 'kleurrijk', 285, 'Zeldzaam',
     'Grijs veld met één rood blok en geel accent.',
     'Een rustig duifgrijs veld, gebroken door één fel rood blok, een zwarte grafische vorm en een klein mosterdgeel accent. Veel leegte, weinig ingrepen — het minst drukke en tegelijk het meest uitgesproken stuk uit de collectie.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-basalt', 'Vloerpouf — Basalt', 'kleurrijk', 285, null,
     'Zwart, rood en room in strakke blokken.',
     'Zwarte, rode en roomkleurige blokken, strak naast elkaar. De donkerste pouf uit de collectie en daardoor de meest grafische — mooi tegen een lichte muur of op een naturel vloerkleed.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-ash', 'Vloerpouf — Ash', 'kleurrijk', 245, null,
     'Roomwit met roze en zwart, en franjes.',
     'Roomwitte wol met een roze en een zwart vlak, afgezet met korte zwarte franjes langs de rand. Die franjes komen uit het oorspronkelijke kleed en zijn bewust bewaard gebleven.',
-    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
   p('pouf-mist', 'Vloerpouf — Mist', 'koel', 245, null,
     'Ecru met een brede stoffige blauwe band.',
     'Ongeverfde ecru wol met een brede, stoffig blauwe band over de onderste helft. De eenvoud van twee kleuren, meer is het niet — en precies daarom werkt het.',
-    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-sorrel', 'Vloerpouf — Sorrel', 'warm', 285, 'Zeldzaam',
     'Diep rood, dicht geknoopt en gevlekt.',
-    'Diep zuringrood over het hele vlak, met donkerder en lichter gevlekte zones waar het oorspronkelijke kleed ongelijk is verkleurd. Dicht geknoopt, zwaar en vol — de meest verzadigde kleur van de collectie.',
+    'Diep zuringrood over het hele vlak, met donkerder en lichter gevlekte zones waar de handgeverfde wol de kleur ongelijk heeft opgenomen. Dicht geknoopt, zwaar en vol — de meest verzadigde kleur van de collectie.',
     'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
 
   p('pouf-coral', 'Vloerpouf — Coral', 'warm', 285, null,
     'Koraalroze met zachtgroene motieven.',
-    'Koraalroze met verweerde zachtgroene motieven die door het vlak lopen. De twee kleuren zijn allebei verbleekt, waardoor ze elkaar niet bijten maar in elkaar overlopen.',
+    'Koraalroze met verweerde zachtgroene motieven die door het vlak lopen. Beide kleuren zijn zacht van toon, waardoor ze elkaar niet bijten maar in elkaar overlopen.',
     'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
 
   p('pouf-foxglove', 'Vloerpouf — Foxglove', 'kleurrijk', 285, 'Zeldzaam',
@@ -233,13 +233,13 @@ export const products = [
 
   p('pouf-bloom', 'Vloerpouf — Bloom', 'kleurrijk', 245, null,
     'Magenta en groen op koraalroze zijkanten.',
-    'Een boucherouite in volle bloei: magenta, grasgroen en zacht roze door elkaar op het bovenvlak, met zijkanten in koraalroze en zwart. Geknoopt van gerecyclede stofresten, dus elke lus heeft een andere herkomst — je ziet stukjes katoen naast wol naast nylon. Vrolijk zonder kinderlijk te worden.',
-    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+    'Een boucherouite in volle bloei: magenta, grasgroen en zacht roze door elkaar op het bovenvlak, met zijkanten in koraalroze en zwart. Boucherouite wordt met de hand geknoopt uit uiteenlopende garens, dus elke lus heeft een eigen kleur en glans — mat katoen naast dichte wol. Vrolijk zonder kinderlijk te worden.',
+    'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
   p('pouf-kapsa', 'Vloerpouf — Kapsa', 'kleurrijk', 245, null,
     'Kobaltblauw hart met rode en gele zigzags.',
     'Een kobaltblauw vlak in het midden, omringd door zigzags in rood, geel en groen op een ecru ondergrond. Van alle poufs is dit de meest grafische: het patroon loopt netjes door over de rand, zodat de zijkant net zo interessant is als de bovenkant.',
-    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+    'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
   q({
     slug: 'stoel-laurel',
@@ -438,9 +438,9 @@ export const products = [
     tag: null,
     short: 'Fel oranje met een breed gestreept middenpaneel.',
     description:
-      'Fel oranje, grof geweven uit gerecyclede stofresten — daardoor zit het vlak vol kleine witte en lichtoranje spikkels in plaats van één egale kleur. Door het midden loopt een breed gestreept paneel: een kobaltblauwe baan met grasgroene strepen ertegenaan, en daarbuiten aan beide kanten nog twee groene lijnen. Vierkanter dan de andere kussens en het drukste van allemaal — dit is er een die je bewust neerlegt, niet een die meebeweegt.',
+      'Fel oranje, grof geweven uit gemêleerd garen — daardoor zit het vlak vol kleine witte en lichtoranje spikkels in plaats van één egale kleur. Door het midden loopt een breed gestreept paneel: een kobaltblauwe baan met grasgroene strepen ertegenaan, en daarbuiten aan beide kanten nog twee groene lijnen. Vierkanter dan de andere kussens en het drukste van allemaal — dit is er een die je bewust neerlegt, niet een die meebeweegt.',
     details: [
-      ['Materiaal', 'Gerecyclede vezels, grof geweven'],
+      ['Materiaal', 'Handgeweven wol en katoen, grof van draad'],
       ['Weefsel', 'Handgeweven, gespikkeld van kleur'],
       ['Herkomst', 'Marokko'],
       ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
@@ -457,9 +457,9 @@ export const products = [
     tag: null,
     short: 'Fel oranje met één kobaltblauwe baan in het midden.',
     description:
-      'Hetzelfde grove, gespikkelde oranje weefsel van gerecyclede stofresten als Flare, maar met een veel rustiger tekening: één kobaltblauwe baan door het midden, met aan elke kant een dunne grasgroene lijn ertegenaan. Verder alleen oranje. De ingetogen van de twee — makkelijker te combineren, en het oranje krijgt meer ruimte.',
+      'Hetzelfde grove, gespikkelde oranje weefsel als Flare, maar met een veel rustiger tekening: één kobaltblauwe baan door het midden, met aan elke kant een dunne grasgroene lijn ertegenaan. Verder alleen oranje. De ingetogen van de twee — makkelijker te combineren, en het oranje krijgt meer ruimte.',
     details: [
-      ['Materiaal', 'Gerecyclede vezels, grof geweven'],
+      ['Materiaal', 'Handgeweven wol en katoen, grof van draad'],
       ['Weefsel', 'Handgeweven, gespikkeld van kleur'],
       ['Herkomst', 'Marokko'],
       ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
