@@ -13,7 +13,7 @@ export default function Shop() {
   useReveal([active])
   useSeo({
     title: 'Shop de collectie',
-    description: 'De volledige collectie van Atelier Nomad: 33 unieke vintage Marokkaanse vloerpoufs, plus handgemaakte stoelen, een krukje, een vloerlamp en negen handgeweven wollen kussens.',
+    description: 'De volledige collectie van Atelier Nomad: 33 unieke vintage Marokkaanse vloerpoufs, plus negen handgeweven wollen kussens en een handvol interieurstukken van hout en touw.',
   })
 
   /* Twee filterassen door één chiprij: 'poufs'/'interieur' filtert op
@@ -36,8 +36,8 @@ export default function Shop() {
         <span className="eyebrow reveal">De collectie</span>
         <h1 className="display reveal" data-delay="1">Shop &amp; Collectie</h1>
         <p className="lead measure reveal" data-delay="2">
-          Drieëndertig vintage vloerpoufs, elk uit een ander Berberkleed geknoopt, naast
-          een handvol interieurstukken van hout, touw en handgeweven wol. Alles met de
+          Drieëndertig vintage vloerpoufs, elk uit een ander Berberkleed geknoopt, negen
+          handgeweven kussens en een paar stukken van laurierhout en touw. Alles met de
           hand gemaakt — wat je op de foto ziet, is precies wat je ontvangt.
         </p>
       </section>

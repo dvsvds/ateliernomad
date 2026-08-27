@@ -1,8 +1,8 @@
 /* ============================================================
    PRODUCTDATA — Atelier Nomad
    ------------------------------------------------------------
-   45 stuks: 33 vintage Marokkaanse vloerpoufs plus twaalf
-   interieurstukken (stoel, krukje, vloerlamp, negen kussens).
+   45 stuks: 33 vintage Marokkaanse vloerpoufs, negen handgeweven
+   kussens, en drie interieurstukken (stoel, krukje, vloerlamp).
    Elke pouf is uniek — gemaakt van een gerecycled Berberkleed,
    dus geen twee zijn gelijk.
 
@@ -18,7 +18,7 @@
    Alle poufs worden ONGEVULD verstuurd (hoes zonder vulling).
    ------------------------------------------------------------
    Twee filterassen op de shoppagina:
-     type   — poufs / interieur   (waar het om gaat)
+     type   — poufs / kussens / interieur   (waar het om gaat)
      kleur  — naturel / warm / koel / kleurrijk  (hoe het oogt)
    Elk product heeft er allebei één.
    ============================================================ */
@@ -26,6 +26,7 @@
 export const categories = [
   { id: 'all',       label: 'Alles',     as: 'type' },
   { id: 'poufs',     label: 'Poufs',     as: 'type' },
+  { id: 'kussens',   label: 'Kussens',   as: 'type' },
   { id: 'interieur', label: 'Interieur', as: 'type' },
   { id: 'naturel',   label: 'Naturel',   as: 'kleur' },
   { id: 'warm',      label: 'Warm',      as: 'kleur' },
@@ -57,12 +58,13 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
   images: [`/images/products/${slug}.jpg`],
 })
 
-/* De interieurstukken zijn geen poufs: andere specs, eigen label.
+/* Alles wat geen pouf is: andere specs, eigen label. Kussens vormen
+   een eigen filtersoort; stoel, krukje en lamp vallen onder interieur.
    Ze delen wel de kleurfilters, zodat de shop één logica houdt. */
-const q = ({ slug, name, label, category, price, tag, short, description, details }) => ({
+const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details }) => ({
   slug,
   name,
-  type: 'interieur',
+  type,
   category,
   categoryLabel: label,
   price,
@@ -297,6 +299,7 @@ export const products = [
     slug: 'kussen-atlas',
     name: 'Kussen — Atlas',
     label: 'Kussen',
+    type: 'kussens',
     category: 'koel',
     price: 75,
     tag: null,
@@ -315,6 +318,7 @@ export const products = [
     slug: 'kussen-fern',
     name: 'Kussen — Fern',
     label: 'Kussen',
+    type: 'kussens',
     category: 'koel',
     price: 75,
     tag: null,
@@ -333,6 +337,7 @@ export const products = [
     slug: 'kussen-cobalt',
     name: 'Kussen — Cobalt',
     label: 'Kussen',
+    type: 'kussens',
     category: 'koel',
     price: 75,
     tag: null,
@@ -351,6 +356,7 @@ export const products = [
     slug: 'kussen-sienna',
     name: 'Kussen — Sienna',
     label: 'Kussen',
+    type: 'kussens',
     category: 'naturel',
     price: 75,
     tag: null,
@@ -369,6 +375,7 @@ export const products = [
     slug: 'kussen-cipher',
     name: 'Kussen — Cipher',
     label: 'Kussen',
+    type: 'kussens',
     category: 'naturel',
     price: 75,
     tag: null,
@@ -387,6 +394,7 @@ export const products = [
     slug: 'kussen-prism',
     name: 'Kussen — Prism',
     label: 'Kussen',
+    type: 'kussens',
     category: 'kleurrijk',
     price: 75,
     tag: null,
@@ -405,6 +413,7 @@ export const products = [
     slug: 'kussen-umber',
     name: 'Kussen — Umber',
     label: 'Kussen',
+    type: 'kussens',
     category: 'warm',
     price: 75,
     tag: null,
@@ -423,6 +432,7 @@ export const products = [
     slug: 'kussen-flare',
     name: 'Kussen — Flare',
     label: 'Kussen',
+    type: 'kussens',
     category: 'warm',
     price: 75,
     tag: null,
@@ -441,6 +451,7 @@ export const products = [
     slug: 'kussen-persimmon',
     name: 'Kussen — Persimmon',
     label: 'Kussen',
+    type: 'kussens',
     category: 'warm',
     price: 75,
     tag: null,
