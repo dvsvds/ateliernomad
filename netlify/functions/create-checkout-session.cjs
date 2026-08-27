@@ -40,7 +40,7 @@ const CATALOG = {
   'pouf-kapsa':       { name: "Vloerpouf — Kapsa", price: 245, max: 1 },
   'stoel-laurel':     { name: "Stoel — Laurel", price: 165, max: 20 },
   'krukje-laurel':    { name: "Krukje — Laurel", price: 95, max: 20 },
-  'lamp-doum':        { name: "Vloerlamp — Doum", price: 285, max: 20 },
+  'kapstok-doum':     { name: "Kapstok — Doum", price: 285, max: 20 },
   'kussen-atlas':     { name: "Kussen — Atlas", price: 75, max: 20 },
   'kussen-fern':      { name: "Kussen — Fern", price: 75, max: 20 },
   'kussen-cobalt':    { name: "Kussen — Cobalt", price: 75, max: 20 },

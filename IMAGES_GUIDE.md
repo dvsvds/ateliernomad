@@ -35,7 +35,7 @@ gewoon een extra pad in die array.
 De zes oude producten staan weer in de collectie. Hun originele 3:4-bronfoto's
 zijn verplaatst naar `/bronbeelden` (buiten de build); de site gebruikt de
 genormaliseerde 4:5-versies: `pouf-bloom`, `pouf-kapsa`, `stoel-laurel`,
-`krukje-laurel`, `lamp-doum` en `kussen-atlas`. Het krukje had geen eigen foto —
+`krukje-laurel`, `kapstok-doum` en `kussen-atlas`. Het krukje had geen eigen foto —
 zijn packshot is met Higgsfield opgeschaald uit de uitsnede rechtsonder in de
 oude lampfoto.
 

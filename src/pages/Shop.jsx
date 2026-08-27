@@ -13,7 +13,7 @@ export default function Shop() {
   useReveal([active])
   useSeo({
     title: 'Shop de collectie',
-    description: 'De volledige collectie van Atelier Nomad: 33 unieke vintage Marokkaanse vloerpoufs, plus negen handgeweven wollen kussens en een handvol interieurstukken van hout en touw.',
+    description: 'De volledige collectie van Atelier Nomad: 33 unieke vintage Marokkaanse vloerpoufs, plus negen handgeweven wollen kussens, een stoel, een krukje en een kapstok van hout en touw.',
   })
 
   /* Twee filterassen door één chiprij: 'poufs'/'interieur' filtert op

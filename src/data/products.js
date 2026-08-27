@@ -2,7 +2,7 @@
    PRODUCTDATA — Atelier Nomad
    ------------------------------------------------------------
    45 stuks: 33 vintage Marokkaanse vloerpoufs, negen handgeweven
-   kussens, en drie interieurstukken (stoel, krukje, vloerlamp).
+   kussens, en drie interieurstukken (stoel, krukje, kapstok).
    Elke pouf is uniek — geknoopt uit een vintage Berberkleed,
    dus geen twee zijn gelijk.
 
@@ -59,7 +59,7 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
 })
 
 /* Alles wat geen pouf is: andere specs, eigen label. Kussens vormen
-   een eigen filtersoort; stoel, krukje en lamp vallen onder interieur.
+   een eigen filtersoort; stoel, krukje en kapstok vallen onder interieur.
    Ze delen wel de kleurfilters, zodat de shop één logica houdt. */
 const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details }) => ({
   slug,
@@ -278,18 +278,19 @@ export const products = [
   }),
 
   q({
-    slug: 'lamp-doum',
-    name: 'Vloerlamp — Doum',
-    label: 'Vloerlamp',
+    slug: 'kapstok-doum',
+    name: 'Kapstok — Doum',
+    label: 'Kapstok',
     category: 'naturel',
     price: 285,
     tag: 'Zeldzaam',
-    short: 'Driepoot met twee gevlochten kappen.',
+    short: 'Staande kapstok op driepoot, met gevlochten haken.',
     description:
-      'Een vloerlamp op een driepoot van laurierhout, met twee kappen van strak opgerold doumtouw die als bloemkelken aan de stam hangen. De losse vezels aan de onderrand zijn met opzet blijven zitten — aangestoken werpt de lamp daardoor een gerafelde schaduw op de muur. Een stuk dat een hoek in zijn eentje kan dragen.',
+      'Een staande kapstok van laurierhout op een driepoot, met twee zwaar omwikkelde haken van doumtouw die als kelken uit de stam steken. Breed genoeg voor een jas, een tas of een hoed, en stevig genoeg om daar niet van om te vallen. De losse vezels aan de onderrand zijn met opzet blijven zitten — dat geeft het touwwerk zijn ruige, levende rand. Een stuk dat een lege hoek in zijn eentje kan dragen.',
     details: [
       ['Materiaal', 'Laurierhout en doumtouw'],
-      ['Kappen', 'Twee, met de hand opgerold en vastgezet'],
+      ['Haken', 'Twee, met de hand omwikkeld en vastgezet'],
+      ['Voet', 'Driepoot, staat los op de vloer'],
       ['Herkomst', 'Marrakech-regio, Marokko'],
       ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
     ],
@@ -469,7 +470,7 @@ export const products = [
 
 export const getProduct = (slug) => products.find((x) => x.slug === slug)
 
-export const featured = ['pouf-cinnamon', 'pouf-foxglove', 'lamp-doum', 'stoel-laurel']
+export const featured = ['pouf-cinnamon', 'pouf-foxglove', 'kapstok-doum', 'stoel-laurel']
   .map(getProduct)
   .filter(Boolean)
 
