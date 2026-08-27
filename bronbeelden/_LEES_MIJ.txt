@@ -1,0 +1,19 @@
+Originele bronfoto's van de zes stukken die eerder al op de site stonden.
+
+Ze zijn 3:4 en groot; de versies die de site gebruikt zijn hieruit
+genormaliseerd naar 1400x1750 (4:5) en staan in public/images/products/ als:
+
+  boucherouite-pouf-1.jpg  ->  pouf-bloom.jpg
+  kapsa-pouf-1.jpg         ->  pouf-kapsa.jpg
+  laurel-chair-1.jpg       ->  stoel-laurel.jpg
+  wool-cushion-1.jpg       ->  kussen-atlas.jpg
+  raffia-lamp-1.jpg        ->  lamp-doum.jpg
+
+Niet gebruikt, en waarom:
+  boucherouite-pouf-2.jpg  sfeerbeeld met zichtbaar HIGGSFIELD-watermerk
+  kapsa-pouf-2.png         vrijwel identiek aan kapsa-pouf-1
+  raffia-lamp-2.jpg        buiten geschoten tegen een blauwe muur; past niet
+                           bij de cremestudio van de rest
+
+Deze map staat bewust BUITEN public/, zodat de bestanden niet meegaan
+in de build.

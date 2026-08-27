@@ -1,0 +1,466 @@
+/* ============================================================
+   PRODUCTDATA — Atelier Nomad
+   ------------------------------------------------------------
+   45 stuks: 33 vintage Marokkaanse vloerpoufs plus twaalf
+   interieurstukken (stoel, krukje, vloerlamp, negen kussens).
+   Elke pouf is uniek — gemaakt van een gerecycled Berberkleed,
+   dus geen twee zijn gelijk.
+
+   ⚠️  Prijs gewijzigd of product toegevoegd?
+       Draai `node scripts/sync-catalog.mjs` — die genereert
+       api/_catalog.js opnieuw. Dat is de serverbron waarmee
+       Stripe rekent; de front-end kan geen prijs verzinnen.
+
+   ⚠️  AFMETINGEN ONTBREKEN met opzet. Zodra de stukken opgemeten
+       zijn, voeg per product een regel ['Afmeting', '...'] toe
+       aan `details`. Liever geen maat dan een gegokte maat.
+
+   Alle poufs worden ONGEVULD verstuurd (hoes zonder vulling).
+   ------------------------------------------------------------
+   Twee filterassen op de shoppagina:
+     type   — poufs / interieur   (waar het om gaat)
+     kleur  — naturel / warm / koel / kleurrijk  (hoe het oogt)
+   Elk product heeft er allebei één.
+   ============================================================ */
+
+export const categories = [
+  { id: 'all',       label: 'Alles',     as: 'type' },
+  { id: 'poufs',     label: 'Poufs',     as: 'type' },
+  { id: 'interieur', label: 'Interieur', as: 'type' },
+  { id: 'naturel',   label: 'Naturel',   as: 'kleur' },
+  { id: 'warm',      label: 'Warm',      as: 'kleur' },
+  { id: 'koel',      label: 'Koel',      as: 'kleur' },
+  { id: 'kleurrijk', label: 'Kleurrijk', as: 'kleur' },
+]
+
+/* Gedeelde specificaties — elke pouf is hetzelfde soort object,
+   alleen het kleed waar hij van gemaakt is verschilt. */
+const DETAILS = (materiaal, herkomst) => [
+  ['Materiaal', materiaal],
+  ['Levering', 'Ongevuld, als hoes'],
+  ['Herkomst', herkomst],
+  ['Uniek', 'Eén exemplaar — wat je ziet, ontvang je'],
+]
+
+const p = (slug, name, category, price, tag, short, description, materiaal, herkomst) => ({
+  slug,
+  name,
+  type: 'poufs',
+  unique: true, // er bestaat precies één exemplaar — max 1 in de winkelmand
+  category,
+  categoryLabel: 'Vloerpouf',
+  price,
+  tag,
+  short,
+  description,
+  details: DETAILS(materiaal, herkomst),
+  images: [`/images/products/${slug}.jpg`],
+})
+
+/* De interieurstukken zijn geen poufs: andere specs, eigen label.
+   Ze delen wel de kleurfilters, zodat de shop één logica houdt. */
+const q = ({ slug, name, label, category, price, tag, short, description, details }) => ({
+  slug,
+  name,
+  type: 'interieur',
+  category,
+  categoryLabel: label,
+  price,
+  tag,
+  short,
+  description,
+  details,
+  images: [`/images/products/${slug}.jpg`],
+})
+
+export const products = [
+  p('pouf-haze', 'Vloerpouf — Haze', 'koel', 245, 'Bestseller',
+    'Rookblauw vlak op ongeverfde ecru wol.',
+    'Een rustig stuk: een breed rookblauw vlak dat overloopt in ongeverfde, hoogpolige schapenwol. De kleur is zacht en licht vervaagd door jaren gebruik, alsof je er door een ochtendmist naar kijkt. Past in interieurs waar je niet nóg een felle kleur wil.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-poppy', 'Vloerpouf — Poppy', 'kleurrijk', 245, null,
+    'Fel rood met zwarte baan en gele hoek.',
+    'Weinig subtiliteit, en dat is precies de bedoeling. Een diep klaproosrood beslaat het grootste deel van het vlak, doorsneden door een zwarte baan en afgesloten met een gele hoek. Uit een kleed dat generaties in gebruik is geweest — je ziet het aan de plekken waar de pool dunner is geworden.',
+    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+
+  p('pouf-heather', 'Vloerpouf — Heather', 'kleurrijk', 245, null,
+    'Zacht paarsroze met gele driehoeken.',
+    'Het paarsroze van bloeiende heide, gebroken door twee gele driehoeken en een enkele zwarte lijn. De hoogpolige wol is aan de randen lichter uitgesleten, wat het stuk een verzachte, gedragen uitstraling geeft.',
+    'Vintage Berberwol, gerecycled kleed', 'Hoge Atlas, Marokko'),
+
+  p('pouf-saffron', 'Vloerpouf — Saffron', 'warm', 245, null,
+    'Okergeel met grijs en een roze accent.',
+    'Okergeel als saffraan, met een grijs vlak dat de warmte in balans houdt en een klein roze accent langs de rand. Een van de zachtste poufs uit de collectie — dik en losjes geknoopt.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-clay', 'Vloerpouf — Clay', 'warm', 285, null,
+    'Koraalrode kelim met fijn zigzagmotief.',
+    'Dicht geknoopt vintage kelimwerk in koraal en gebrande aarde, met een fijn zigzagpatroon dat over het hele vlak doorloopt. Zwaarder en compacter dan de hoogpolige poufs, met de patina van een kleed dat lang op een leemvloer heeft gelegen.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-drift', 'Vloerpouf — Drift', 'naturel', 245, null,
+    'Ecru met smalle strepen in inkt, oker en zwart.',
+    'Ongeverfde wol als basis, met een band van smalle strepen in inktblauw, oker en zwart langs één zijde. Ingetogen genoeg voor een rustige kamer, met net genoeg lijnenspel om niet saai te worden.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-indigo', 'Vloerpouf — Indigo', 'koel', 245, null,
+    'Ivoor met kobaltblauw vlak en groene tekens.',
+    'Een helder kobaltblauw vlak op ivoren wol, met twee kleine groene tekens die als vlinders op het vlak zitten en een streep roestrood langs de rand. Grafisch en licht — het blauw haalt de warmte uit een kamer vol aardetinten.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-peach', 'Vloerpouf — Peach', 'kleurrijk', 245, null,
+    'Roze en gele ruiten met zwarte krullijn.',
+    'Roze en dooiergele ruiten op ivoor, losjes doorsneden door een zwarte krullijn die met de hand is meegeweven. Speels zonder kinderlijk te worden — het gedempte roze houdt het volwassen.',
+    'Vintage Berberwol, gerecycled kleed', 'Hoge Atlas, Marokko'),
+
+  p('pouf-chalk', 'Vloerpouf — Chalk', 'naturel', 195, null,
+    'Ongeverfd ivoor met één zwarte kruisstreek.',
+    'De soberste pouf uit de collectie: ongeverfde, hoogpolige schapenwol met één zwarte kruisstreek. Verder niets. Voor wie textuur wil zonder kleur — de wol doet al het werk.',
+    '100% ongeverfde schapenwol', 'Midden-Atlas, Marokko'),
+
+  p('pouf-tide', 'Vloerpouf — Tide', 'kleurrijk', 245, null,
+    'Banen in blauw, geel, wit en zwart.',
+    'Brede banen die als eb en vloed over het vlak lopen: kobalt, dooiergeel, wit en zwart naast elkaar. Uit een kleed met een uitgesproken streepdessin, waardoor deze pouf van elke kant anders oogt.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-blush', 'Vloerpouf — Blush', 'kleurrijk', 285, 'Zeldzaam',
+    'Verwassen roze ruitjes over het hele vlak.',
+    'Een fijn ruitjespatroon in verwassen roze en room, over het volledige vlak doorgeweven. De kleur is in de loop der jaren verbleekt tot iets tussen oudroze en poeder — precies wat een vintage stuk zijn charme geeft. Niet na te maken.',
+    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+
+  p('pouf-cinnamon', 'Vloerpouf — Cinnamon', 'warm', 245, 'Bestseller',
+    'Oker en ivoor in een groot dambordpatroon.',
+    'Een groot dambordpatroon in kaneeloker en ivoor op het bovenvlak, met een grof gevlochten ivoren zijband eromheen. Het patroon is met de hand geknoopt, dus de vakjes lopen niet strak in de pas — dat is precies het verschil met machinewerk.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-dune', 'Vloerpouf — Dune', 'naturel', 285, null,
+    'Zandkleurig met fijn geweven ruitmotieven.',
+    'Zandtinten van ecru tot licht taupe, met fijne geweven ruit- en diamantmotieven die je pas van dichtbij goed ziet. Vlakker geweven dan de hoogpolige poufs, met de zachte glans die oude wol krijgt.',
+    'Vintage kelim, dicht geknoopte wol', 'Midden-Atlas, Marokko'),
+
+  p('pouf-rust', 'Vloerpouf — Rust', 'warm', 285, null,
+    'Verweerd oranje met groene Berbertekens.',
+    'Roestoranje dat door zon en gebruik ongelijkmatig is verkleurd, met kleine groene Berbertekens langs de randen. Een van de meest getekende stukken uit de partij — als je van patina houdt, is dit hem.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-pebble', 'Vloerpouf — Pebble', 'naturel', 245, null,
+    'Grijs en ecru met kleine donkere spikkels.',
+    'Kiezelgrijs naast ongeverfd ecru, met kleine donkere spikkels die door de wol heen zijn meegeweven. Rustig, neutraal en makkelijk te combineren — het soort stuk dat overal past.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-solstice', 'Vloerpouf — Solstice', 'warm', 245, null,
+    'Zonnegeel vlak met uitwaaierende lijnen.',
+    'Een breed zonnegeel vlak met lichte lijnen die vanuit het midden uitwaaieren als stralen. Het geel is warm en niet schel — dichter bij korenveld dan bij citroen.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-shoal', 'Vloerpouf — Shoal', 'koel', 245, null,
+    'Grijsblauw vlak op zandkleurige wol.',
+    'Een grijsblauw vlak dat als een ondiepte in zandkleurige wol ligt. Dezelfde rustige familie als Haze, maar met het blauw dichter naar het midden en een koelere ondertoon.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-ember', 'Vloerpouf — Ember', 'kleurrijk', 245, null,
+    'Ivoor met roestrode en diepblauwe vlakken.',
+    'Op romige, hoogpolige wol liggen een roestrood en een diepblauw vlak naast elkaar, met een dunne zwarte lijn ertussen. De combinatie van die twee kleuren op ivoor maakt dit een van de grafischste stukken uit de collectie.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-meadow', 'Vloerpouf — Meadow', 'naturel', 285, null,
+    'Ivoren kelim bezaaid met kleine gekleurde tekens.',
+    'Plat geweven ivoren kelim, bezaaid met kleine met de hand geborduurde tekens in groen, rood, blauw en roze — pijlen, kruisjes, ruitjes. Elk teken is apart aangebracht. Van een afstand rustig ivoor, van dichtbij een klein archief.',
+    'Vintage kelim met handborduursel', 'Hoge Atlas, Marokko'),
+
+  p('pouf-quill', 'Vloerpouf — Quill', 'naturel', 195, null,
+    'Ivoor met zwarte pentekening-motieven.',
+    'Ivoren kelim met zwarte motieven die eruitzien alsof ze met een pen zijn getekend: zigzags, ruiten en kleine kruizen. Alleen zwart op ivoor, verder geen kleur — de zuinigste en misschien wel strakste pouf van de collectie.',
+    'Vintage kelim, plat geweven', 'Hoge Atlas, Marokko'),
+
+  p('pouf-thistle', 'Vloerpouf — Thistle', 'naturel', 285, null,
+    'Ivoor met fijne gekleurde stekelmotieven.',
+    'Fijne, stekelige motieven in paars, groen en rood op een ivoren kelimondergrond, dichter bij elkaar geborduurd dan bij Meadow. Het resultaat leest bijna als een patroon in plaats van losse tekens.',
+    'Vintage kelim met handborduursel', 'Hoge Atlas, Marokko'),
+
+  p('pouf-marigold', 'Vloerpouf — Marigold', 'warm', 285, null,
+    'Koraaloranje met roze en groene tekens.',
+    'Warm koraaloranje met roze en groene motieven die er los overheen zijn geweven. Dicht geknoopt en zwaar, met de ongelijkmatige kleuropname die je alleen bij plantaardig geverfde wol ziet.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-signal', 'Vloerpouf — Signal', 'kleurrijk', 285, 'Zeldzaam',
+    'Grijs veld met één rood blok en geel accent.',
+    'Een rustig duifgrijs veld, gebroken door één fel rood blok, een zwarte grafische vorm en een klein mosterdgeel accent. Veel leegte, weinig ingrepen — het minst drukke en tegelijk het meest uitgesproken stuk uit de collectie.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-basalt', 'Vloerpouf — Basalt', 'kleurrijk', 285, null,
+    'Zwart, rood en room in strakke blokken.',
+    'Zwarte, rode en roomkleurige blokken, strak naast elkaar. De donkerste pouf uit de collectie en daardoor de meest grafische — mooi tegen een lichte muur of op een naturel vloerkleed.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-ash', 'Vloerpouf — Ash', 'kleurrijk', 245, null,
+    'Roomwit met roze en zwart, en franjes.',
+    'Roomwitte wol met een roze en een zwart vlak, afgezet met korte zwarte franjes langs de rand. Die franjes komen uit het oorspronkelijke kleed en zijn bewust bewaard gebleven.',
+    'Vintage Berberwol, gerecycled kleed', 'Marokko'),
+
+  p('pouf-mist', 'Vloerpouf — Mist', 'koel', 245, null,
+    'Ecru met een brede stoffige blauwe band.',
+    'Ongeverfde ecru wol met een brede, stoffig blauwe band over de onderste helft. De eenvoud van twee kleuren, meer is het niet — en precies daarom werkt het.',
+    'Vintage Berberwol, gerecycled kleed', 'Midden-Atlas, Marokko'),
+
+  p('pouf-sorrel', 'Vloerpouf — Sorrel', 'warm', 285, 'Zeldzaam',
+    'Diep rood, dicht geknoopt en gevlekt.',
+    'Diep zuringrood over het hele vlak, met donkerder en lichter gevlekte zones waar het oorspronkelijke kleed ongelijk is verkleurd. Dicht geknoopt, zwaar en vol — de meest verzadigde kleur van de collectie.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-coral', 'Vloerpouf — Coral', 'warm', 285, null,
+    'Koraalroze met zachtgroene motieven.',
+    'Koraalroze met verweerde zachtgroene motieven die door het vlak lopen. De twee kleuren zijn allebei verbleekt, waardoor ze elkaar niet bijten maar in elkaar overlopen.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-foxglove', 'Vloerpouf — Foxglove', 'kleurrijk', 285, 'Zeldzaam',
+    'Magenta en zalm met een zwarte ster.',
+    'Fel magenta naast zalmroze, met een grote zwarte ster en groene tekens op het vlak. De meest uitbundige pouf van allemaal — koop hem als je iets wil dat de kamer overneemt, niet als je iets zoekt dat meebeweegt.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-apricot', 'Vloerpouf — Apricot', 'warm', 285, null,
+    'Zalmoranje met kleine groene Berbertekens.',
+    'Zalmoranje wol met kleine groene Berbertekens langs de randen en een ivoren zijband. Zachter van toon dan Rust en Marigold, en daardoor makkelijker te combineren met naturel textiel.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-garnet', 'Vloerpouf — Garnet', 'warm', 285, null,
+    'Granaatrood met roze en een geblokte hoek.',
+    'Granaatrood met roze doorschijnend, en één hoek met een klein geblokt motief in gedempte tinten. Het rood is dieper en bruiner dan bij Sorrel — dichter bij wijn dan bij tomaat.',
+    'Vintage kelim, dicht geknoopte wol', 'Zuid-Marokko'),
+
+  p('pouf-bloom', 'Vloerpouf — Bloom', 'kleurrijk', 245, null,
+    'Magenta en groen op koraalroze zijkanten.',
+    'Een boucherouite in volle bloei: magenta, grasgroen en zacht roze door elkaar op het bovenvlak, met zijkanten in koraalroze en zwart. Geknoopt van gerecyclede stofresten, dus elke lus heeft een andere herkomst — je ziet stukjes katoen naast wol naast nylon. Vrolijk zonder kinderlijk te worden.',
+    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+
+  p('pouf-kapsa', 'Vloerpouf — Kapsa', 'kleurrijk', 245, null,
+    'Kobaltblauw hart met rode en gele zigzags.',
+    'Een kobaltblauw vlak in het midden, omringd door zigzags in rood, geel en groen op een ecru ondergrond. Van alle poufs is dit de meest grafische: het patroon loopt netjes door over de rand, zodat de zijkant net zo interessant is als de bovenkant.',
+    'Vintage boucherouite, gerecyclede vezels', 'Marokko'),
+
+  q({
+    slug: 'stoel-laurel',
+    name: 'Stoel — Laurel',
+    label: 'Stoel',
+    category: 'naturel',
+    price: 165,
+    tag: null,
+    short: 'Laurierhout met handgevlochten doumzitting.',
+    description:
+      'Een lage Marokkaanse stoel van ongeschild laurierhout, met zitting en rugleuning van gevlochten doumtouw. De takken zijn niet recht geschaafd maar gebruikt zoals ze gegroeid zijn — daardoor staat geen enkele stoel er precies hetzelfde bij. De prijs geldt per stoel; op de foto staan er twee om te laten zien hoe ze samen ogen.',
+    details: [
+      ['Materiaal', 'Ongeschild laurierhout'],
+      ['Zitting', 'Handgevlochten doumtouw'],
+      ['Herkomst', 'Marrakech-regio, Marokko'],
+      ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
+    ],
+  }),
+
+  q({
+    slug: 'krukje-laurel',
+    name: 'Krukje — Laurel',
+    label: 'Krukje',
+    category: 'naturel',
+    price: 95,
+    tag: null,
+    short: 'Klein vierkant krukje, zelfde hand als de stoel.',
+    description:
+      'Hetzelfde ambacht als de Laurel-stoel, maar dan klein: een vierkant krukje van laurierhout met een strak gevlochten zitting van doumtouw. Werkt als zitplek, als bijzettafeltje naast de bank of als plek om een plant op te zetten.',
+    details: [
+      ['Materiaal', 'Ongeschild laurierhout'],
+      ['Zitting', 'Handgevlochten doumtouw'],
+      ['Herkomst', 'Marrakech-regio, Marokko'],
+      ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
+    ],
+  }),
+
+  q({
+    slug: 'lamp-doum',
+    name: 'Vloerlamp — Doum',
+    label: 'Vloerlamp',
+    category: 'naturel',
+    price: 285,
+    tag: 'Zeldzaam',
+    short: 'Driepoot met twee gevlochten kappen.',
+    description:
+      'Een vloerlamp op een driepoot van laurierhout, met twee kappen van strak opgerold doumtouw die als bloemkelken aan de stam hangen. De losse vezels aan de onderrand zijn met opzet blijven zitten — aangestoken werpt de lamp daardoor een gerafelde schaduw op de muur. Een stuk dat een hoek in zijn eentje kan dragen.',
+    details: [
+      ['Materiaal', 'Laurierhout en doumtouw'],
+      ['Kappen', 'Twee, met de hand opgerold en vastgezet'],
+      ['Herkomst', 'Marrakech-regio, Marokko'],
+      ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-atlas',
+    name: 'Kussen — Atlas',
+    label: 'Kussen',
+    category: 'koel',
+    price: 75,
+    tag: null,
+    short: 'Dikke ecru wol met turkooise en zwarte strepen.',
+    description:
+      'Hoogpolige, ongeverfde schapenwol met verticale strepen in turkoois en zwart, en een dichte zwarte franjerand langs boven en onder. Geweven op een smal weefgetouw in de Atlas, waar dit soort dekens al generaties op dezelfde manier gemaakt wordt. Zwaar en warm in de hand.',
+    details: [
+      ['Materiaal', 'Ongeverfde schapenwol, hoogpolig'],
+      ['Weefsel', 'Handgeweven, dichte franjerand'],
+      ['Herkomst', 'Hoge Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-fern',
+    name: 'Kussen — Fern',
+    label: 'Kussen',
+    category: 'koel',
+    price: 75,
+    tag: null,
+    short: 'Ecru vlakweefsel met brede smaragdgroene banen.',
+    description:
+      'Plat geweven, ongeverfde wol in ecru, met aan weerszijden een groep smaragdgroene banen: links één brede baan met een smalle ecru lijn erdoor, rechts twee smallere. Daartussen blijft het weefsel leeg, zodat het groen alle aandacht krijgt. Het groen is dieper en matter dan op een scherm te vangen is — echte geverfde wol, geen kleurstof die glimt.',
+    details: [
+      ['Materiaal', 'Ongeverfde schapenwol met geverfde wollen banen'],
+      ['Weefsel', 'Handgeweven vlakweefsel, licht onregelmatig'],
+      ['Herkomst', 'Midden-Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-cobalt',
+    name: 'Kussen — Cobalt',
+    label: 'Kussen',
+    category: 'koel',
+    price: 75,
+    tag: null,
+    short: 'Ecru met twee kobaltblauwe strepen in het midden.',
+    description:
+      'Twee kobaltblauwe strepen naast elkaar in het midden van het vlak, en langs beide randen een groepje smalle strepen die om de zijkant heen doorlopen. Verder alleen ongeverfde wol. Het strakste kussen van de vier — de soort eenvoud die overal bij past zonder saai te zijn.',
+    details: [
+      ['Materiaal', 'Ongeverfde schapenwol met geverfde wollen strepen'],
+      ['Weefsel', 'Handgeweven vlakweefsel, licht onregelmatig'],
+      ['Herkomst', 'Midden-Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-sienna',
+    name: 'Kussen — Sienna',
+    label: 'Kussen',
+    category: 'naturel',
+    price: 75,
+    tag: null,
+    short: 'Ecru met dunne strepen in kobalt en roestbruin.',
+    description:
+      'Dunne strepen in kobaltblauw en roestbruin, onregelmatig over het vlak verdeeld: één blauwe links, een blauwe en een roestbruine samen in het midden, en nog een paar tegen de rechterrand. Die ongelijke maatvoering is geen fout maar het handwerk zelf — er lag geen patroon naast het weefgetouw.',
+    details: [
+      ['Materiaal', 'Ongeverfde schapenwol met geverfde wollen strepen'],
+      ['Weefsel', 'Handgeweven vlakweefsel, licht onregelmatig'],
+      ['Herkomst', 'Midden-Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-cipher',
+    name: 'Kussen — Cipher',
+    label: 'Kussen',
+    category: 'naturel',
+    price: 75,
+    tag: null,
+    short: 'Ecru met verspreide Berbertekens in vijf kleuren.',
+    description:
+      'Over het ecru vlak liggen losse Berbertekens verspreid: een groepje paarse en magenta streepjes, een groene zigzagrij, een bruine getrapte ruit, een rode golflijn en een paar kleine kruisjes. Ze staan ver uit elkaar, met veel lege wol ertussen — precies wat het rustig houdt ondanks het aantal kleuren. Zulke tekens zijn geen decoratie maar een taal; elk teken had oorspronkelijk een betekenis.',
+    details: [
+      ['Materiaal', 'Ongeverfde schapenwol met geborduurde motieven'],
+      ['Weefsel', 'Handgeweven vlakweefsel, licht onregelmatig'],
+      ['Herkomst', 'Midden-Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-prism',
+    name: 'Kussen — Prism',
+    label: 'Kussen',
+    category: 'kleurrijk',
+    price: 75,
+    tag: null,
+    short: 'Hoogpolige banden in kobalt, saliegroen en geel.',
+    description:
+      'Brede verticale banden over de volle hoogte, in crème, kobaltblauw, saliegroen en goudgeel, elk gescheiden door een smalle zwarte baan. De pool is dik en zacht — je zakt er met je hand in weg. Het meest uitgesproken kussen van de reeks: leg hem op een effen bank en de hoek is meteen af.',
+    details: [
+      ['Materiaal', 'Geverfde schapenwol, hoogpolig'],
+      ['Weefsel', 'Handgeknoopt, dikke pool'],
+      ['Herkomst', 'Midden-Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-umber',
+    name: 'Kussen — Umber',
+    label: 'Kussen',
+    category: 'warm',
+    price: 75,
+    tag: null,
+    short: 'Warmbruine wol met kobalt en roze strepen.',
+    description:
+      'Warmbruine wol, de kleur van koffie met melk, gevlekt doordat lichtere en donkerdere draden door elkaar geweven zijn. In het midden een brede kobaltblauwe baan met een felroze streep ernaast, en langs beide randen dezelfde combinatie in het klein. Het enige kussen met een gekleurde ondergrond in plaats van ecru — dat maakt hem warmer en zwaarder van toon.',
+    details: [
+      ['Materiaal', 'Geverfde schapenwol'],
+      ['Weefsel', 'Handgeweven vlakweefsel, gevlekt van kleur'],
+      ['Herkomst', 'Midden-Atlas, Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-flare',
+    name: 'Kussen — Flare',
+    label: 'Kussen',
+    category: 'warm',
+    price: 75,
+    tag: null,
+    short: 'Fel oranje met een breed gestreept middenpaneel.',
+    description:
+      'Fel oranje, grof geweven uit gerecyclede stofresten — daardoor zit het vlak vol kleine witte en lichtoranje spikkels in plaats van één egale kleur. Door het midden loopt een breed gestreept paneel: een kobaltblauwe baan met grasgroene strepen ertegenaan, en daarbuiten aan beide kanten nog twee groene lijnen. Vierkanter dan de andere kussens en het drukste van allemaal — dit is er een die je bewust neerlegt, niet een die meebeweegt.',
+    details: [
+      ['Materiaal', 'Gerecyclede vezels, grof geweven'],
+      ['Weefsel', 'Handgeweven, gespikkeld van kleur'],
+      ['Herkomst', 'Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+
+  q({
+    slug: 'kussen-persimmon',
+    name: 'Kussen — Persimmon',
+    label: 'Kussen',
+    category: 'warm',
+    price: 75,
+    tag: null,
+    short: 'Fel oranje met één kobaltblauwe baan in het midden.',
+    description:
+      'Hetzelfde grove, gespikkelde oranje weefsel van gerecyclede stofresten als Flare, maar met een veel rustiger tekening: één kobaltblauwe baan door het midden, met aan elke kant een dunne grasgroene lijn ertegenaan. Verder alleen oranje. De ingetogen van de twee — makkelijker te combineren, en het oranje krijgt meer ruimte.',
+    details: [
+      ['Materiaal', 'Gerecyclede vezels, grof geweven'],
+      ['Weefsel', 'Handgeweven, gespikkeld van kleur'],
+      ['Herkomst', 'Marokko'],
+      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
+    ],
+  }),
+]
+
+export const getProduct = (slug) => products.find((x) => x.slug === slug)
+
+export const featured = ['pouf-cinnamon', 'pouf-foxglove', 'lamp-doum', 'stoel-laurel']
+  .map(getProduct)
+  .filter(Boolean)
+
+export const formatPrice = (n) =>
+  new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(n)

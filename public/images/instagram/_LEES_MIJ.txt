@@ -1,0 +1,3 @@
+Leg hier je foto's voor de map "instagram".
+Zie /IMAGES_GUIDE.md in de hoofdmap voor de exacte bestandsnamen.
+Zolang een foto ontbreekt, toont de site automatisch een nette placeholder.
