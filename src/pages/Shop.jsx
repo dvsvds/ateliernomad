@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
 import ProductCard from '../components/ProductCard.jsx'
-import { products, categories } from '../data/products.js'
+import { products, categories, collectie } from '../data/products.js'
 
 export default function Shop() {
   const [params, setParams] = useSearchParams()
@@ -12,7 +12,7 @@ export default function Shop() {
   const active = params.get('cat') || 'all'
   useReveal([active])
   useSeo({
-    title: 'Shop de collectie',
+    title: 'De eerste collectie',
     description: 'De volledige collectie van Atelier Nomad: 33 unieke vintage Marokkaanse vloerpoufs, plus negen handgeweven wollen kussens, een stoel, een krukje en een kapstok van hout en touw.',
   })
 
@@ -33,12 +33,13 @@ export default function Shop() {
   return (
     <>
       <section className="page-hero container">
-        <span className="eyebrow reveal">De collectie</span>
-        <h1 className="display reveal" data-delay="1">Shop &amp; Collectie</h1>
+        <span className="eyebrow reveal">Collectie {collectie.nummer}</span>
+        <h1 className="display reveal" data-delay="1">{collectie.naam}</h1>
         <p className="lead measure reveal" data-delay="2">
-          Drieëndertig vintage vloerpoufs, elk uit een ander Berberkleed geknoopt, negen
-          handgeweven kussens en een paar stukken van laurierhout en touw. Alles met de
-          hand gemaakt — wat je op de foto ziet, is precies wat je ontvangt.
+          {products.length} stukken, in één keer geselecteerd in Marokko: drieëndertig vintage
+          vloerpoufs, acht handgeweven kussens, een stoel, een krukje en een kapstok.
+          Alles met de hand gemaakt en elk stuk uniek — wat je op de foto ziet, is precies
+          wat je ontvangt. Is het weg, dan komt het niet terug.
         </p>
       </section>
 
@@ -61,6 +62,7 @@ export default function Shop() {
 
           <p className="filters__count reveal" aria-live="polite">
             {filtered.length} {filtered.length === 1 ? 'stuk' : 'stuks'}
+            {active !== 'all' && ` van ${products.length}`}
           </p>
 
           <div className="product-grid">

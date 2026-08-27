@@ -2,7 +2,7 @@
 
 ## Productfoto's
 
-Alle 45 producten hebben hun packshot in `public/images/products/` staan, als
+Alle 44 producten hebben hun packshot in `public/images/products/` staan, als
 `<slug>.jpg` — bijvoorbeeld `pouf-cinnamon.jpg` of `stoel-laurel.jpg`. De
 bestandsnaam volgt altijd de `slug` in `src/data/products.js`, dus die twee
 moeten gelijk blijven.

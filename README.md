@@ -74,7 +74,7 @@ atelier-nomad/
 │  ├─ App.jsx              # Routing
 │  ├─ styles/index.css     # Volledig design-systeem (tokens, componenten)
 │  ├─ data/
-│  │  ├─ products.js       # ⭐ 45 producten: naam, prijs, tekst, beeld
+│  │  ├─ products.js       # ⭐ 44 producten: naam, prijs, tekst, beeld
 │  │  └─ site.js           # Teksten, testimonials, FAQ, lifestyle
 │  ├─ context/CartContext.jsx
 │  ├─ lib/checkout.js      # Stripe-koppeling (front-end)

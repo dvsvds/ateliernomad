@@ -1,7 +1,7 @@
 /* ============================================================
    PRODUCTDATA — Atelier Nomad
    ------------------------------------------------------------
-   45 stuks: 33 vintage Marokkaanse vloerpoufs, negen handgeweven
+   44 stuks: 33 vintage Marokkaanse vloerpoufs, acht handgeweven
    kussens, en drie interieurstukken (stoel, krukje, kapstok).
    Elke pouf is uniek — geknoopt uit een vintage Berberkleed,
    dus geen twee zijn gelijk.
@@ -22,6 +22,15 @@
      kleur  — naturel / warm / koel / kleurrijk  (hoe het oogt)
    Elk product heeft er allebei één.
    ============================================================ */
+
+/* De hele voorraad is in één keer ingekocht en vormt samen één drop.
+   Komt er later een tweede, geef producten dan een `collectie`-veld en
+   filter hierop; nu hoort alles bij deze ene. */
+export const collectie = {
+  nummer: '01',
+  naam: 'De eerste collectie',
+  regel: 'In één keer geselecteerd in Marokko. Elk stuk bestaat maar één keer — is het weg, dan komt het niet terug.',
+}
 
 export const categories = [
   { id: 'all',       label: 'Alles',     as: 'type' },
@@ -61,7 +70,7 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
 /* Alles wat geen pouf is: andere specs, eigen label. Kussens vormen
    een eigen filtersoort; stoel, krukje en kapstok vallen onder interieur.
    Ze delen wel de kleurfilters, zodat de shop één logica houdt. */
-const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details }) => ({
+const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details, images }) => ({
   slug,
   name,
   type,
@@ -72,7 +81,8 @@ const q = ({ slug, name, label, type = 'interieur', category, price, tag, short,
   short,
   description,
   details,
-  images: [`/images/products/${slug}.jpg`],
+  // meerdere beelden alleen waar het iets toevoegt, zoals een tweezijdig kussen
+  images: images || [`/images/products/${slug}.jpg`],
 })
 
 export const products = [
@@ -437,35 +447,22 @@ export const products = [
     category: 'warm',
     price: 75,
     tag: null,
-    short: 'Fel oranje met een breed gestreept middenpaneel.',
+    short: 'Fel oranje, met twee verschillende kanten.',
+    images: [
+      '/images/products/kussen-flare.jpg',
+      '/images/products/kussen-flare-achterkant.jpg',
+    ],
     description:
-      'Fel oranje, grof geweven uit gemêleerd garen — daardoor zit het vlak vol kleine witte en lichtoranje spikkels in plaats van één egale kleur. Door het midden loopt een breed gestreept paneel: een kobaltblauwe baan met grasgroene strepen ertegenaan, en daarbuiten aan beide kanten nog twee groene lijnen. Vierkanter dan de andere kussens en het drukste van allemaal — dit is er een die je bewust neerlegt, niet een die meebeweegt.',
+      'Fel oranje, grof geweven uit gemêleerd garen — daardoor zit het vlak vol kleine witte en lichtoranje spikkels in plaats van één egale kleur. De twee kanten zijn niet gelijk: op de voorkant loopt een breed gestreept paneel van kobaltblauw met grasgroene strepen ertegenaan en nog twee groene lijnen erbuiten; de achterkant houdt het bij één blauwe baan met een dunne groene lijn aan elke kant. Draai hem om en je hebt een ander kussen. Vierkanter dan de rest en het felste van allemaal — dit is er een die je bewust neerlegt.',
     details: [
       ['Materiaal', 'Handgeweven wol en katoen, grof van draad'],
       ['Weefsel', 'Handgeweven, gespikkeld van kleur'],
+      ['Twee kanten', 'Voor- en achterkant hebben een ander streepbeeld'],
       ['Herkomst', 'Marokko'],
       ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
     ],
   }),
 
-  q({
-    slug: 'kussen-persimmon',
-    name: 'Kussen — Persimmon',
-    label: 'Kussen',
-    type: 'kussens',
-    category: 'warm',
-    price: 75,
-    tag: null,
-    short: 'Fel oranje met één kobaltblauwe baan in het midden.',
-    description:
-      'Hetzelfde grove, gespikkelde oranje weefsel als Flare, maar met een veel rustiger tekening: één kobaltblauwe baan door het midden, met aan elke kant een dunne grasgroene lijn ertegenaan. Verder alleen oranje. De ingetogen van de twee — makkelijker te combineren, en het oranje krijgt meer ruimte.',
-    details: [
-      ['Materiaal', 'Handgeweven wol en katoen, grof van draad'],
-      ['Weefsel', 'Handgeweven, gespikkeld van kleur'],
-      ['Herkomst', 'Marokko'],
-      ['Onderhoud', 'Luchten en uitkloppen; vlekken plaatselijk deppen'],
-    ],
-  }),
 ]
 
 export const getProduct = (slug) => products.find((x) => x.slug === slug)
