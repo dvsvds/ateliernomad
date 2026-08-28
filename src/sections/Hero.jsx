@@ -32,20 +32,16 @@ export default function Hero() {
         </div>
 
         <div className="hero__visual reveal" data-delay="2">
-          {/* Hero-video: zachte, automatisch afspelende loop (gedempt).
-              Vervang /public/videos/hero.mp4 om een andere video te tonen. */}
+          {/* Merkbeeld als hero. Wil je hier weer bewegend beeld, zie
+              bronbeelden/hero-video.mp4 en git-historie voor de video-variant. */}
           <div className="frame-main" style={{ overflow: 'hidden', borderRadius: 'var(--radius-xl)', aspectRatio: '4 / 5', background: 'var(--sand)' }}>
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster="/images/brand/hero-poster.jpg"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            >
-              <source src="/videos/hero.mp4" type="video/mp4" />
-            </video>
+            <SmartImage
+              src={heroImages.main}
+              alt="Marokkaanse vloerpoufs en kussens in een licht interieur"
+              label="Atelier Nomad"
+              sublabel=""
+              loading="eager"
+            />
           </div>
 
           <div className="frame-sub" style={{ overflow: 'hidden' }}>

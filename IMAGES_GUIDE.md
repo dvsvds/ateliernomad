@@ -26,8 +26,7 @@ gewoon een extra pad in die array.
 
 | Bestand | Waarvoor |
 |---|---|
-| `public/videos/hero.mp4` | hero-video op de homepage |
-| `public/images/brand/hero-poster.jpg` | posterframe van die video |
+| `public/images/brand/hero.jpg` | het grote beeld in de hero op de homepage |
 | `public/images/lifestyle/inter-1..4.jpg` | sfeerbeelden in de "Leef met textuur"-sectie |
 | `public/images/instagram/ig-1..6.jpg` | **ontbreken nog** — Instagram-galerij toont placeholders |
 | `public/images/brand/og-image.jpg` | **ontbreekt nog** — social share-kaart, 1200×630 |

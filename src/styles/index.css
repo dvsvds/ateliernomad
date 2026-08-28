@@ -312,7 +312,10 @@ p { margin: 0 0 1.1rem; }
 }
 
 /* ---------- 9. SmartImage (placeholder fallback) ---------- */
-.smart-img { position: relative; overflow: hidden; background: var(--sand); display: block; }
+/* height:100% laat het beeld het kader vullen wanneer de ouder een vaste
+   hoogte of aspect-ratio heeft; bij een ouder zonder hoogte valt het
+   terug op auto en verandert er niets. */
+.smart-img { position: relative; overflow: hidden; background: var(--sand); display: block; height: 100%; }
 .smart-img img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 1.2s var(--ease);
