@@ -32,16 +32,24 @@ export default function Hero() {
         </div>
 
         <div className="hero__visual reveal" data-delay="2">
-          {/* Merkbeeld als hero. Wil je hier weer bewegend beeld, zie
-              bronbeelden/hero-video.mp4 en git-historie voor de video-variant. */}
+          {/* Het merkbeeld als trage camerabeweging. Geen gegenereerde
+              animatie: elk frame is een uitsnede uit dezelfde foto, dus er
+              kan niets vervormen. Het posterframe is beeld nummer één, zodat
+              er geen sprong zit tussen stilstand en afspelen.
+              Opnieuw maken? Zie IMAGES_GUIDE.md. */}
           <div className="frame-main" style={{ overflow: 'hidden', borderRadius: 'var(--radius-xl)', aspectRatio: '4 / 5', background: 'var(--sand)' }}>
-            <SmartImage
-              src={heroImages.main}
-              alt="Marokkaanse vloerpoufs en kussens in een licht interieur"
-              label="Atelier Nomad"
-              sublabel=""
-              loading="eager"
-            />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/images/brand/hero-poster.jpg"
+              aria-label="Marokkaanse vloerpoufs en kussens in een licht interieur"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            >
+              <source src="/videos/hero.mp4" type="video/mp4" />
+            </video>
           </div>
 
           <div className="frame-sub" style={{ overflow: 'hidden' }}>

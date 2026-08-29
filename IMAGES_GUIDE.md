@@ -26,7 +26,9 @@ gewoon een extra pad in die array.
 
 | Bestand | Waarvoor |
 |---|---|
-| `public/images/brand/hero.jpg` | het grote beeld in de hero op de homepage |
+| `public/videos/hero.mp4` | de hero op de homepage: trage zoom over `hero.jpg` |
+| `public/images/brand/hero-poster.jpg` | eerste beeld van die video, zichtbaar voor het afspelen |
+| `public/images/brand/hero.jpg` | het merkbeeld zelf, ook in gebruik op de Over-pagina |
 | `public/images/lifestyle/inter-1..4.jpg` | sfeerbeelden in de "Leef met textuur"-sectie |
 | `public/images/instagram/ig-1..6.jpg` | **ontbreken nog** — Instagram-galerij toont placeholders |
 | `public/images/brand/og-image.jpg` | **ontbreekt nog** — social share-kaart, 1200×630 |
@@ -49,3 +51,19 @@ foto in plaats van uit fantasie.
 **Als je dit herhaalt:** leg elk resultaat naast zijn bronfoto voordat je het
 plaatst. Bij drie van de 31 maakte het model er een ánder product van. Zie
 `STATUS.md` in de scratchpad van die sessie voor de werkende prompt.
+
+## De hero-video opnieuw maken
+
+De hero is geen gegenereerde animatie maar een trage in- en uitzoom over
+één foto: elk frame is een uitsnede uit `hero.jpg`, dus er kan onderweg
+niets vervormen. Hij loopt heen en terug, waardoor de loop naadloos sluit.
+
+Wil je hem vernieuwen met een andere foto:
+1. Schaal de foto eerst op (de bron moet ruim breder zijn dan 960px,
+   anders wordt het diepste zoompunt zichtbaar zacht).
+2. Snijd naar 4:5 en render 250 frames op 960 x 1200, waarbij de uitsnede
+   krimpt van 100% naar 90% en weer terug, met een smoothstep-verloop.
+3. Anker de uitsnede aan de bovenkant, anders valt de merknaam in de foto
+   weg zodra er ingezoomd wordt.
+4. Encodeer met x264, crf 26, zonder audio, en zet het posterframe gelijk
+   aan beeld nummer één.
