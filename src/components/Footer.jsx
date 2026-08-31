@@ -35,7 +35,9 @@ export default function Footer() {
           <div>
             <h4>Contact</h4>
             <a href={`mailto:${brand.email}`}>{brand.email}</a>
-            <a href={`tel:${brand.phone.replace(/[^+\d]/g, '')}`}>{brand.phone}</a>
+            {brand.phone && (
+              <a href={`tel:${brand.phone.replace(/[^+\d]/g, '')}`}>{brand.phone}</a>
+            )}
             <a href={brand.instagram} target="_blank" rel="noreferrer">Instagram {brand.instagramHandle}</a>
             <span style={{ color: 'rgba(250,246,239,0.6)', fontSize: '0.9rem', display: 'block', paddingTop: '0.4rem' }}>{brand.city}</span>
           </div>

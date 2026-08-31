@@ -25,7 +25,7 @@ export const bedrijf = {
   postcode: '',          // postcode en gemeente
   land: 'België',
   email: 'ateliernomad01@gmail.com',
-  telefoon: '',          // je echte nummer
+  telefoon: '',          // optioneel; leeg = de regel verdwijnt
 }
 
 /* Toont de waarde, of een zichtbare herinnering als die nog leeg is. */
@@ -50,7 +50,11 @@ export const documenten = {
           `Ondernemingsnummer: ${veld(bedrijf.kbo, 'KBO-nummer')}`,
           `Btw-nummer: ${veld(bedrijf.btw, 'btw-nummer')}`,
           `E-mail: ${bedrijf.email}`,
-          `Telefoon: ${veld(bedrijf.telefoon, 'telefoonnummer')}`,
+          // Een telefoonnummer is sinds de Omnibus-richtlijn (2022) niet meer
+          // verplicht zolang e-mail en het contactformulier snel contact geven
+          // en de klant er een bewijs van overhoudt. Vul je er toch een in,
+          // dan verschijnt de regel vanzelf.
+          ...(bedrijf.telefoon ? [`Telefoon: ${bedrijf.telefoon}`] : []),
         ],
       },
       {

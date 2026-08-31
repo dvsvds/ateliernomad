@@ -6,10 +6,11 @@ export const brand = {
   name: 'Atelier Nomad',
   tagline: 'Handcrafted Moroccan Living',
   email: 'ateliernomad01@gmail.com',
-  phone: '+31 (0)20 123 4567',
+  phone: '',   // leeg = nergens getoond. Wettelijk niet verplicht zolang
+               // e-mail en het contactformulier er zijn.
   instagram: 'https://www.instagram.com/ateliernomad',
   instagramHandle: '@ateliernomad',
-  city: 'Amsterdam · Marrakech',
+  city: 'België · Marrakech',
 }
 
 export const heroImages = {

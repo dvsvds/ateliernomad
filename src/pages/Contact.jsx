@@ -63,7 +63,9 @@ export default function Contact() {
             </div>
             <div className="info-card">
               <h4>Telefoon</h4>
-              <p style={{ margin: 0 }}><a href={`tel:${brand.phone.replace(/[^+\d]/g,'')}`} className="link-underline">{brand.phone}</a></p>
+              {brand.phone && (
+                <p style={{ margin: 0 }}><a href={`tel:${brand.phone.replace(/[^+\d]/g,'')}`} className="link-underline">{brand.phone}</a></p>
+              )}
             </div>
             <div className="info-card">
               <h4>Instagram</h4>
