@@ -66,6 +66,8 @@ exports.handler = async (event) => {
         price_data: {
           currency: 'eur',
           unit_amount: Math.round(CATALOG[i.slug].price * 100),
+          // Prijzen zijn inclusief btw; Stripe Tax rekent de btw eruit.
+          tax_behavior: 'inclusive',
           product_data: { name: CATALOG[i.slug].name },
         },
       }))
@@ -75,12 +77,14 @@ exports.handler = async (event) => {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
+      // Stripe Tax rekent pas mee als de sessie er expliciet om vraagt.
+      automatic_tax: { enabled: true },
       success_url: `${SITE_URL}/bedankt?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/shop`,
       billing_address_collection: 'auto',
       shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE'] },
       shipping_options: [
-        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, display_name: 'Standaard verzending (EU)' } },
+        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)' } },
       ],
     })
 

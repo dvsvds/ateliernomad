@@ -23,6 +23,10 @@ export default async function handler(req, res) {
           price_data: {
             currency: 'eur',
             unit_amount: Math.round(ref.price * 100), // prijs van de SERVER, niet de client
+            // Onze prijzen zijn INCLUSIEF btw, zoals de algemene voorwaarden
+            // zeggen. Stripe Tax rekent de btw er dus uít, in plaats van er
+            // 21% bovenop te zetten: de klant betaalt gewoon de getoonde prijs.
+            tax_behavior: 'inclusive',
             product_data: { name: ref.name },
           },
         }
@@ -33,6 +37,10 @@ export default async function handler(req, res) {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
+      // Stripe Tax staat aan in het dashboard, maar rekent pas mee als de
+      // sessie er expliciet om vraagt. Vereist een leveradres van de klant
+      // (zie shipping_address_collection hieronder) om het tarief te bepalen.
+      automatic_tax: { enabled: true },
       success_url: `${SITE_URL}/bedankt?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/shop`,
       billing_address_collection: 'auto',
@@ -40,7 +48,7 @@ export default async function handler(req, res) {
         allowed_countries: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE'],
       },
       shipping_options: [
-        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, display_name: 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 3 }, maximum: { unit: 'business_day', value: 7 } } } },
+        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 3 }, maximum: { unit: 'business_day', value: 7 } } } },
       ],
     })
 
