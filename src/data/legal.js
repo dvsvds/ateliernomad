@@ -19,12 +19,12 @@
 export const bedrijf = {
   handelsnaam: 'Atelier Nomad',
   rechtsvorm: '',        // bv. 'Eenmanszaak' of 'BV'
-  kbo: '',               // ondernemingsnummer, bv. '0123.456.789'
-  btw: '',               // btw-nummer, bv. 'BE 0123.456.789'
+  kbo: '1035.137.874',   // ondernemingsnummer
+  btw: 'BE 1035.137.874',
   straat: '',            // straat en huisnummer
   postcode: '',          // postcode en gemeente
   land: 'België',
-  email: 'hello@ateliernomad.com',
+  email: 'ateliernomad01@gmail.com',
   telefoon: '',          // je echte nummer
 }
 

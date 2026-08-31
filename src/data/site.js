@@ -5,7 +5,7 @@
 export const brand = {
   name: 'Atelier Nomad',
   tagline: 'Handcrafted Moroccan Living',
-  email: 'hello@ateliernomad.com',
+  email: 'ateliernomad01@gmail.com',
   phone: '+31 (0)20 123 4567',
   instagram: 'https://www.instagram.com/ateliernomad',
   instagramHandle: '@ateliernomad',
