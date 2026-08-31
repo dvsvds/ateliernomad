@@ -43,7 +43,11 @@ export default function Footer() {
 
         <div className="footer__bottom">
           <small>© {new Date().getFullYear()} Atelier Nomad. Met de hand gemaakt in Marokko.</small>
-          <small>Algemene voorwaarden · Privacy · Verzending & retour</small>
+          <small className="footer__legal">
+            <Link to="/voorwaarden">Algemene voorwaarden</Link>
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/verzending">Verzending &amp; retour</Link>
+          </small>
           <small>Website door <a href="https://web-makers.be" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>WebMakers</a></small>
         </div>
       </div>

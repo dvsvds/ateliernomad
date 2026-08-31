@@ -494,6 +494,24 @@ p { margin: 0 0 1.1rem; }
 .pdp__cta { display: flex; gap: 0.8rem; margin-top: 1.6rem; align-items: center; }
 
 /* ---------- 20. Shop filters ---------- */
+/* Juridische pagina's: rustige, goed leesbare lopende tekst */
+.legal-block { margin-bottom: 2.4rem; }
+.legal-block h2 { margin-bottom: 0.7rem; }
+.legal-block p { margin-bottom: 0.9rem; color: var(--ink-soft); max-width: 58ch; }
+.legal-block p:last-child { margin-bottom: 0; }
+.legal-list { list-style: none; padding: 0; margin: 0.2rem 0 0; }
+.legal-list li {
+  position: relative; padding-left: 1.1rem; margin-bottom: 0.55rem; color: var(--ink-soft); max-width: 58ch;
+}
+.legal-list li::before {
+  content: ''; position: absolute; left: 0; top: 0.62em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--line);
+}
+/* Footerlinks naar de juridische pagina's */
+.footer__legal { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; }
+.footer__legal a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+.footer__legal a:hover { border-bottom-color: currentColor; }
+
 .filters { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
 /* scheidt de soortchips van de kleurchips; valt weg zodra de rij afbreekt */
 .filters__split { width: 1px; align-self: stretch; margin: 0.15rem 0.35rem; background: var(--line); }

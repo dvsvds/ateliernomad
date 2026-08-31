@@ -102,6 +102,10 @@ atelier-nomad/
   bewust geen maat op de productpagina's. Zodra je gemeten hebt: voeg per product
   een `['Afmeting', '...']`-regel toe in `src/data/products.js` en draai
   `node scripts/sync-catalog.mjs`.
+- **Juridische pagina's wachten op je gegevens.** Vul `bedrijf` in
+  `src/data/legal.js` in (KBO, btw, adres, telefoon). Zolang een veld leeg
+  is toont de site daar zichtbaar "[vul in: ...]". Laat de teksten daarna
+  één keer nakijken door je boekhouder voor je echte betalingen aanzet.
 - **Telefoonnummer is nep.** `src/data/site.js` staat op +31 (0)20 123 4567 —
   een Amsterdams voorbeeldnummer. Vervang door het echte nummer.
 - **Social share-beeld** (`og-image.jpg`) is nu een uitsnede uit het herobeeld;

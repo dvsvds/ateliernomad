@@ -12,6 +12,7 @@ import Craftsmanship from './pages/Craftsmanship.jsx'
 import Contact from './pages/Contact.jsx'
 import FAQ from './pages/FAQ.jsx'
 import Success from './pages/Success.jsx'
+import Legal from './pages/Legal.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 // Scroll naar boven bij navigatie
@@ -37,6 +38,9 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/bedankt" element={<Success />} />
+          <Route path="/voorwaarden" element={<Legal doc="voorwaarden" />} />
+          <Route path="/privacy" element={<Legal doc="privacy" />} />
+          <Route path="/verzending" element={<Legal doc="verzending" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
