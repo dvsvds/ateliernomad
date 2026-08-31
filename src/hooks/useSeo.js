@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SITE = 'Atelier Nomad'
+const SITE = 'Atelier Nomàd'
 
 /** Lichtgewicht SEO-hook: zet title + meta description per pagina (geen extra dependency). */
 export default function useSeo({ title, description } = {}) {

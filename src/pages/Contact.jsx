@@ -7,7 +7,7 @@ export default function Contact() {
   useReveal()
   useSeo({
     title: 'Contact',
-    description: 'Neem contact op met Atelier Nomad voor vragen over producten, maatwerk, verzending of samenwerking.',
+    description: 'Neem contact op met Atelier Nomàd voor vragen over producten, maatwerk, verzending of samenwerking.',
   })
   const [sent, setSent] = useState(false)
 

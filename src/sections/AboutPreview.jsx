@@ -6,13 +6,13 @@ export default function AboutPreview() {
     <section className="section section--alt">
       <div className="container split">
         <div className="split__media reveal">
-          <SmartImage src="/images/lifestyle/styling-1.jpg" alt="Atelier Nomad sfeer" label="Sfeerbeeld" />
+          <SmartImage src="/images/lifestyle/styling-1.jpg" alt="Atelier Nomàd sfeer" label="Sfeerbeeld" />
         </div>
         <div className="reveal" data-delay="1">
-          <span className="eyebrow">Over Atelier Nomad</span>
+          <span className="eyebrow">Over Atelier Nomàd</span>
           <h2 className="h2">Stukken met een ziel,<br />gekozen om te blijven</h2>
           <p className="lead">
-            Atelier Nomad ontstond uit een liefde voor het Marokkaanse ambacht en de
+            Atelier Nomàd ontstond uit een liefde voor het Marokkaanse ambacht en de
             wens om eerlijke, tijdloze stukken een plek te geven in moderne interieurs.
           </p>
           <p>

@@ -1,5 +1,5 @@
 /* ============================================================
-   JURIDISCHE PAGINA'S — Atelier Nomad
+   JURIDISCHE PAGINA'S — Atelier Nomàd
    ------------------------------------------------------------
    ⚠️  VUL EERST `bedrijf` HIERONDER IN. Zolang een veld leeg is,
        toont de site op die plek zichtbaar "[vul in: …]" — dat is
@@ -17,7 +17,7 @@
    ============================================================ */
 
 export const bedrijf = {
-  handelsnaam: 'Atelier Nomad',
+  handelsnaam: 'Atelier Nomàd',
   rechtsvorm: '',        // bv. 'Eenmanszaak' of 'BV'
   kbo: '1035.137.874',   // ondernemingsnummer
   btw: 'BE 1035.137.874',
@@ -31,20 +31,34 @@ export const bedrijf = {
 /* Toont de waarde, of een zichtbare herinnering als die nog leeg is. */
 export const veld = (waarde, omschrijving) => waarde || `[vul in: ${omschrijving}]`
 
-const ADRES = () =>
-  `${veld(bedrijf.straat, 'straat en nummer')}, ${veld(bedrijf.postcode, 'postcode en gemeente')}, ${bedrijf.land}`
+/* Zolang het adres nog niet ingevuld is, laten we die zin liever weg dan
+   dat er "[vul in: ...]" op een live pagina staat. De onderneming blijft
+   identificeerbaar via het KBO-nummer. Let op: een geografisch adres is
+   wettelijk verplicht (Boek VI WER) — dit is een nette tussenstand, geen
+   oplossing. Vul `straat` en `postcode` in en de zin komt vanzelf terug. */
+export const heeftAdres = () => Boolean(bedrijf.straat && bedrijf.postcode)
+
+const ADRES = () => `${bedrijf.straat}, ${bedrijf.postcode}, ${bedrijf.land}`
+
+const ZETEL = () =>
+  heeftAdres()
+    ? `, met maatschappelijke zetel te ${ADRES()}`
+    : ''
 
 export const documenten = {
   voorwaarden: {
     eyebrow: 'Juridisch',
     titel: 'Algemene voorwaarden',
     intro:
-      'Deze voorwaarden gelden voor elke bestelling die je bij Atelier Nomad plaatst. Door te bestellen ga je ermee akkoord. We hebben ze zo kort en leesbaar gehouden als kan.',
+      'Deze voorwaarden gelden voor elke bestelling die je bij Atelier Nomàd plaatst. Door te bestellen ga je ermee akkoord. We hebben ze zo kort en leesbaar gehouden als kan.',
     secties: [
       {
         h: '1. Wie wij zijn',
         p: [
-          `${bedrijf.handelsnaam}${bedrijf.rechtsvorm ? `, ${bedrijf.rechtsvorm}` : ''}, met maatschappelijke zetel te ${ADRES()}.`,
+          `${bedrijf.handelsnaam}${bedrijf.rechtsvorm ? `, ${bedrijf.rechtsvorm}` : ''}${ZETEL()}, ingeschreven in de Kruispuntbank van Ondernemingen.`,
+          ...(heeftAdres()
+            ? []
+            : ['Onze vestigingsgegevens zijn opvraagbaar in de Kruispuntbank van Ondernemingen op ondernemingsnummer 1035.137.874, of bij ons per e-mail.']),
         ],
         lijst: [
           `Ondernemingsnummer: ${veld(bedrijf.kbo, 'KBO-nummer')}`,
@@ -128,7 +142,7 @@ export const documenten = {
       {
         h: 'Wie verwerkt je gegevens',
         p: [
-          `${bedrijf.handelsnaam}, ${ADRES()}, ondernemingsnummer ${veld(bedrijf.kbo, 'KBO-nummer')}, is verantwoordelijk voor de verwerking. Vragen? Mail ${bedrijf.email}.`,
+          `${bedrijf.handelsnaam}${ZETEL()}, ondernemingsnummer ${veld(bedrijf.kbo, 'KBO-nummer')}, is verantwoordelijk voor de verwerking. Vragen? Mail ${bedrijf.email}.`,
         ],
       },
       {

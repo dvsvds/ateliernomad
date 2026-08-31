@@ -30,7 +30,7 @@ export default function Navbar() {
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${menuOpen ? 'nav--menu-open' : ''}`}>
       <div className="container nav__inner">
         <Link to="/" className="nav__brand" onClick={() => setMenuOpen(false)}>
-          Atelier Nomad
+          Atelier Nomàd
           <small>Handcrafted Moroccan Living</small>
         </Link>
 

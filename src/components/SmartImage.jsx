@@ -5,7 +5,7 @@ import { useState } from 'react'
  * een nette, merkkleurige placeholder met de productnaam — zo ziet de
  * site er altijd af uit, ook voordat je je beelden hebt toegevoegd.
  */
-export default function SmartImage({ src, alt = '', label, sublabel = 'Atelier Nomad', loading = 'lazy' }) {
+export default function SmartImage({ src, alt = '', label, sublabel = 'Atelier Nomàd', loading = 'lazy' }) {
   const [failed, setFailed] = useState(!src)
 
   return (

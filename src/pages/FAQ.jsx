@@ -8,7 +8,7 @@ export default function FAQ() {
   useReveal()
   useSeo({
     title: 'Veelgestelde vragen',
-    description: 'Antwoorden op veelgestelde vragen over Atelier Nomad: handwerk, levering, verzending, retour en onderhoud.',
+    description: 'Antwoorden op veelgestelde vragen over Atelier Nomàd: handwerk, levering, verzending, retour en onderhoud.',
   })
   const [open, setOpen] = useState(0)
 

@@ -15,7 +15,7 @@ export default function Product() {
   useReveal([slug])
   useSeo({
     title: product ? product.name : 'Product',
-    description: product ? product.short : 'Atelier Nomad product',
+    description: product ? product.short : 'Atelier Nomàd product',
   })
 
   if (!product) {

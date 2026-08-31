@@ -20,7 +20,7 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { products } from '../src/data/products.js'
+import { alleProducten as products } from '../src/data/products.js'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 

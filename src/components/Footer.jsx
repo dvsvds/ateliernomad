@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="footer__grid">
           <div>
             <div className="footer__brand">
-              Atelier Nomad
+              Atelier Nomàd
               <small>Handcrafted Moroccan Living</small>
             </div>
             <p style={{ maxWidth: '34ch', marginTop: '1.2rem', color: 'rgba(250,246,239,0.7)' }}>
@@ -26,7 +26,7 @@ export default function Footer() {
 
           <div>
             <h4>Atelier</h4>
-            <Link to="/over">Over Atelier Nomad</Link>
+            <Link to="/over">Over Atelier Nomàd</Link>
             <Link to="/ambacht">Ambacht & Herkomst</Link>
             <Link to="/faq">Veelgestelde vragen</Link>
             <Link to="/contact">Contact</Link>
@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__bottom">
-          <small>© {new Date().getFullYear()} Atelier Nomad. Met de hand gemaakt in Marokko.</small>
+          <small>© {new Date().getFullYear()} Atelier Nomàd. Met de hand gemaakt in Marokko.</small>
           <small className="footer__legal">
             <Link to="/voorwaarden">Algemene voorwaarden</Link>
             <Link to="/privacy">Privacy</Link>

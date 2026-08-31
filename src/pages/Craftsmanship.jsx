@@ -8,7 +8,7 @@ export default function Craftsmanship() {
   useReveal()
   useSeo({
     title: 'Ambacht & Herkomst',
-    description: 'Ontdek het Marokkaanse ambacht achter Atelier Nomad: de technieken, de regio’s en de makers achter elk handgemaakt stuk.',
+    description: 'Ontdek het Marokkaanse ambacht achter Atelier Nomàd: de technieken, de regio’s en de makers achter elk handgemaakt stuk.',
   })
 
   return (

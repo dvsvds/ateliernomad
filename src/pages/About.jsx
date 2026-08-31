@@ -7,14 +7,14 @@ import Newsletter from '../components/Newsletter.jsx'
 export default function About() {
   useReveal()
   useSeo({
-    title: 'Over Atelier Nomad',
-    description: 'Het verhaal achter Atelier Nomad — een liefde voor Marokkaans ambacht, eerlijke samenwerking en tijdloze interieurstukken.',
+    title: 'Over Atelier Nomàd',
+    description: 'Het verhaal achter Atelier Nomàd — een liefde voor Marokkaans ambacht, eerlijke samenwerking en tijdloze interieurstukken.',
   })
 
   return (
     <>
       <section className="page-hero container">
-        <span className="eyebrow reveal">Over Atelier Nomad</span>
+        <span className="eyebrow reveal">Over Atelier Nomàd</span>
         <h1 className="display reveal" data-delay="1">Een liefdesbrief aan<br />het Marokkaanse ambacht</h1>
         <p className="lead measure reveal" data-delay="2">
           Wij geloven dat een interieur pas echt tot leven komt met stukken die een
@@ -25,12 +25,12 @@ export default function About() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container split">
           <div className="split__media reveal">
-            <SmartImage src="/images/brand/hero.jpg" alt="Atelier Nomad" label="Atelier Nomad" />
+            <SmartImage src="/images/brand/hero.jpg" alt="Atelier Nomàd" label="Atelier Nomàd" />
           </div>
           <div className="reveal" data-delay="1">
             <h2 className="h2">Hoe het begon</h2>
             <p>
-              Atelier Nomad ontstond uit een reis door de medina’s van Marrakech, waar
+              Atelier Nomàd ontstond uit een reis door de medina’s van Marrakech, waar
               de geur van leer, de kleuren van wol en het geduldige tikken van weefgetouwen
               een blijvende indruk achterlieten. Wat begon als bewondering, groeide uit tot
               een merk met een missie: dit ambacht eerlijk delen met interieurliefhebbers in Europa.

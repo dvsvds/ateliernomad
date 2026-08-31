@@ -1,9 +1,9 @@
 /* ============================================================
-   SITE-CONTENT — Atelier Nomad
+   SITE-CONTENT — Atelier Nomàd
    ============================================================ */
 
 export const brand = {
-  name: 'Atelier Nomad',
+  name: 'Atelier Nomàd',
   tagline: 'Handcrafted Moroccan Living',
   email: 'ateliernomad01@gmail.com',
   phone: '',   // leeg = nergens getoond. Wettelijk niet verplicht zolang
@@ -21,7 +21,7 @@ export const heroImages = {
 export const testimonials = [
   { quote: 'De pouf is nog mooier dan op de foto. Je voelt meteen dat het echt handwerk is.', by: 'Sophie · Amsterdam' },
   { quote: 'Eindelijk een stuk met ziel. De kwaliteit en het persoonlijke contact waren uitzonderlijk.', by: 'Marc · Antwerpen' },
-  { quote: 'Alles ademt rust en vakmanschap. Atelier Nomad is mijn vaste adres voor interieur geworden.', by: 'Lena · Berlijn' },
+  { quote: 'Alles ademt rust en vakmanschap. Atelier Nomàd is mijn vaste adres voor interieur geworden.', by: 'Lena · Berlijn' },
 ]
 
 export const lifestyle = [

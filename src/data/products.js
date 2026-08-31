@@ -1,5 +1,5 @@
 /* ============================================================
-   PRODUCTDATA — Atelier Nomad
+   PRODUCTDATA — Atelier Nomàd
    ------------------------------------------------------------
    44 stuks: 33 vintage Marokkaanse vloerpoufs, acht handgeweven
    kussens, en drie interieurstukken (stoel, krukje, kapstok).
@@ -470,7 +470,40 @@ export const products = [
 
 ]
 
-export const getProduct = (slug) => products.find((x) => x.slug === slug)
+/* ------------------------------------------------------------------
+   VERBORGEN ARTIKELEN
+   Staan niet in de shop, niet in de uitgelichte rij en niet in de
+   sitemap, maar hebben wel een werkende productpagina en zitten in de
+   serverprijslijst. Bedoeld om de betaalflow met echt geld te testen
+   zonder een klant een testartikel te laten zien.
+
+   Weghalen zodra je klaar bent met testen: schrap het item hieronder
+   en draai `node scripts/sync-catalog.mjs`.
+   ------------------------------------------------------------------ */
+export const verborgenProducten = [
+  q({
+    slug: 'test-artikel',
+    name: 'Testartikel',
+    label: 'Test',
+    type: 'verborgen',
+    category: 'authentiek',
+    price: 0.5,
+    tag: null,
+    short: 'Alleen om de betaling te testen.',
+    description:
+      'Dit is geen product. Het staat er om één keer de volledige betaalflow te kunnen doorlopen met een echt bedrag. Het verschijnt nergens in de collectie en is alleen bereikbaar via deze directe link.',
+    details: [
+      ['Waarvoor', 'Testen van de checkout'],
+      ['Bedrag', 'Vijftig cent, het minimum dat Stripe toelaat'],
+      ['Verzending', 'Vervalt: bij een losse test worden geen verzendkosten gerekend'],
+    ],
+  }),
+]
+
+/* Alles bij elkaar — voor productpagina's en voor de serverprijslijst. */
+export const alleProducten = [...products, ...verborgenProducten]
+
+export const getProduct = (slug) => alleProducten.find((x) => x.slug === slug)
 
 export const featured = ['pouf-cinnamon', 'pouf-foxglove', 'kapstok-doum', 'stoel-laurel']
   .map(getProduct)
