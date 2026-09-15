@@ -5,6 +5,12 @@ import useSeo from '../hooks/useSeo.js'
 import ProductCard from '../components/ProductCard.jsx'
 import { products, categories, collectie } from '../data/products.js'
 
+/* Een productsoort zonder stukken (bv. interieur zolang alles uitverkocht is)
+   krijgt geen filterknop — anders klikt een bezoeker op een lege shop. */
+const chips = categories.filter(
+  (c) => c.as !== 'type' || c.id === 'all' || products.some((p) => p.type === c.id)
+)
+
 export default function Shop() {
   const [params, setParams] = useSearchParams()
   /* De URL is de bron van waarheid — zo werkt een link naar
@@ -13,10 +19,10 @@ export default function Shop() {
   useReveal([active])
   useSeo({
     title: 'De eerste collectie',
-    description: 'De volledige collectie van Atelier Nomàd: 33 unieke vintage Marokkaanse vloerpoufs, plus negen handgeweven wollen kussens, een stoel, een krukje en een kapstok van hout en touw.',
+    description: 'De volledige collectie van Atelier Nomàd: 33 unieke vintage Marokkaanse vloerpoufs, plus acht handgeweven wollen kussens.',
   })
 
-  /* Twee filterassen door één chiprij: 'poufs'/'interieur' filtert op
+  /* Twee filterassen door één chiprij: 'poufs'/'kussens'/'interieur' filtert op
      productsoort, de kleurchips op kleurfamilie. Welke van de twee een
      chip is, staat in `as` — zo blijft dit één simpele vergelijking. */
   const filtered = useMemo(() => {
@@ -37,7 +43,7 @@ export default function Shop() {
         <h1 className="display reveal" data-delay="1">{collectie.naam}</h1>
         <p className="lead measure reveal" data-delay="2">
           {products.length} stukken, in één keer geselecteerd in Marokko: drieëndertig vintage
-          vloerpoufs, acht handgeweven kussens, een stoel, een krukje en een kapstok.
+          vloerpoufs en acht handgeweven kussens.
           Alles met de hand gemaakt en elk stuk uniek — wat je op de foto ziet, is precies
           wat je ontvangt. Is het weg, dan komt het niet terug.
         </p>
@@ -46,10 +52,10 @@ export default function Shop() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <div className="filters reveal">
-            {categories.map((c, i) => (
+            {chips.map((c, i) => (
               <Fragment key={c.id}>
                 {/* streepje tussen de soort- en de kleurchips */}
-                {i > 0 && categories[i - 1].as !== c.as && <span className="filters__split" aria-hidden="true" />}
+                {i > 0 && chips[i - 1].as !== c.as && <span className="filters__split" aria-hidden="true" />}
                 <button
                   className={`chip ${active === c.id ? 'active' : ''}`}
                   onClick={() => choose(c.id)}

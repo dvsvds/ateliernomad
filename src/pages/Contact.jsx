@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { verstuurFormulier } from '../lib/netlifyForm.js'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
 import { brand } from '../data/site.js'
@@ -9,12 +10,16 @@ export default function Contact() {
     title: 'Contact',
     description: 'Neem contact op met Atelier Nomàd voor vragen over producten, maatwerk, verzending of samenwerking.',
   })
-  const [sent, setSent] = useState(false)
+  // idle | bezig | verzonden | fout
+  const [status, setStatus] = useState('idle')
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
-    // TODO: koppel een mailservice of formulier-backend (Formspree, Resend, eigen API).
-    setSent(true)
+    const form = e.currentTarget
+    setStatus('bezig')
+    const ok = await verstuurFormulier('contact', new FormData(form))
+    if (ok) form.reset()
+    setStatus(ok ? 'verzonden' : 'fout')
   }
 
   return (
@@ -29,8 +34,20 @@ export default function Contact() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container contact-grid">
-          <form className="reveal" onSubmit={submit}>
-            {sent && <p className="notice" style={{ marginBottom: '1.2rem' }}>Dank je wel — je bericht is verstuurd. We reageren binnen 1–2 werkdagen. ✦</p>}
+          <form className="reveal" name="contact" onSubmit={submit}>
+            {status === 'verzonden' && (
+              <p className="notice" role="status" style={{ marginBottom: '1.2rem' }}>Dank je wel — je bericht is verstuurd. We reageren binnen 1–2 werkdagen. ✦</p>
+            )}
+            {status === 'fout' && (
+              <p className="notice" role="alert" style={{ marginBottom: '1.2rem' }}>
+                Versturen lukte niet. Mail ons rechtstreeks op{' '}
+                <a href={`mailto:${brand.email}`} className="link-underline">{brand.email}</a>, dan kijken we er meteen naar.
+              </p>
+            )}
+            {/* Honeypot tegen spambots: onzichtbaar voor mensen, bots vullen het in. */}
+            <p hidden>
+              <label>Niet invullen: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label>
+            </p>
             <div className="field">
               <label htmlFor="name">Naam</label>
               <input id="name" name="name" required placeholder="Je naam" />
@@ -53,7 +70,9 @@ export default function Contact() {
               <label htmlFor="message">Bericht</label>
               <textarea id="message" name="message" required placeholder="Waarmee kunnen we je helpen?"></textarea>
             </div>
-            <button className="btn btn--terracotta" type="submit">Verstuur bericht <span className="btn__icon" aria-hidden>→</span></button>
+            <button className="btn btn--terracotta" type="submit" disabled={status === 'bezig'}>
+              {status === 'bezig' ? 'Bezig met versturen…' : 'Verstuur bericht'} <span className="btn__icon" aria-hidden>→</span>
+            </button>
           </form>
 
           <aside className="reveal" data-delay="1">
@@ -61,12 +80,12 @@ export default function Contact() {
               <h4>E-mail</h4>
               <p style={{ margin: 0 }}><a href={`mailto:${brand.email}`} className="link-underline">{brand.email}</a></p>
             </div>
-            <div className="info-card">
-              <h4>Telefoon</h4>
-              {brand.phone && (
+            {brand.phone && (
+              <div className="info-card">
+                <h4>Telefoon</h4>
                 <p style={{ margin: 0 }}><a href={`tel:${brand.phone.replace(/[^+\d]/g,'')}`} className="link-underline">{brand.phone}</a></p>
-              )}
-            </div>
+              </div>
+            )}
             <div className="info-card">
               <h4>Instagram</h4>
               <p style={{ margin: 0 }}><a href={brand.instagram} target="_blank" rel="noreferrer" className="link-underline">{brand.instagramHandle}</a></p>

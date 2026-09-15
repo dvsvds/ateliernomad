@@ -3,7 +3,7 @@
 ## Productfoto's
 
 Alle 44 producten hebben hun packshot in `public/images/products/` staan, als
-`<slug>.jpg` — bijvoorbeeld `pouf-cinnamon.jpg` of `stoel-laurel.jpg`. De
+`<slug>.jpg` — bijvoorbeeld `pouf-cinnamon.jpg` of `kussen-flare.jpg`. De
 bestandsnaam volgt altijd de `slug` in `src/data/products.js`, dus die twee
 moeten gelijk blijven.
 
@@ -11,7 +11,7 @@ Formaat: 1400 × 1750 px (4:5 staand), JPG, ±300 KB per stuk.
 
 ### Een product vervangen of toevoegen
 1. Zet de foto neer als `public/images/products/<slug>.jpg`, 4:5 staand (1400×1750).
-2. Voeg een `p(...)`-regel (pouf) of `q({...})`-blok (interieur) toe in
+2. Voeg een `p(...)`-regel (pouf) of `q({...})`-blok (kussen of interieur) toe in
    `src/data/products.js`.
 3. Draai `node scripts/sync-catalog.mjs` — die schrijft de serverprijslijsten
    (`api/_catalog.js` én de Netlify-functie) opnieuw. Sla je dit over, dan

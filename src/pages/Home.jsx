@@ -8,12 +8,13 @@ import Lifestyle from '../sections/Lifestyle.jsx'
 import Testimonials from '../sections/Testimonials.jsx'
 import InstagramGallery from '../sections/InstagramGallery.jsx'
 import Newsletter from '../components/Newsletter.jsx'
+import { testimonials, instagram } from '../data/site.js'
 
 export default function Home() {
   useReveal()
   useSeo({
     title: 'Handcrafted Moroccan Living',
-    description: 'Atelier Nomàd — unieke vintage Marokkaanse vloerpoufs, geknoopt uit Berberkleden, plus handgeweven wollen kussens en meubilair van laurierhout en doumtouw. Elk stuk bestaat maar één keer.',
+    description: 'Atelier Nomàd — unieke vintage Marokkaanse vloerpoufs, geknoopt uit Berberkleden, plus handgeweven wollen kussens. Elk stuk bestaat maar één keer.',
   })
 
   return (
@@ -23,8 +24,8 @@ export default function Home() {
       <AboutPreview />
       <CraftsmanshipSection />
       <Lifestyle />
-      <Testimonials />
-      <InstagramGallery />
+      {testimonials.length > 0 && <Testimonials />}
+      {instagram.length > 0 && <InstagramGallery />}
       <section className="section section--alt">
         <Newsletter />
       </section>

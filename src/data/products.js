@@ -1,8 +1,8 @@
 /* ============================================================
    PRODUCTDATA — Atelier Nomàd
    ------------------------------------------------------------
-   44 stuks: 33 vintage Marokkaanse vloerpoufs, acht handgeweven
-   kussens, en drie interieurstukken (stoel, krukje, kapstok).
+   41 stuks: 33 vintage Marokkaanse vloerpoufs en acht handgeweven
+   kussens. Stoel, krukje en kapstok zijn uitverkocht (sep 2026).
    Elke pouf is uniek — geknoopt uit een vintage Berberkleed,
    dus geen twee zijn gelijk.
 
@@ -19,7 +19,8 @@
    Prijstiers pouf: €120 eenvoudig / €130 kleur / €140 zeldzaam.
    ------------------------------------------------------------
    Twee filterassen op de shoppagina:
-     type   — poufs / kussens / interieur   (waar het om gaat)
+     type   — poufs / kussens / interieur   (waar het om gaat;
+              een soort zonder producten verschijnt niet als filter)
      stijl  — authentiek / modern / geweven (hoe het oogt en gemaakt is)
    Elk product heeft er allebei één.
 
@@ -73,7 +74,7 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
 })
 
 /* Alles wat geen pouf is: andere specs, eigen label. Kussens vormen
-   een eigen filtersoort; stoel, krukje en kapstok vallen onder interieur.
+   een eigen filtersoort; al de rest valt onder interieur.
    Ze delen wel de kleurfilters, zodat de shop één logica houdt. */
 const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details, images }) => ({
   slug,
@@ -257,61 +258,6 @@ export const products = [
     'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
   q({
-    slug: 'stoel-laurel',
-    name: 'Stoel — Laurel',
-    label: 'Stoel',
-    category: 'authentiek',
-    price: 165,
-    tag: null,
-    short: 'Laurierhout met handgevlochten doumzitting.',
-    description:
-      'Een lage Marokkaanse stoel van ongeschild laurierhout, met zitting en rugleuning van gevlochten doumtouw. De takken zijn niet recht geschaafd maar gebruikt zoals ze gegroeid zijn — daardoor staat geen enkele stoel er precies hetzelfde bij. De prijs geldt per stoel; op de foto staan er twee om te laten zien hoe ze samen ogen.',
-    details: [
-      ['Materiaal', 'Ongeschild laurierhout'],
-      ['Zitting', 'Handgevlochten doumtouw'],
-      ['Herkomst', 'Marrakech-regio, Marokko'],
-      ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
-    ],
-  }),
-
-  q({
-    slug: 'krukje-laurel',
-    name: 'Krukje — Laurel',
-    label: 'Krukje',
-    category: 'authentiek',
-    price: 95,
-    tag: null,
-    short: 'Klein vierkant krukje, zelfde hand als de stoel.',
-    description:
-      'Hetzelfde ambacht als de Laurel-stoel, maar dan klein: een vierkant krukje van laurierhout met een strak gevlochten zitting van doumtouw. Werkt als zitplek, als bijzettafeltje naast de bank of als plek om een plant op te zetten.',
-    details: [
-      ['Materiaal', 'Ongeschild laurierhout'],
-      ['Zitting', 'Handgevlochten doumtouw'],
-      ['Herkomst', 'Marrakech-regio, Marokko'],
-      ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
-    ],
-  }),
-
-  q({
-    slug: 'kapstok-doum',
-    name: 'Kapstok — Doum',
-    label: 'Kapstok',
-    category: 'authentiek',
-    price: 285,
-    tag: 'Zeldzaam',
-    short: 'Staande kapstok op driepoot, met gevlochten haken.',
-    description:
-      'Een staande kapstok van laurierhout op een driepoot, met twee zwaar omwikkelde haken van doumtouw die als kelken uit de stam steken. Breed genoeg voor een jas, een tas of een hoed, en stevig genoeg om daar niet van om te vallen. De losse vezels aan de onderrand zijn met opzet blijven zitten — dat geeft het touwwerk zijn ruige, levende rand. Een stuk dat een lege hoek in zijn eentje kan dragen.',
-    details: [
-      ['Materiaal', 'Laurierhout en doumtouw'],
-      ['Haken', 'Twee, met de hand omwikkeld en vastgezet'],
-      ['Voet', 'Driepoot, staat los op de vloer'],
-      ['Herkomst', 'Marrakech-regio, Marokko'],
-      ['Handgemaakt', 'Kleine verschillen in vorm en kleur horen erbij'],
-    ],
-  }),
-
-  q({
     slug: 'kussen-atlas',
     name: 'Kussen — Atlas',
     label: 'Kussen',
@@ -477,35 +423,17 @@ export const products = [
    serverprijslijst. Bedoeld om de betaalflow met echt geld te testen
    zonder een klant een testartikel te laten zien.
 
-   Weghalen zodra je klaar bent met testen: schrap het item hieronder
-   en draai `node scripts/sync-catalog.mjs`.
+   Toevoegen: zet een q({...}) in de lijst en draai daarna
+   `node scripts/sync-catalog.mjs`.
    ------------------------------------------------------------------ */
-export const verborgenProducten = [
-  q({
-    slug: 'test-artikel',
-    name: 'Testartikel',
-    label: 'Test',
-    type: 'verborgen',
-    category: 'authentiek',
-    price: 0.5,
-    tag: null,
-    short: 'Alleen om de betaling te testen.',
-    description:
-      'Dit is geen product. Het staat er om één keer de volledige betaalflow te kunnen doorlopen met een echt bedrag. Het verschijnt nergens in de collectie en is alleen bereikbaar via deze directe link.',
-    details: [
-      ['Waarvoor', 'Testen van de checkout'],
-      ['Bedrag', 'Vijftig cent, het minimum dat Stripe toelaat'],
-      ['Verzending', 'Vervalt: bij een losse test worden geen verzendkosten gerekend'],
-    ],
-  }),
-]
+export const verborgenProducten = []
 
 /* Alles bij elkaar — voor productpagina's en voor de serverprijslijst. */
 export const alleProducten = [...products, ...verborgenProducten]
 
 export const getProduct = (slug) => alleProducten.find((x) => x.slug === slug)
 
-export const featured = ['pouf-cinnamon', 'pouf-foxglove', 'kapstok-doum', 'stoel-laurel']
+export const featured = ['pouf-cinnamon', 'kussen-prism', 'pouf-foxglove', 'kussen-cipher']
   .map(getProduct)
   .filter(Boolean)
 

@@ -18,11 +18,11 @@ export const heroImages = {
   sub: '/images/products/pouf-cinnamon.jpg', // los productbeeld als accent
 }
 
-export const testimonials = [
-  { quote: 'De pouf is nog mooier dan op de foto. Je voelt meteen dat het echt handwerk is.', by: 'Sophie · Amsterdam' },
-  { quote: 'Eindelijk een stuk met ziel. De kwaliteit en het persoonlijke contact waren uitzonderlijk.', by: 'Marc · Antwerpen' },
-  { quote: 'Alles ademt rust en vakmanschap. Atelier Nomàd is mijn vaste adres voor interieur geworden.', by: 'Lena · Berlijn' },
-]
+/* Klantreviews. Bewust leeg: zet hier alleen ECHTE reacties, met
+   toestemming van de klant. Verzonnen reviews zijn sinds de Omnibus-
+   richtlijn (2022) verboden. Zolang de lijst leeg is, toont de homepage
+   de sectie niet. Vorm: { quote: '...', by: 'Voornaam · Stad' } */
+export const testimonials = []
 
 export const lifestyle = [
   { src: '/images/lifestyle/inter-1.jpg', label: 'Loungehoek met poufs' },
@@ -31,14 +31,10 @@ export const lifestyle = [
   { src: '/images/lifestyle/inter-4.jpg', label: 'Poufs in een kleurrijk interieur' },
 ]
 
-export const instagram = [
-  '/images/instagram/ig-1.jpg',
-  '/images/instagram/ig-2.jpg',
-  '/images/instagram/ig-3.jpg',
-  '/images/instagram/ig-4.jpg',
-  '/images/instagram/ig-5.jpg',
-  '/images/instagram/ig-6.jpg',
-]
+/* Foto's voor de Instagram-galerij op de homepage. Leeg = de sectie wordt
+   niet getoond. Zet hier paden als '/images/instagram/ig-1.jpg' zodra de
+   foto's in public/images/instagram staan. */
+export const instagram = []
 
 export const faqs = [
   { q: 'Zijn alle stukken echt handgemaakt?', a: 'Ja. Elk stuk wordt met de hand vervaardigd door ambachtslieden in Marokko, volgens technieken die generaties lang zijn doorgegeven. Daardoor is geen enkel exemplaar exact hetzelfde — kleine variaties horen bij het ambacht.' },

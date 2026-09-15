@@ -38,9 +38,6 @@ const CATALOG = {
   'pouf-garnet':   { name: "Vloerpouf — Garnet", price: 140, max: 1 },
   'pouf-bloom':    { name: "Vloerpouf — Bloom", price: 130, max: 1 },
   'pouf-kapsa':    { name: "Vloerpouf — Kapsa", price: 130, max: 1 },
-  'stoel-laurel':  { name: "Stoel — Laurel", price: 165, max: 20 },
-  'krukje-laurel': { name: "Krukje — Laurel", price: 95, max: 20 },
-  'kapstok-doum':  { name: "Kapstok — Doum", price: 285, max: 20 },
   'kussen-atlas':  { name: "Kussen — Atlas", price: 75, max: 20 },
   'kussen-fern':   { name: "Kussen — Fern", price: 75, max: 20 },
   'kussen-cobalt': { name: "Kussen — Cobalt", price: 75, max: 20 },
@@ -49,7 +46,6 @@ const CATALOG = {
   'kussen-prism':  { name: "Kussen — Prism", price: 75, max: 20 },
   'kussen-umber':  { name: "Kussen — Umber", price: 75, max: 20 },
   'kussen-flare':  { name: "Kussen — Flare", price: 75, max: 20 },
-  'test-artikel':  { name: "Testartikel", price: 0.5, max: 20 },
 }
 // </catalog>
 
@@ -73,8 +69,6 @@ exports.handler = async (event) => {
         },
       }))
 
-    const alleenTest = items.length > 0 && items.every((i) => i.slug === 'test-artikel')
-
     if (line_items.length === 0) return { statusCode: 400, body: JSON.stringify({ error: 'Lege of ongeldige winkelmand' }) }
 
     const session = await stripe.checkout.sessions.create({
@@ -86,16 +80,9 @@ exports.handler = async (event) => {
       cancel_url: `${SITE_URL}/shop`,
       billing_address_collection: 'auto',
       shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE'] },
-      // Bij een losse test geen verzendkosten: dan kost de test echt 50 cent.
-      // Het leveradres blijft wel gevraagd worden, want Stripe Tax heeft het
-      // nodig om het btw-tarief te bepalen.
-      ...(alleenTest
-        ? {}
-        : {
-            shipping_options: [
-              { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)' } },
-            ],
-          }),
+      shipping_options: [
+        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)' } },
+      ],
     })
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id, url: session.url }) }

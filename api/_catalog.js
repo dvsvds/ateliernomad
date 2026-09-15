@@ -1,7 +1,7 @@
 // Serverprijslijst — DE BRON VAN WAARHEID voor betalingen.
 // GEGENEREERD door scripts/sync-catalog.mjs — niet met de hand aanpassen.
 // Wijzig src/data/products.js en draai het script opnieuw.
-// 45 producten.
+// 41 producten.
 export const CATALOG = {
   'pouf-haze':     { name: "Vloerpouf — Haze", price: 130, max: 1 },
   'pouf-poppy':    { name: "Vloerpouf — Poppy", price: 130, max: 1 },
@@ -36,9 +36,6 @@ export const CATALOG = {
   'pouf-garnet':   { name: "Vloerpouf — Garnet", price: 140, max: 1 },
   'pouf-bloom':    { name: "Vloerpouf — Bloom", price: 130, max: 1 },
   'pouf-kapsa':    { name: "Vloerpouf — Kapsa", price: 130, max: 1 },
-  'stoel-laurel':  { name: "Stoel — Laurel", price: 165, max: 20 },
-  'krukje-laurel': { name: "Krukje — Laurel", price: 95, max: 20 },
-  'kapstok-doum':  { name: "Kapstok — Doum", price: 285, max: 20 },
   'kussen-atlas':  { name: "Kussen — Atlas", price: 75, max: 20 },
   'kussen-fern':   { name: "Kussen — Fern", price: 75, max: 20 },
   'kussen-cobalt': { name: "Kussen — Cobalt", price: 75, max: 20 },
@@ -47,5 +44,4 @@ export const CATALOG = {
   'kussen-prism':  { name: "Kussen — Prism", price: 75, max: 20 },
   'kussen-umber':  { name: "Kussen — Umber", price: 75, max: 20 },
   'kussen-flare':  { name: "Kussen — Flare", price: 75, max: 20 },
-  'test-artikel':  { name: "Testartikel", price: 0.5, max: 20 },
 }

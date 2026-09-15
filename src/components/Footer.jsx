@@ -20,7 +20,7 @@ export default function Footer() {
             <h4>Shop</h4>
             <Link to="/shop">Volledige collectie</Link>
             <Link to="/shop?cat=poufs">Vloerpoufs</Link>
-            <Link to="/shop?cat=interieur">Interieur</Link>
+            <Link to="/shop?cat=kussens">Kussens</Link>
             <Link to="/shop?cat=geweven">Geweven</Link>
           </div>
 

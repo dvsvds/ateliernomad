@@ -32,8 +32,6 @@ export default async function handler(req, res) {
         }
       })
 
-    const alleenTest = items.length > 0 && items.every((i) => i.slug === 'test-artikel')
-
     if (line_items.length === 0) return res.status(400).json({ error: 'Lege of ongeldige winkelmand' })
 
     const session = await stripe.checkout.sessions.create({
@@ -49,16 +47,9 @@ export default async function handler(req, res) {
       shipping_address_collection: {
         allowed_countries: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE'],
       },
-      // Bij een losse test geen verzendkosten: dan kost de test echt 50 cent.
-      // Het leveradres blijft wel gevraagd worden, want Stripe Tax heeft het
-      // nodig om het btw-tarief te bepalen.
-      ...(alleenTest
-        ? {}
-        : {
-          shipping_options: [
+      shipping_options: [
         { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 3 }, maximum: { unit: 'business_day', value: 7 } } } },
-          ],
-        }),
+      ],
     })
 
     return res.status(200).json({ id: session.id, url: session.url })
