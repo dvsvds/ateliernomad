@@ -1,8 +1,9 @@
 /* ============================================================
    PRODUCTDATA — Atelier Nomàd
    ------------------------------------------------------------
-   41 stuks: 33 vintage Marokkaanse vloerpoufs en acht handgeweven
-   kussens. Stoel, krukje en kapstok zijn uitverkocht (sep 2026).
+   39 stuks: 31 vintage Marokkaanse vloerpoufs en acht handgeweven
+   kussens. Stoel, krukje en kapstok zijn uitverkocht (sep 2026),
+   net als de poufs Meadow en Thistle (16 sep 2026).
    Elke pouf is uniek — geknoopt uit een vintage Berberkleed,
    dus geen twee zijn gelijk.
 
@@ -62,7 +63,7 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
   slug,
   name,
   type: 'poufs',
-  unique: true, // er bestaat precies één exemplaar — max 1 in de winkelmand
+  unique: true, // er bestaat precies één exemplaar — max 1 in de winkelwagen
   category,
   categoryLabel: 'Vloerpouf',
   price,
@@ -182,20 +183,10 @@ export const products = [
     'Op romige, hoogpolige wol liggen een roestrood en een diepblauw vlak naast elkaar, met een dunne zwarte lijn ertussen. De combinatie van die twee kleuren op ivoor maakt dit een van de grafischste stukken uit de collectie.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-meadow', 'Vloerpouf — Meadow', 'geweven', 140, null,
-    'Ivoren kelim bezaaid met kleine gekleurde tekens.',
-    'Plat geweven ivoren kelim, bezaaid met kleine met de hand geborduurde tekens in groen, rood, blauw en roze — pijlen, kruisjes, ruitjes. Elk teken is apart aangebracht. Van een afstand rustig ivoor, van dichtbij een klein archief.',
-    'Vintage kelim met handborduursel', 'Hoge Atlas, Marokko'),
-
   p('pouf-quill', 'Vloerpouf — Quill', 'geweven', 120, null,
     'Ivoor met zwarte pentekening-motieven.',
     'Ivoren kelim met zwarte motieven die eruitzien alsof ze met een pen zijn getekend: zigzags, ruiten en kleine kruizen. Alleen zwart op ivoor, verder geen kleur — de zuinigste en misschien wel strakste pouf van de collectie.',
     'Vintage kelim, plat geweven', 'Hoge Atlas, Marokko'),
-
-  p('pouf-thistle', 'Vloerpouf — Thistle', 'geweven', 140, null,
-    'Ivoor met fijne gekleurde stekelmotieven.',
-    'Fijne, stekelige motieven in paars, groen en rood op een ivoren kelimondergrond, dichter bij elkaar geborduurd dan bij Meadow. Het resultaat leest bijna als een patroon in plaats van losse tekens.',
-    'Vintage kelim met handborduursel', 'Hoge Atlas, Marokko'),
 
   p('pouf-marigold', 'Vloerpouf — Marigold', 'geweven', 140, null,
     'Koraaloranje met roze en groene tekens.',

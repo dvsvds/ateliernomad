@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { brand } from '../data/site.js'
+import PaymentMethods from './PaymentMethods.jsx'
 
 export default function Footer() {
   return (
@@ -41,6 +42,11 @@ export default function Footer() {
             <a href={brand.instagram} target="_blank" rel="noreferrer">Instagram {brand.instagramHandle}</a>
             <span style={{ color: 'rgba(250,246,239,0.6)', fontSize: '0.9rem', display: 'block', paddingTop: '0.4rem' }}>{brand.city}</span>
           </div>
+        </div>
+
+        <div className="footer__pay">
+          <span className="footer__pay-label">Veilig betalen met</span>
+          <PaymentMethods variant="dark" />
         </div>
 
         <div className="footer__bottom">

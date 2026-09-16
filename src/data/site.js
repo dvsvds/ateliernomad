@@ -13,6 +13,29 @@ export const brand = {
   city: 'België · Marrakech',
 }
 
+/* Winkelinfo die op productpagina, winkelwagen en footer terugkomt.
+   Moet kloppen met netlify/functions/create-checkout-session.cjs
+   (verzendkosten) en met de pagina Verzending & retour (legal.js). */
+export const shop = {
+  shippingCost: 9.95,          // per bestelling, binnen de EU
+  deliveryTime: '2–4 werkdagen',
+  returnDays: 14,
+}
+
+/* Betaalmethodes onderaan de site en bij het afrekenen.
+   ⚠️ Toon ALLEEN wat aanstaat in Stripe: Dashboard → Instellingen →
+   Betalingen → Betaalmethodes. Staat iets niet aan, haal het hier weg.
+   Officieel logo? Zet het bestand in public/images/payments/ en vul
+   `logo` in (bv. '/images/payments/bancontact.svg'); zonder logo
+   verschijnt de naam als nette badge. */
+export const paymentMethods = [
+  { name: 'Bancontact', logo: '' },
+  { name: 'Visa', logo: '' },
+  { name: 'Mastercard', logo: '' },
+  { name: 'Apple Pay', logo: '' },
+  { name: 'Google Pay', logo: '' },
+]
+
 export const heroImages = {
   main: '/images/brand/hero.jpg',          // jouw merkbeeld (interieur met poufs)
   sub: '/images/products/pouf-cinnamon.jpg', // los productbeeld als accent

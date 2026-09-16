@@ -1,7 +1,7 @@
 // Serverprijslijst — DE BRON VAN WAARHEID voor betalingen.
 // GEGENEREERD door scripts/sync-catalog.mjs — niet met de hand aanpassen.
 // Wijzig src/data/products.js en draai het script opnieuw.
-// 41 producten.
+// 39 producten.
 export const CATALOG = {
   'pouf-haze':     { name: "Vloerpouf — Haze", price: 130, max: 1 },
   'pouf-poppy':    { name: "Vloerpouf — Poppy", price: 130, max: 1 },
@@ -21,9 +21,7 @@ export const CATALOG = {
   'pouf-solstice': { name: "Vloerpouf — Solstice", price: 130, max: 1 },
   'pouf-shoal':    { name: "Vloerpouf — Shoal", price: 130, max: 1 },
   'pouf-ember':    { name: "Vloerpouf — Ember", price: 130, max: 1 },
-  'pouf-meadow':   { name: "Vloerpouf — Meadow", price: 140, max: 1 },
   'pouf-quill':    { name: "Vloerpouf — Quill", price: 120, max: 1 },
-  'pouf-thistle':  { name: "Vloerpouf — Thistle", price: 140, max: 1 },
   'pouf-marigold': { name: "Vloerpouf — Marigold", price: 140, max: 1 },
   'pouf-signal':   { name: "Vloerpouf — Signal", price: 140, max: 1 },
   'pouf-basalt':   { name: "Vloerpouf — Basalt", price: 140, max: 1 },

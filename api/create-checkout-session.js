@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         }
       })
 
-    if (line_items.length === 0) return res.status(400).json({ error: 'Lege of ongeldige winkelmand' })
+    if (line_items.length === 0) return res.status(400).json({ error: 'Lege of ongeldige winkelwagen' })
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',

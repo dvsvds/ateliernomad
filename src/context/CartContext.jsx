@@ -7,7 +7,7 @@ function reducer(state, action) {
   switch (action.type) {
     case 'add': {
       // Unieke stukken (elke pouf bestaat één keer) kunnen maar één keer
-      // in de mand — nogmaals toevoegen verandert het aantal niet.
+      // in de winkelwagen — nogmaals toevoegen verandert het aantal niet.
       const max = action.item.unique ? 1 : Infinity
       const found = state.find((i) => i.slug === action.item.slug)
       if (found) {

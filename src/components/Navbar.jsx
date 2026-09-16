@@ -43,8 +43,8 @@ export default function Navbar() {
         </nav>
 
         <div className="nav__actions">
-          <button className="nav__cart" onClick={open} aria-label="Winkelmand openen">
-            Mand
+          <button className="nav__cart" onClick={open} aria-label="Winkelwagen openen">
+            Winkelwagen
             {count > 0 && <span className="nav__cart-count">{count}</span>}
           </button>
           <button

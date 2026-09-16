@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import SmartImage from './SmartImage.jsx'
-import { formatPrice } from '../data/products.js'
+import Price from './Price.jsx'
 import { useCart } from '../context/CartContext.jsx'
 
 export default function ProductCard({ product, delay }) {
@@ -17,9 +17,9 @@ export default function ProductCard({ product, delay }) {
         <div className="card__quick">
           <button
             className="btn btn--light"
-            onClick={() => add({ slug: product.slug, name: product.name, price: product.price, image: product.images?.[0] })}
+            onClick={() => add({ slug: product.slug, name: product.name, price: product.price, image: product.images?.[0], unique: product.unique })}
           >
-            In winkelmand
+            In winkelwagen
             <span className="btn__icon" aria-hidden>+</span>
           </button>
         </div>
@@ -29,7 +29,7 @@ export default function ProductCard({ product, delay }) {
         <h3 className="card__name">{product.name}</h3>
       </Link>
       <div className="card__row">
-        <span className="card__price">{formatPrice(product.price)}</span>
+        <Price value={product.price} className="card__price" />
       </div>
     </article>
   )

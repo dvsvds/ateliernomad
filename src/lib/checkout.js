@@ -10,7 +10,7 @@ const getStripe = () => {
 }
 
 /**
- * Stuurt de winkelmand naar de serverless functie, die een Stripe
+ * Stuurt de winkelwagen naar de serverless functie, die een Stripe
  * Checkout-sessie aanmaakt. Daarna leiden we de klant door naar de
  * beveiligde betaalpagina van Stripe.
  */

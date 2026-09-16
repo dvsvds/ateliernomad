@@ -23,9 +23,7 @@ const CATALOG = {
   'pouf-solstice': { name: "Vloerpouf — Solstice", price: 130, max: 1 },
   'pouf-shoal':    { name: "Vloerpouf — Shoal", price: 130, max: 1 },
   'pouf-ember':    { name: "Vloerpouf — Ember", price: 130, max: 1 },
-  'pouf-meadow':   { name: "Vloerpouf — Meadow", price: 140, max: 1 },
   'pouf-quill':    { name: "Vloerpouf — Quill", price: 120, max: 1 },
-  'pouf-thistle':  { name: "Vloerpouf — Thistle", price: 140, max: 1 },
   'pouf-marigold': { name: "Vloerpouf — Marigold", price: 140, max: 1 },
   'pouf-signal':   { name: "Vloerpouf — Signal", price: 140, max: 1 },
   'pouf-basalt':   { name: "Vloerpouf — Basalt", price: 140, max: 1 },
@@ -69,7 +67,7 @@ exports.handler = async (event) => {
         },
       }))
 
-    if (line_items.length === 0) return { statusCode: 400, body: JSON.stringify({ error: 'Lege of ongeldige winkelmand' }) }
+    if (line_items.length === 0) return { statusCode: 400, body: JSON.stringify({ error: 'Lege of ongeldige winkelwagen' }) }
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',

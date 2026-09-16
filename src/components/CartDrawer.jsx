@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useCart } from '../context/CartContext.jsx'
 import { formatPrice } from '../data/products.js'
 import SmartImage from './SmartImage.jsx'
+import PaymentMethods from './PaymentMethods.jsx'
+import { shop } from '../data/site.js'
 import { startCheckout } from '../lib/checkout.js'
 
 export default function CartDrawer() {
@@ -16,15 +18,18 @@ export default function CartDrawer() {
   return (
     <>
       <div className={`drawer-overlay ${isOpen ? 'open' : ''}`} onClick={close} />
-      <aside className={`drawer ${isOpen ? 'open' : ''}`} aria-hidden={!isOpen} aria-label="Winkelmand">
+      <aside className={`drawer ${isOpen ? 'open' : ''}`} aria-hidden={!isOpen} aria-label="Winkelwagen">
         <div className="drawer__head">
-          <h3 className="h3">Winkelmand {count > 0 && `(${count})`}</h3>
+          <h3 className="h3">Winkelwagen {count > 0 && `(${count})`}</h3>
           <button className="drawer__close" onClick={close} aria-label="Sluiten">×</button>
         </div>
 
         <div className="drawer__body">
           {items.length === 0 && (
-            <p className="drawer__empty">Je winkelmand is nog leeg.<br />Ontdek de collectie en voeg iets moois toe.</p>
+            <div className="drawer__empty">
+              <p>Je winkelwagen is nog leeg.<br />Ontdek de collectie en voeg iets moois toe.</p>
+              <button className="btn btn--ghost" onClick={close}>Verder winkelen</button>
+            </div>
           )}
 
           {items.map((i) => (
@@ -52,17 +57,25 @@ export default function CartDrawer() {
 
         {items.length > 0 && (
           <div className="drawer__foot">
+            {/* Geen verrassingen bij het afrekenen: verzendkosten staan er al.
+                Vast bedrag per bestelling, gelijk aan de checkout-functie. */}
+            <dl className="drawer__sum">
+              <div><dt>Subtotaal</dt><dd>{formatPrice(subtotal)}</dd></div>
+              <div><dt>Verzending (EU)</dt><dd>{formatPrice(shop.shippingCost)}</dd></div>
+            </dl>
             <div className="drawer__total">
-              <span>Subtotaal</span>
-              <b>{formatPrice(subtotal)}</b>
+              <span>Totaal <small>incl. btw</small></span>
+              <b>{formatPrice(subtotal + shop.shippingCost)}</b>
             </div>
-            <p className="newsletter__note" style={{ marginTop: 0, marginBottom: '1rem' }}>
-              Verzendkosten worden bij het afrekenen berekend.
-            </p>
             <button className="btn btn--terracotta btn--block" onClick={checkout} disabled={loading}>
-              {loading ? 'Even geduld…' : 'Afrekenen'}
+              {loading ? 'Even geduld…' : 'Veilig afrekenen'}
               <span className="btn__icon" aria-hidden>→</span>
             </button>
+            <button className="drawer__continue" onClick={close}>of verder winkelen</button>
+            <p className="drawer__assure">
+              Verzonden binnen {shop.deliveryTime} · {shop.returnDays} dagen bedenktijd
+            </p>
+            <PaymentMethods className="drawer__pay" />
           </div>
         )}
       </aside>

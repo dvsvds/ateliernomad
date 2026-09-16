@@ -1,18 +1,39 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
 import SmartImage from '../components/SmartImage.jsx'
 import ProductCard from '../components/ProductCard.jsx'
+import Price from '../components/Price.jsx'
+import PaymentMethods from '../components/PaymentMethods.jsx'
 import { getProduct, products, formatPrice } from '../data/products.js'
+import { shop } from '../data/site.js'
 import { useCart } from '../context/CartContext.jsx'
 
 export default function Product() {
   const { slug } = useParams()
   const product = getProduct(slug)
-  const { add } = useCart()
+  const { add, items, open } = useCart()
   const [qty, setQty] = useState(1)
+  const ctaRef = useRef(null)
+  const [showSticky, setShowSticky] = useState(false)
   useReveal([slug])
+
+  /* Sticky knop op mobiel: verschijnt zodra de gewone knop uit beeld is,
+     en verdwijnt weer bij de footer zodat die niet bedekt wordt. */
+  useEffect(() => {
+    const cta = ctaRef.current
+    const footer = document.querySelector('.footer')
+    if (!cta || !('IntersectionObserver' in window)) return
+    const seen = { cta: true, footer: false }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { seen[e.target === cta ? 'cta' : 'footer'] = e.isIntersecting })
+      setShowSticky(!seen.cta && !seen.footer)
+    })
+    io.observe(cta)
+    if (footer) io.observe(footer)
+    return () => { io.disconnect(); setShowSticky(false) }
+  }, [slug])
   useSeo({
     title: product ? product.name : 'Product',
     description: product ? product.short : 'Atelier Nomàd product',
@@ -26,6 +47,15 @@ export default function Product() {
       </section>
     )
   }
+
+  /* Een uniek stuk dat al in de winkelwagen zit, kan er niet nog eens in:
+     de knop opent dan de winkelwagen in plaats van niets te doen. */
+  const inCart = product.unique && items.some((i) => i.slug === product.slug)
+  const addToCart = () =>
+    inCart
+      ? open()
+      : add({ slug: product.slug, name: product.name, price: product.price, image: product.images?.[0], unique: product.unique, qty: product.unique ? 1 : qty })
+  const ctaLabel = inCart ? 'Bekijk winkelwagen' : 'In winkelwagen'
 
   const related = products.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 3)
   const more = related.length ? related : products.filter((p) => p.slug !== product.slug).slice(0, 3)
@@ -54,7 +84,7 @@ export default function Product() {
           <div className="pdp__info reveal" data-delay="1">
             <span className="card__cat">{product.categoryLabel}</span>
             <h1 className="h2" style={{ marginTop: '0.4rem' }}>{product.name}</h1>
-            <div className="pdp__price">{formatPrice(product.price)}</div>
+            <Price value={product.price} className="pdp__price" />
             <p className="lead">{product.short}</p>
             <p>{product.description}</p>
 
@@ -64,7 +94,7 @@ export default function Product() {
               ))}
             </ul>
 
-            <div className="pdp__cta">
+            <div className="pdp__cta" ref={ctaRef}>
               {/* Unieke stukken bestaan één keer — dan is een aantal-keuze onzin */}
               {!product.unique && (
                 <div className="qty" style={{ border: '1px solid var(--line)', borderRadius: 100, padding: '0.4rem 0.6rem' }}>
@@ -73,20 +103,36 @@ export default function Product() {
                   <button onClick={() => setQty((q) => q + 1)} aria-label="Meer">+</button>
                 </div>
               )}
-              <button
-                className="btn btn--terracotta"
-                onClick={() => add({ slug: product.slug, name: product.name, price: product.price, image: product.images?.[0], unique: product.unique, qty: product.unique ? 1 : qty })}
-              >
-                In winkelmand <span className="btn__icon" aria-hidden>+</span>
+              <button className="btn btn--terracotta" onClick={addToCart}>
+                {ctaLabel} <span className="btn__icon" aria-hidden>{inCart ? '→' : '+'}</span>
               </button>
             </div>
+            {product.unique && (
+              <p className="pdp__stock">Uniek stuk — er is er maar één van</p>
+            )}
 
-            <p className="notice" style={{ marginTop: '1.6rem' }}>
-              ✦ Uniek handgemaakt stuk · Verzending binnen heel Europa · Veilig betalen via Stripe
-            </p>
+            {/* Vertrouwen vlak bij de knop: alles hieronder moet kloppen
+                met src/data/site.js (shop) en de pagina Verzending & retour. */}
+            <ul className="trust">
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>Verzonden binnen {shop.deliveryTime}</b>, met track &amp; trace</span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{formatPrice(shop.shippingCost)} verzending</b> binnen de EU, per bestelling</span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{shop.returnDays} dagen bedenktijd</b> — <Link to="/verzending" className="trust__link">zo werkt retour</Link></span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>Veilig betalen</b> via Stripe</span></li>
+            </ul>
+            <PaymentMethods className="pdp__pay" />
           </div>
         </div>
       </section>
+
+      <div className={`sticky-cta ${showSticky ? 'is-visible' : ''}`} aria-hidden={!showSticky}>
+        <div className="sticky-cta__info">
+          <span className="sticky-cta__name">{product.name}</span>
+          <Price value={product.price} className="sticky-cta__price" />
+        </div>
+        <button className="btn btn--terracotta" onClick={addToCart} tabIndex={showSticky ? 0 : -1}>
+          {ctaLabel}
+        </button>
+      </div>
 
       <section className="section section--alt">
         <div className="container">

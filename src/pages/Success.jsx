@@ -6,7 +6,7 @@ import { useCart } from '../context/CartContext.jsx'
 export default function Success() {
   useSeo({ title: 'Bedankt voor je bestelling' })
   const { clear } = useCart()
-  useEffect(() => { clear() /* leeg de winkelmand na geslaagde betaling */ }, [])
+  useEffect(() => { clear() /* leeg de winkelwagen na geslaagde betaling */ }, [])
 
   return (
     <section className="section container center" style={{ minHeight: '60vh', display: 'grid', placeContent: 'center' }}>

@@ -591,3 +591,72 @@ p { margin: 0 0 1.1rem; }
   .pdp__gallery { grid-template-columns: 1fr 1fr; }
   .hero__cta .btn { width: 100%; justify-content: center; }
 }
+
+/* ---------- 26. Prijs incl. btw, vertrouwen & betaalmethodes ---------- */
+.price { display: inline-flex; align-items: baseline; gap: 0.45em; flex-wrap: wrap; }
+.price__vat {
+  font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0.04em;
+  color: var(--muted); font-weight: 300;
+}
+.pdp__price { display: flex; }
+.pdp__price .price__vat { font-size: 0.8rem; }
+
+.pdp__stock { margin: 0.9rem 0 0; font-size: 0.86rem; color: var(--terracotta); }
+
+.trust { list-style: none; margin: 1.6rem 0 0; padding: 1.1rem 1.2rem; background: var(--cream-deep); border-radius: var(--radius-lg); display: grid; gap: 0.55rem; }
+.trust li { display: flex; gap: 0.7rem; align-items: baseline; font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; }
+.trust b { font-weight: 500; color: var(--ink); }
+.trust__icon { color: var(--terracotta); font-size: 0.7rem; flex-shrink: 0; }
+.trust__link { text-decoration: underline; text-underline-offset: 2px; }
+
+.pay { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.pay__item {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 28px; padding: 0.2rem 0.65rem; border-radius: var(--radius);
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em; line-height: 1;
+  white-space: nowrap;
+}
+.pay__item img { height: 18px; width: auto; display: block; }
+.pay--light .pay__item { background: var(--white); border: 1px solid var(--line); color: var(--ink-soft); }
+.pay--dark .pay__item { background: rgba(250,246,239,0.06); border: 1px solid rgba(250,246,239,0.18); color: rgba(250,246,239,0.82); }
+.pdp__pay { margin-top: 0.9rem; }
+
+.footer__pay { display: flex; align-items: center; gap: 0.6rem 1.2rem; flex-wrap: wrap; padding: 1.6rem 0; border-bottom: 1px solid rgba(250,246,239,0.14); }
+.footer__pay-label { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); }
+
+/* Winkelwagen */
+.drawer__empty .btn { margin-top: 1.6rem; }
+.drawer__sum { margin: 0 0 0.6rem; }
+.drawer__sum div { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--ink-soft); padding: 0.15rem 0; }
+.drawer__sum dd { margin: 0; }
+.drawer__total { padding-top: 0.6rem; border-top: 1px solid var(--line); }
+.drawer__total small { font-size: 0.72rem; color: var(--muted); margin-left: 0.3rem; }
+.drawer__continue {
+  display: block; width: 100%; margin-top: 0.7rem; background: none; border: none;
+  font-size: 0.82rem; color: var(--muted); text-decoration: underline; text-underline-offset: 3px;
+}
+.drawer__continue:hover { color: var(--ink); }
+.drawer__assure { text-align: center; font-size: 0.76rem; color: var(--muted); margin: 0.8rem 0 0.7rem; }
+.drawer__pay { justify-content: center; }
+
+/* Sticky knop op mobiel (productpagina) */
+.sticky-cta { display: none; }
+@media (max-width: 860px) {
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+    background: rgba(250,246,239,0.97); border-top: 1px solid var(--line);
+    box-shadow: 0 -12px 30px -22px rgba(47,42,36,0.5);
+    transform: translateY(110%); visibility: hidden;
+    transition: transform 0.45s var(--ease-soft), visibility 0.45s;
+  }
+  .sticky-cta.is-visible { transform: none; visibility: visible; }
+  .sticky-cta__info { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+  .sticky-cta__name { font-family: var(--font-serif); font-size: 1.05rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sticky-cta__price { font-size: 0.92rem; }
+  .sticky-cta .btn { padding: 0.8rem 1.2rem; flex-shrink: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta { transition: none; }
+}

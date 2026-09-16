@@ -186,7 +186,7 @@ export const documenten = {
       {
         h: 'Cookies',
         p: [
-          'Deze site zet geen trackingcookies en gebruikt geen advertentienetwerken. Je winkelmand wordt lokaal in je eigen browser bewaard, zodat die er nog is als je terugkomt. Die gegevens verlaten je toestel niet.',
+          'Deze site zet geen trackingcookies en gebruikt geen advertentienetwerken. Je winkelwagen wordt lokaal in je eigen browser bewaard, zodat die er nog is als je terugkomt. Die gegevens verlaten je toestel niet.',
         ],
       },
     ],
