@@ -18,6 +18,7 @@ export const brand = {
    (verzendkosten) en met de pagina Verzending & retour (legal.js). */
 export const shop = {
   shippingCost: 9.95,          // per bestelling, binnen de EU
+  btwTarief: 0.21,             // Belgisch standaardtarief; prijzen zijn inclusief btw
   deliveryTime: '2–4 werkdagen',
   returnDays: 14,
 }

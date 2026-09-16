@@ -8,6 +8,8 @@ import { startCheckout } from '../lib/checkout.js'
 
 export default function CartDrawer() {
   const { items, isOpen, close, remove, setQty, subtotal, count } = useCart()
+  // Prijzen zijn inclusief btw, dus de btw zit er al in: bedrag x 21/121.
+  const btwInSubtotaal = Math.round((subtotal * shop.btwTarief) / (1 + shop.btwTarief) * 100) / 100
   const [loading, setLoading] = useState(false)
 
   const checkout = async () => {
@@ -60,7 +62,8 @@ export default function CartDrawer() {
             {/* Geen verrassingen bij het afrekenen: verzendkosten staan er al.
                 Vast bedrag per bestelling, gelijk aan de checkout-functie. */}
             <dl className="drawer__sum">
-              <div><dt>Subtotaal</dt><dd>{formatPrice(subtotal)}</dd></div>
+              <div><dt>Subtotaal <small>incl. btw</small></dt><dd>{formatPrice(subtotal)}</dd></div>
+              <div className="drawer__vat"><dt>waarvan btw ({Math.round(shop.btwTarief * 100)}%)</dt><dd>{formatPrice(btwInSubtotaal)}</dd></div>
               <div><dt>Verzending (EU)</dt><dd>{formatPrice(shop.shippingCost)}</dd></div>
             </dl>
             <div className="drawer__total">
