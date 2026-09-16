@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { verversWinkelwagen } from '../lib/cartSync.js'
 
 const CartContext = createContext(null)
 const STORAGE_KEY = 'atelier-nomad-cart'
@@ -39,7 +40,8 @@ function reducer(state, action) {
 function init() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
+    // Nooit klakkeloos laden: verkochte stukken en oude prijzen eruit.
+    return verversWinkelwagen(raw ? JSON.parse(raw) : [])
   } catch {
     return []
   }
