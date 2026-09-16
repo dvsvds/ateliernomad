@@ -1,26 +1,34 @@
 const Stripe = require('stripe')
+const nodemailer = require('nodemailer')
+const { maakBevestiging, bestelcode } = require('../lib/bestelmail.cjs')
 
 /* ============================================================
-   stripe-webhook — mailt de eigenaar bij elke geslaagde betaling
+   stripe-webhook — na elke geslaagde betaling:
+     1. een bevestigingsmail naar de klant
+     2. een bestelmelding naar de eigenaar
    ------------------------------------------------------------
    Stripe roept deze functie aan zodra er betaald is. We controleren
    eerst de handtekening (anders kan iedereen valse bestellingen
-   sturen), halen dan de artikelen op en posten de bestelling naar
-   Netlify Forms. Netlify mailt elke formulierinzending door naar
-   ateliernomad01@gmail.com, dus er is geen aparte maildienst nodig.
+   sturen) en halen dan de artikelen op.
 
-   Eenmalig instellen:
-   1. Stripe → Developers → Webhooks → Add endpoint
-        URL:    https://xn--ateliernomd-h7a.be/.netlify/functions/stripe-webhook
-        Events: checkout.session.completed
-                checkout.session.async_payment_succeeded
-   2. Kopieer de "Signing secret" (begint met whsec_) naar Netlify als
-      STRIPE_WEBHOOK_SECRET, en deploy daarna opnieuw: Netlify geeft
-      nieuwe variabelen pas bij een deploy door aan functies.
+   De klant krijgt zijn bevestiging via het Gmail-account van de zaak.
+   De eigenaar krijgt de bestelling via Netlify Forms, dat al naar
+   ateliernomad01@gmail.com doormailt. In die melding staat of de mail
+   naar de klant gelukt is — mislukt die, dan zie je dat meteen.
 
-   Het formulier "bestelling" staat als verborgen kopie in index.html.
-   Voeg je hier een veld toe, zet het daar dan ook bij — anders gooit
-   Netlify het weg.
+   Eenmalig instellen in Netlify (Environment variables):
+     STRIPE_WEBHOOK_SECRET  "Signing secret" van de webhook in Stripe (whsec_…)
+     MAIL_USER              ateliernomad01@gmail.com
+     MAIL_APP_PASSWORD      een Gmail-app-wachtwoord (niet je gewone wachtwoord)
+   Daarna opnieuw deployen: Netlify geeft nieuwe variabelen pas bij een
+   deploy door aan functies.
+
+   Stripe-webhook: Developers → Webhooks → Add endpoint
+     URL:    https://xn--ateliernomd-h7a.be/.netlify/functions/stripe-webhook
+     Events: checkout.session.completed, checkout.session.async_payment_succeeded
+
+   Testbetalingen (Stripe in testmodus) sturen de klantmail naar
+   MAIL_USER in plaats van naar het testadres, met [TEST] in het onderwerp.
    ============================================================ */
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -34,17 +42,16 @@ const adresTekst = (a) =>
     .filter(Boolean)
     .join('\n')
 
-/* Zuivere functie: zet een Checkout-sessie om in de velden van de
-   bestelmail. Apart gehouden zodat ze zonder Stripe te testen is. */
-function maakVelden(session, regels, { test = false } = {}) {
+/* Zuivere functie: de velden van de bestelmelding voor de eigenaar. */
+function maakVelden(session, regels, { test = false, klantmail = 'onbekend' } = {}) {
   const klant = session.customer_details || {}
-  // Nieuwere API-versies zetten het leveradres onder collected_information.
   const lever = session.collected_information?.shipping_details || session.shipping_details || null
   const adres = lever?.address || klant.address
 
   return {
     'form-name': 'bestelling',
     status: test ? 'TEST — dit is geen echte bestelling' : 'Betaald',
+    bestelcode: bestelcode(session.id),
     bestelnummer: session.id,
     datum: new Date((session.created || Date.now() / 1000) * 1000).toLocaleString('nl-BE', { timeZone: 'Europe/Brussels' }),
     totaal: euro(session.amount_total),
@@ -56,10 +63,44 @@ function maakVelden(session, regels, { test = false } = {}) {
     naam: lever?.name || klant.name || '',
     email: klant.email || '',
     leveradres: adres ? adresTekst(adres) : 'niet opgegeven',
+    klantmail,
     stripe: typeof session.payment_intent === 'string'
       ? `https://dashboard.stripe.com/payments/${session.payment_intent}`
       : 'https://dashboard.stripe.com/payments',
     'bot-field': '',
+  }
+}
+
+/* Stuurt de bevestiging naar de klant. Gooit nooit: het resultaat komt
+   als tekst in de melding voor de eigenaar. `transport` is er voor tests. */
+async function stuurBevestiging(session, regels, { test = false, transport } = {}) {
+  const user = process.env.MAIL_USER
+  const pass = process.env.MAIL_APP_PASSWORD
+  if (!transport && (!user || !pass)) return 'niet verstuurd — MAIL_USER of MAIL_APP_PASSWORD ontbreekt in Netlify'
+
+  const aan = test ? user : session.customer_details?.email
+  if (!aan) return 'niet verstuurd — geen e-mailadres van de klant'
+
+  const { onderwerp, html, tekst } = maakBevestiging({ session, regels, siteUrl: SITE_URL })
+  try {
+    const verzender = transport || nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user, pass },
+      // Netlify-functies hebben maar een paar seconden: niet blijven hangen.
+      connectionTimeout: 5000, greetingTimeout: 5000, socketTimeout: 8000,
+    })
+    await verzender.sendMail({
+      from: `"Atelier Nomàd" <${user}>`,
+      to: aan,
+      replyTo: user,
+      subject: (test ? '[TEST] ' : '') + onderwerp,
+      html,
+      text: tekst,
+    })
+    return `verstuurd naar ${aan}`
+  } catch (err) {
+    console.error('Bevestiging naar klant mislukt:', err.message)
+    return `MISLUKT (${err.message}) — stuur de klant zelf een bevestiging`
   }
 }
 
@@ -99,16 +140,20 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: JSON.stringify({ genegeerd: stripeEvent.type }) }
   }
 
+  const test = !stripeEvent.livemode
+
   let regels = []
   try {
-    regels = (await stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })).data
+    // price.product meegeven, dan staan de productfoto's erbij voor de mail.
+    regels = (await stripe.checkout.sessions.listLineItems(session.id, { limit: 100, expand: ['data.price.product'] })).data
   } catch (err) {
-    // Geen reden om de melding tegen te houden: de mail zegt dan dat je
-    // de artikelen in Stripe moet bekijken.
+    // Geen reden om de meldingen tegen te houden.
     console.error('Artikelen ophalen mislukt:', err.message)
   }
 
-  const velden = maakVelden(session, regels, { test: !stripeEvent.livemode })
+  // Eerst de klant, zodat de melding voor de eigenaar kan zeggen of dat lukte.
+  const klantmail = await stuurBevestiging(session, regels, { test })
+  const velden = maakVelden(session, regels, { test, klantmail })
 
   try {
     const res = await fetch(`${SITE_URL}/`, {
@@ -119,11 +164,12 @@ exports.handler = async (event) => {
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
   } catch (err) {
     console.error('Bestelmelding versturen mislukt:', err.message)
-    // Een fout laat Stripe het later opnieuw proberen, dus geen gemiste bestelling.
+    // Een fout laat Stripe het later opnieuw proberen, zodat je geen bestelling mist.
     return { statusCode: 500, body: 'Melding mislukt' }
   }
 
-  return { statusCode: 200, body: JSON.stringify({ gemeld: session.id }) }
+  return { statusCode: 200, body: JSON.stringify({ gemeld: session.id, klantmail }) }
 }
 
 exports._maakVelden = maakVelden
+exports._stuurBevestiging = stuurBevestiging

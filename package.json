@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^4.8.0",
+    "nodemailer": "^10.0.10",
     "npm": "^11.17.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
