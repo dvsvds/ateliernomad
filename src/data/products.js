@@ -1,7 +1,7 @@
 /* ============================================================
    PRODUCTDATA — Atelier Nomàd
    ------------------------------------------------------------
-   39 stuks: 31 vintage Marokkaanse vloerpoufs en acht handgeweven
+   38 stuks: 30 vintage Marokkaanse vloerpoufs en acht handgeweven
    kussens. Stoel, krukje en kapstok zijn uitverkocht (sep 2026),
    net als de poufs Meadow en Thistle (16 sep 2026).
    Elke pouf is uniek — geknoopt uit een vintage Berberkleed,
@@ -207,11 +207,6 @@ export const products = [
     'Roomwit met roze en zwart, en franjes.',
     'Roomwitte wol met een roze en een zwart vlak, afgezet met korte zwarte franjes langs de rand. Die franjes komen uit het oorspronkelijke kleed en zijn bewust bewaard gebleven.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
-
-  p('pouf-mist', 'Vloerpouf — Mist', 'modern', 130, null,
-    'Ecru met een brede stoffige blauwe band.',
-    'Ongeverfde ecru wol met een brede, stoffig blauwe band over de onderste helft. De eenvoud van twee kleuren, meer is het niet — en precies daarom werkt het.',
-    'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
   p('pouf-sorrel', 'Vloerpouf — Sorrel', 'geweven', 140, 'Zeldzaam',
     'Diep rood, dicht geweven en gevlekt.',

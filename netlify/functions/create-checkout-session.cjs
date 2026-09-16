@@ -28,7 +28,6 @@ const CATALOG = {
   'pouf-signal':   { name: "Vloerpouf — Signal", price: 140, max: 1 },
   'pouf-basalt':   { name: "Vloerpouf — Basalt", price: 140, max: 1 },
   'pouf-ash':      { name: "Vloerpouf — Ash", price: 130, max: 1 },
-  'pouf-mist':     { name: "Vloerpouf — Mist", price: 130, max: 1 },
   'pouf-sorrel':   { name: "Vloerpouf — Sorrel", price: 140, max: 1 },
   'pouf-coral':    { name: "Vloerpouf — Coral", price: 140, max: 1 },
   'pouf-foxglove': { name: "Vloerpouf — Foxglove", price: 140, max: 1 },

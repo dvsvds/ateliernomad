@@ -1,7 +1,9 @@
 import { loadStripe } from '@stripe/stripe-js'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
-const ENDPOINT = import.meta.env.VITE_CHECKOUT_ENDPOINT || '/api/create-checkout-session'
+// Deze site draait op Netlify, dus dat is de standaard. Stond hier het
+// Vercel-pad, dan wees elke build zonder .env naar een functie die niet bestaat.
+const ENDPOINT = import.meta.env.VITE_CHECKOUT_ENDPOINT || '/.netlify/functions/create-checkout-session'
 
 let stripePromise
 const getStripe = () => {
@@ -15,14 +17,11 @@ const getStripe = () => {
  * beveiligde betaalpagina van Stripe.
  */
 export async function startCheckout(items) {
-  if (!PUBLISHABLE_KEY) {
-    alert(
-      'Stripe is nog niet geconfigureerd.\n\n' +
-      'Vul je sleutels in het bestand ".env" in (zie .env.example) ' +
-      'en deploy de functie in /api om echt te kunnen afrekenen.'
-    )
-    return
-  }
+  // Geen controle op PUBLISHABLE_KEY vóór de betaling. De server geeft een
+  // betaal-URL terug, dus de publieke sleutel is alleen nodig voor de oude
+  // redirect via sessie-id onderaan. Die controle stond hier vroeger en werd
+  // bij een build zonder .env letterlijk in de code gebakken: klanten kregen
+  // "nog niet geconfigureerd" terwijl de betaalfunctie gewoon werkte.
 
   const res = await fetch(ENDPOINT, {
     method: 'POST',
@@ -44,7 +43,7 @@ export async function startCheckout(items) {
   if (data.url) { window.location.href = data.url; return }
 
   // Alternatief: redirect via sessie-id.
-  if (data.id) {
+  if (data.id && PUBLISHABLE_KEY) {
     const stripe = await getStripe()
     await stripe.redirectToCheckout({ sessionId: data.id })
   }
