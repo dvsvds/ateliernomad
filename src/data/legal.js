@@ -165,7 +165,7 @@ export const documenten = {
         lijst: [
           'Stripe — betalingsverwerking.',
           'Onze vervoerder — om het pakket te bezorgen.',
-          'Netlify — de hosting van deze website, en de opslag van berichten uit het contactformulier en inschrijvingen op de nieuwsbrief.',
+          'Netlify — de hosting van deze website, de opslag van berichten uit het contactformulier en inschrijvingen op de nieuwsbrief, en een kopie van je bestelling voor onze bestelmelding.',
           'Onze boekhouder — voor de verplichte administratie.',
         ],
         p: ['Verder niemand. We verkopen geen gegevens en doen niet aan advertentieprofielen.'],
