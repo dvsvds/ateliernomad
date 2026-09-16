@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext.jsx'
 import { formatPrice } from '../data/products.js'
 import SmartImage from './SmartImage.jsx'
@@ -8,6 +9,15 @@ import { startCheckout } from '../lib/checkout.js'
 
 export default function CartDrawer() {
   const { items, isOpen, close, remove, setQty, subtotal, count } = useCart()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  // "Verder winkelen" sluit de winkelwagen én brengt je naar de collectie.
+  // Alleen sluiten liet je op een productpagina staan, en dat voelde alsof
+  // de knop niets deed.
+  const verderWinkelen = () => {
+    close()
+    if (pathname !== '/shop') navigate('/shop')
+  }
   // Prijzen zijn inclusief btw, dus de btw zit er al in: bedrag x 21/121.
   const btwInSubtotaal = Math.round((subtotal * shop.btwTarief) / (1 + shop.btwTarief) * 100) / 100
   const [loading, setLoading] = useState(false)
@@ -30,7 +40,7 @@ export default function CartDrawer() {
           {items.length === 0 && (
             <div className="drawer__empty">
               <p>Je winkelwagen is nog leeg.<br />Ontdek de collectie en voeg iets moois toe.</p>
-              <button className="btn btn--ghost" onClick={close}>Verder winkelen</button>
+              <button className="btn btn--ghost" onClick={verderWinkelen}>Verder winkelen</button>
             </div>
           )}
 
@@ -74,7 +84,7 @@ export default function CartDrawer() {
               {loading ? 'Even geduld…' : 'Veilig afrekenen'}
               <span className="btn__icon" aria-hidden>→</span>
             </button>
-            <button className="drawer__continue" onClick={close}>of verder winkelen</button>
+            <button className="drawer__continue" onClick={verderWinkelen}>of verder winkelen</button>
             <p className="drawer__assure">
               Verzonden binnen {shop.deliveryTime} · {shop.returnDays} dagen bedenktijd
             </p>

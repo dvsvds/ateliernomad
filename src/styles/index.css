@@ -456,7 +456,9 @@ p { margin: 0 0 1.1rem; }
 }
 .drawer-overlay.open { opacity: 1; visibility: visible; }
 .drawer {
-  position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
+  position: fixed; top: 0; right: 0; z-index: 201;
+  /* dvh past zich aan de werkbalk van Safari op iPhone aan; vh als terugval */
+  height: 100vh; height: 100dvh;
   width: min(420px, 92vw); background: var(--cream);
   display: flex; flex-direction: column;
   transform: translateX(100%); transition: transform 0.55s var(--ease-soft);
@@ -635,7 +637,8 @@ p { margin: 0 0 1.1rem; }
 .drawer__total { padding-top: 0.6rem; border-top: 1px solid var(--line); }
 .drawer__total small { font-size: 0.72rem; color: var(--muted); margin-left: 0.3rem; }
 .drawer__continue {
-  display: block; width: 100%; margin-top: 0.7rem; background: none; border: none;
+  /* 44px: de minimale tikgrootte op een telefoon. Het was een linkje van 21px. */
+  display: block; width: 100%; min-height: 44px; margin-top: 0.3rem; padding: 0.6rem 0; background: none; border: none;
   font-size: 0.82rem; color: var(--muted); text-decoration: underline; text-underline-offset: 3px;
 }
 .drawer__continue:hover { color: var(--ink); }
@@ -662,4 +665,12 @@ p { margin: 0 0 1.1rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sticky-cta { transition: none; }
+}
+
+/* Op lage schermen past de onderkant van de winkelwagen niet naast de
+   artikelen: die werden platgedrukt tot een smalle strook. Dan scrolt het
+   hele paneel, zodat alle artikelen én alle knoppen bereikbaar blijven. */
+@media (max-height: 760px) {
+  .drawer { overflow-y: auto; overscroll-behavior: contain; }
+  .drawer__body { flex: 0 0 auto; overflow: visible; }
 }
