@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext.jsx'
 import { formatPrice } from '../data/products.js'
@@ -22,15 +22,26 @@ export default function CartDrawer() {
   const btwInSubtotaal = Math.round((subtotal * shop.btwTarief) / (1 + shop.btwTarief) * 100) / 100
   const [loading, setLoading] = useState(false)
 
+  // Escape sluit de winkelwagen, zoals elk overlay hoort te doen.
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e) => { if (e.key === 'Escape') close() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [isOpen, close])
+
   const checkout = async () => {
     setLoading(true)
-    try { await startCheckout(items) } finally { setLoading(false) }
+    // Bij een redirect blijft de knop uit tot de pagina weg is; anders kon
+    // een tweede klik een tweede Stripe-sessie starten.
+    const doorgestuurd = await startCheckout(items)
+    if (!doorgestuurd) setLoading(false)
   }
 
   return (
     <>
       <div className={`drawer-overlay ${isOpen ? 'open' : ''}`} onClick={close} />
-      <aside className={`drawer ${isOpen ? 'open' : ''}`} aria-hidden={!isOpen} aria-label="Winkelwagen">
+      <aside className={`drawer ${isOpen ? 'open' : ''}`} inert={isOpen ? undefined : ''} aria-label="Winkelwagen">
         <div className="drawer__head">
           <h3 className="h3">Winkelwagen {count > 0 && `(${count})`}</h3>
           <button className="drawer__close" onClick={close} aria-label="Sluiten">×</button>

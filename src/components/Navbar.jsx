@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useCart } from '../context/CartContext.jsx'
 
 const links = [
@@ -14,6 +14,11 @@ export default function Navbar() {
   const { count, open } = useCart()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // Ook dicht bij de terugknop of een link buiten het menu; anders bleef
+  // het overlay-menu over de nieuwe pagina staan met een geblokkeerde scroll.
+  useEffect(() => { setMenuOpen(false) }, [pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)

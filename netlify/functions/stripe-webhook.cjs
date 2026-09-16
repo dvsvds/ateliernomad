@@ -109,6 +109,11 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method not allowed' }
   }
 
+  if (!SITE_URL) {
+    console.error('SITE_URL ontbreekt in Netlify — webhook genegeerd')
+    return { statusCode: 500, body: 'Webhook niet geconfigureerd' }
+  }
+
   const secret = process.env.STRIPE_WEBHOOK_SECRET
   if (!secret) {
     console.error('STRIPE_WEBHOOK_SECRET ontbreekt in Netlify — webhook genegeerd')
@@ -151,21 +156,35 @@ exports.handler = async (event) => {
     console.error('Artikelen ophalen mislukt:', err.message)
   }
 
-  // Eerst de klant, zodat de melding voor de eigenaar kan zeggen of dat lukte.
-  const klantmail = await stuurBevestiging(session, regels, { test })
-  const velden = maakVelden(session, regels, { test, klantmail })
-
-  try {
+  // Eerst de melding voor de eigenaar. Mislukt die, dan antwoorden we met een
+  // fout en probeert Stripe later opnieuw — en dan mag de klant niet al een
+  // mail hebben gehad, anders krijgt hij er bij elke poging nog een.
+  const melding = async (velden) => {
     const res = await fetch(`${SITE_URL}/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(velden).toString(),
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  }
+
+  try {
+    await melding(maakVelden(session, regels, { test, klantmail: 'wordt verstuurd…' }))
   } catch (err) {
     console.error('Bestelmelding versturen mislukt:', err.message)
-    // Een fout laat Stripe het later opnieuw proberen, zodat je geen bestelling mist.
     return { statusCode: 500, body: 'Melding mislukt' }
+  }
+
+  // Daarna de klant. Vanaf hier altijd 200: Stripe hoeft niet meer terug te
+  // komen, en het resultaat staat in een tweede regel in Netlify Forms als
+  // het misging.
+  const klantmail = await stuurBevestiging(session, regels, { test })
+  if (klantmail.startsWith('MISLUKT') || klantmail.startsWith('niet verstuurd')) {
+    try {
+      await melding({ ...maakVelden(session, regels, { test, klantmail }), status: 'LET OP — klantmail niet verstuurd' })
+    } catch (err) {
+      console.error('Tweede melding mislukt:', err.message)
+    }
   }
 
   return { statusCode: 200, body: JSON.stringify({ gemeld: session.id, klantmail }) }

@@ -18,7 +18,7 @@ import NotFound from './pages/NotFound.jsx'
 // Scroll naar boven bij navigatie
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' }) }, [pathname])
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [pathname])
   return null
 }
 

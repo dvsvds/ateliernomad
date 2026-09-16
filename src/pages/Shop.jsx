@@ -15,7 +15,9 @@ export default function Shop() {
   const [params, setParams] = useSearchParams()
   /* De URL is de bron van waarheid — zo werkt een link naar
      /shop?cat=poufs ook als je al op de shoppagina staat. */
-  const active = params.get('cat') || 'all'
+  const gevraagd = params.get('cat')
+  // Een oude of verzonnen link (?cat=interieur, ?cat=foo) toont anders een lege shop.
+  const active = categories.some((c) => c.id === gevraagd) ? gevraagd : 'all'
   useReveal([active])
   useSeo({
     title: 'De eerste collectie',

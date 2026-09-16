@@ -15,6 +15,10 @@ export default function Product() {
   const product = getProduct(slug)
   const { add, items, open } = useCart()
   const [qty, setQty] = useState(1)
+  const [beeld, setBeeld] = useState(0)
+  // De component wordt hergebruikt tussen producten: aantal en gekozen foto
+  // mogen niet meereizen naar het volgende product.
+  useEffect(() => { setQty(1); setBeeld(0) }, [slug])
   const ctaRef = useRef(null)
   const [showSticky, setShowSticky] = useState(false)
   useReveal([slug])
@@ -72,12 +76,19 @@ export default function Product() {
         <div className="pdp">
           <div className="pdp__gallery reveal">
             <div className="main">
-              <SmartImage src={product.images?.[0]} alt={product.name} label={product.name} loading="eager" />
+              <SmartImage key={product.images?.[beeld]} src={product.images?.[beeld]} alt={product.name} label={product.name} loading="eager" />
             </div>
-            {(product.images || []).slice(1).map((src, i) => (
-              <div className="thumb" key={i}>
-                <SmartImage src={src} alt={`${product.name} ${i + 2}`} label="Detail" sublabel="" />
-              </div>
+            {(product.images || []).length > 1 && product.images.map((src, i) => (
+              <button
+                type="button"
+                className={`thumb ${i === beeld ? 'is-active' : ''}`}
+                key={src}
+                onClick={() => setBeeld(i)}
+                aria-label={i === 0 ? 'Voorkant tonen' : 'Achterkant tonen'}
+                aria-pressed={i === beeld}
+              >
+                <SmartImage src={src} alt="" label="" sublabel="" />
+              </button>
             ))}
           </div>
 

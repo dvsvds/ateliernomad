@@ -6,14 +6,15 @@ const SITE = 'Atelier Nomàd'
 export default function useSeo({ title, description } = {}) {
   useEffect(() => {
     if (title) document.title = `${title} — ${SITE}`
-    if (description) {
-      let tag = document.querySelector('meta[name="description"]')
-      if (!tag) {
-        tag = document.createElement('meta')
-        tag.setAttribute('name', 'description')
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute('content', description)
+    let tag = document.querySelector('meta[name="description"]')
+    if (!tag) {
+      tag = document.createElement('meta')
+      tag.setAttribute('name', 'description')
+      document.head.appendChild(tag)
     }
+    // Geen eigen omschrijving? Dan de standaard uit index.html, niet die van
+    // de vorige pagina.
+    if (!tag.dataset.standaard) tag.dataset.standaard = tag.getAttribute('content') || ''
+    tag.setAttribute('content', description || tag.dataset.standaard)
   }, [title, description])
 }

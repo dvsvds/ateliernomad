@@ -1,12 +1,17 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import useSeo from '../hooks/useSeo.js'
 import { useCart } from '../context/CartContext.jsx'
 
 export default function Success() {
   useSeo({ title: 'Bedankt voor je bestelling' })
   const { clear } = useCart()
-  useEffect(() => { clear() /* leeg de winkelwagen na geslaagde betaling */ }, [])
+  const [params] = useSearchParams()
+  // Stripe stuurt de klant hierheen mét session_id. Zonder die parameter
+  // is er niet betaald: dan geen succesbericht en geen lege winkelwagen.
+  const sessionId = params.get('session_id')
+  useEffect(() => { if (sessionId) clear() }, [sessionId])
+  if (!sessionId) return <Navigate to="/shop" replace />
 
   return (
     <section className="section container center" style={{ minHeight: '60vh', display: 'grid', placeContent: 'center' }}>

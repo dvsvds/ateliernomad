@@ -465,6 +465,8 @@ p { margin: 0 0 1.1rem; }
   box-shadow: var(--shadow-card);
 }
 .drawer.open { transform: none; }
+/* Dicht = ook echt weg voor Tab en schermlezers; visibility pas na de schuifbeweging */
+.drawer:not(.open) { visibility: hidden; transition: transform 0.55s var(--ease-soft), visibility 0s 0.55s; }
 .drawer__head { display: flex; align-items: center; justify-content: space-between; padding: 1.6rem; border-bottom: 1px solid var(--line); }
 .drawer__head h3 { margin: 0; }
 .drawer__close { background: none; border: none; font-size: 1.4rem; color: var(--ink); line-height: 1; }
@@ -674,3 +676,13 @@ p { margin: 0 0 1.1rem; }
   .drawer { overflow-y: auto; overscroll-behavior: contain; }
   .drawer__body { flex: 0 0 auto; overflow: visible; }
 }
+
+/* Op desktop bestaat het mobiele menu niet; anders bleef het na verbreden
+   van het venster staan met een geblokkeerde scroll. */
+@media (min-width: 861px) { .nav__mobile { display: none; } }
+
+/* Thumbnails op de productpagina zijn knoppen die het grote beeld wisselen */
+.pdp__gallery .thumb { padding: 0; border: 2px solid transparent; background: none; cursor: pointer; }
+.pdp__gallery .thumb.is-active { border-color: var(--terracotta); }
+.pdp__gallery .thumb:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
+

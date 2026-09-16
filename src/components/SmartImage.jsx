@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Toont je foto zodra die bestaat. Ontbreekt de foto, dan verschijnt
@@ -7,6 +7,9 @@ import { useState } from 'react'
  */
 export default function SmartImage({ src, alt = '', label, sublabel = 'Atelier Nomàd', loading = 'lazy' }) {
   const [failed, setFailed] = useState(!src)
+  // Dezelfde component wordt hergebruikt tussen producten: een mislukt beeld
+  // van het vorige product mag het volgende niet als plaatshouder tonen.
+  useEffect(() => { setFailed(!src) }, [src])
 
   return (
     <span className="smart-img">

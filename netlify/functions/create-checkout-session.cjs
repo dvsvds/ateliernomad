@@ -1,7 +1,9 @@
 const Stripe = require('stripe')
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-const SITE_URL = process.env.SITE_URL || 'http://localhost:5173'
+// Geen terugval op localhost: een productie-deploy zonder SITE_URL zou
+// klanten na het betalen naar een dood adres sturen.
+const SITE_URL = process.env.SITE_URL
 
 // <catalog: gegenereerd door scripts/sync-catalog.mjs — niet met de hand aanpassen>
 const CATALOG = {
@@ -51,20 +53,40 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) }
   }
   try {
-    const { items = [] } = JSON.parse(event.body || '{}')
-    const line_items = items
-      .filter((i) => CATALOG[i.slug])
-      .map((i) => ({
+    if (!SITE_URL) {
+      console.error('SITE_URL ontbreekt in Netlify')
+      return { statusCode: 500, body: JSON.stringify({ error: 'Shop niet geconfigureerd' }) }
+    }
+
+    const { items } = JSON.parse(event.body || '{}')
+    if (!Array.isArray(items)) return { statusCode: 400, body: JSON.stringify({ error: 'Ongeldige winkelwagen' }) }
+
+    // Eerst per slug optellen, dan pas begrenzen: twee losse regels van
+    // hetzelfde unieke stuk zouden anders samen 2 exemplaren verkopen.
+    const perSlug = new Map()
+    for (const i of items) {
+      if (!i || typeof i.slug !== 'string' || !CATALOG[i.slug]) continue
+      perSlug.set(i.slug, (perSlug.get(i.slug) || 0) + (Math.max(0, parseInt(i.qty, 10)) || 0))
+    }
+
+    const line_items = [...perSlug].map(([slug, aantal]) => {
+      const ref = CATALOG[slug]
+      return {
         // max komt uit de catalogus: unieke stukken 1, overige 20
-        quantity: Math.max(1, Math.min(CATALOG[i.slug].max || 20, parseInt(i.qty, 10) || 1)),
+        quantity: Math.max(1, Math.min(ref.max || 20, aantal)),
         price_data: {
           currency: 'eur',
-          unit_amount: Math.round(CATALOG[i.slug].price * 100),
+          unit_amount: Math.round(ref.price * 100), // prijs van de SERVER, niet de client
           // Prijzen zijn inclusief btw; Stripe Tax rekent de btw eruit.
           tax_behavior: 'inclusive',
-          product_data: { name: CATALOG[i.slug].name },
+          product_data: {
+            name: ref.name,
+            // Zo staat de foto op de betaalpagina en in de bevestigingsmail.
+            images: [`${SITE_URL}/images/products/${slug}.jpg`],
+          },
         },
-      }))
+      }
+    })
 
     if (line_items.length === 0) return { statusCode: 400, body: JSON.stringify({ error: 'Lege of ongeldige winkelwagen' }) }
 
@@ -78,13 +100,14 @@ exports.handler = async (event) => {
       billing_address_collection: 'auto',
       shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE'] },
       shipping_options: [
-        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)' } },
+        { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 2 }, maximum: { unit: 'business_day', value: 4 } } } },
       ],
     })
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id, url: session.url }) }
   } catch (err) {
     console.error(err)
-    return { statusCode: 500, body: JSON.stringify({ error: 'Stripe-fout', detail: err.message }) }
+    // Geen foutdetails naar de browser; die staan in de functielogs.
+    return { statusCode: 500, body: JSON.stringify({ error: 'Stripe-fout' }) }
   }
 }

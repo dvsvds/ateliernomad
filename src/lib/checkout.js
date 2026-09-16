@@ -16,35 +16,47 @@ const getStripe = () => {
  * Checkout-sessie aanmaakt. Daarna leiden we de klant door naar de
  * beveiligde betaalpagina van Stripe.
  */
+const MELDING = 'Er ging iets mis bij het starten van de betaling. Probeer het later opnieuw, of mail ons als het blijft gebeuren.'
+
+/**
+ * Geeft true terug als de klant wordt doorgestuurd naar Stripe, zodat de
+ * afrekenknop uitgeschakeld blijft tot de pagina echt weg is. Geeft false
+ * terug (na een melding) als er niets gebeurde — dan kan de klant het
+ * opnieuw proberen.
+ */
 export async function startCheckout(items) {
-  // Geen controle op PUBLISHABLE_KEY vóór de betaling. De server geeft een
-  // betaal-URL terug, dus de publieke sleutel is alleen nodig voor de oude
-  // redirect via sessie-id onderaan. Die controle stond hier vroeger en werd
-  // bij een build zonder .env letterlijk in de code gebakken: klanten kregen
-  // "nog niet geconfigureerd" terwijl de betaalfunctie gewoon werkte.
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty })) }),
+    })
 
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      items: items.map((i) => ({ slug: i.slug, name: i.name, price: i.price, qty: i.qty, image: i.image })),
-    }),
-  })
+    if (!res.ok) {
+      console.error(await res.text())
+      alert(MELDING)
+      return false
+    }
 
-  if (!res.ok) {
-    console.error(await res.text())
-    alert('Er ging iets mis bij het starten van de betaling. Probeer het later opnieuw.')
-    return
-  }
+    const data = await res.json()
 
-  const data = await res.json()
+    // Voorkeur: redirect via sessie-URL (eenvoudigst).
+    if (data.url) { window.location.href = data.url; return true }
 
-  // Voorkeur: redirect via sessie-URL (eenvoudigst).
-  if (data.url) { window.location.href = data.url; return }
+    // Alternatief: redirect via sessie-id; daarvoor is de publieke sleutel nodig.
+    if (data.id && PUBLISHABLE_KEY) {
+      const stripe = await getStripe()
+      await stripe.redirectToCheckout({ sessionId: data.id })
+      return true
+    }
 
-  // Alternatief: redirect via sessie-id.
-  if (data.id && PUBLISHABLE_KEY) {
-    const stripe = await getStripe()
-    await stripe.redirectToCheckout({ sessionId: data.id })
+    console.error('Checkout gaf geen url of id terug', data)
+    alert(MELDING)
+    return false
+  } catch (err) {
+    // Offline, DNS, ongeldige JSON: zonder dit bleef de knop stil.
+    console.error(err)
+    alert(MELDING)
+    return false
   }
 }
