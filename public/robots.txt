@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.ateliernomad.com/sitemap.xml
+Sitemap: https://xn--ateliernomd-h7a.be/sitemap.xml

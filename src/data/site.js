@@ -8,8 +8,8 @@ export const brand = {
   email: 'ateliernomad01@gmail.com',
   phone: '',   // leeg = nergens getoond. Wettelijk niet verplicht zolang
                // e-mail en het contactformulier er zijn.
-  instagram: 'https://www.instagram.com/ateliernomad',
-  instagramHandle: '@ateliernomad',
+  instagram: 'https://www.instagram.com/ateliernomad__/',
+  instagramHandle: '@ateliernomad__',
   city: 'België · Marrakech',
 }
 

@@ -20,7 +20,7 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { alleProducten as products } from '../src/data/products.js'
+import { alleProducten as products, products as zichtbareProducten } from '../src/data/products.js'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -54,3 +54,20 @@ nf = `${nf.slice(0, i)}${start}\nconst CATALOG = {\n${regels}\n}\n${nf.slice(j)}
 await writeFile(nfPad, nf, 'utf8')
 
 console.log(`✓ ${products.length} producten weggeschreven naar api/_catalog.js en de Netlify-functie`)
+
+/* ------------------------------------------------------------------
+   Sitemap. Wordt mee gegenereerd, zodat nieuwe of verwijderde
+   producten er automatisch in of uit gaan. Alleen zichtbare producten:
+   verborgen artikelen horen niet in zoekmachines.
+   ------------------------------------------------------------------ */
+const DOMEIN = 'https://xn--ateliernomd-h7a.be'
+const vast = ['/', '/shop', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
+const paden = [...vast, ...zichtbareProducten.map((p) => `/product/${p.slug}`)]
+const sitemap =
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  paden.map((pad) => `  <url><loc>${DOMEIN}${pad}</loc></url>`).join('\n') +
+  '\n</urlset>\n'
+await writeFile(join(root, 'public/sitemap.xml'), sitemap, 'utf8')
+console.log(`✓ sitemap met ${paden.length} pagina's weggeschreven`)
+
