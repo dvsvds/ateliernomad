@@ -21,7 +21,7 @@ export default function Shop() {
   useReveal([active])
   useSeo({
     title: 'De eerste collectie',
-    description: 'De volledige collectie van Atelier Nomàd: 30 unieke vintage Marokkaanse vloerpoufs, plus acht handgeweven wollen kussens.',
+    description: 'De volledige collectie van Atelier Nomàd: 29 unieke vintage Marokkaanse vloerpoufs, plus acht handgeweven wollen kussens.',
   })
 
   /* Twee filterassen door één chiprij: 'poufs'/'kussens'/'interieur' filtert op
@@ -44,7 +44,7 @@ export default function Shop() {
         <span className="eyebrow reveal">Collectie {collectie.nummer}</span>
         <h1 className="display reveal" data-delay="1">{collectie.naam}</h1>
         <p className="lead measure reveal" data-delay="2">
-          {products.length} stukken, in één keer geselecteerd in Marokko: dertig vintage
+          {products.length} stukken, in één keer geselecteerd in Marokko: negenentwintig vintage
           vloerpoufs en acht handgeweven kussens.
           Alles met de hand gemaakt en elk stuk uniek — wat je op de foto ziet, is precies
           wat je ontvangt. Is het weg, dan komt het niet terug.
