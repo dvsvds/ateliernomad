@@ -81,13 +81,16 @@ const q = ({ slug, name, label, type = 'interieur', category, price, tag, short,
   slug,
   name,
   type,
+  // Ook de kussens zijn handgeweven eenlingen: één exemplaar, max 1 in de
+  // wagen, en ze vallen onder het voorraadbeheer.
+  unique: true,
   category,
   categoryLabel: label,
   price,
   tag,
   short,
   description,
-  details,
+  details: [...details, ['Uniek', 'Eén exemplaar — wat je ziet, ontvang je']],
   // meerdere beelden alleen waar het iets toevoegt, zoals een tweezijdig kussen
   images: images || [`/images/products/${slug}.jpg`],
 })

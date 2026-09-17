@@ -11,8 +11,8 @@
      verkocht     zodra Stripe meldt dat er betaald is
      vrijgeven    als de sessie verloopt zonder betaling
 
-   Alleen unieke stukken (max 1 in de catalogus) worden bijgehouden.
-   Kussens zijn geen unieke stukken en blijven gewoon te koop.
+   Alleen unieke stukken (max 1 in de catalogus) worden bijgehouden —
+   dat is op dit moment de hele collectie, poufs én kussens.
 
    Opslag: één record PER STUK, sleutel = slug. Dat is met opzet: Blobs
    leest kort na een schrijfactie soms nog een oude versie. Reserveren

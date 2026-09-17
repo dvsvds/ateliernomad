@@ -37,14 +37,14 @@ const CATALOG = {
   'pouf-garnet':   { name: "Vloerpouf — Garnet", price: 140, max: 1 },
   'pouf-bloom':    { name: "Vloerpouf — Bloom", price: 130, max: 1 },
   'pouf-kapsa':    { name: "Vloerpouf — Kapsa", price: 130, max: 1 },
-  'kussen-atlas':  { name: "Kussen — Atlas", price: 75, max: 20 },
-  'kussen-fern':   { name: "Kussen — Fern", price: 75, max: 20 },
-  'kussen-cobalt': { name: "Kussen — Cobalt", price: 75, max: 20 },
-  'kussen-sienna': { name: "Kussen — Sienna", price: 75, max: 20 },
-  'kussen-cipher': { name: "Kussen — Cipher", price: 75, max: 20 },
-  'kussen-prism':  { name: "Kussen — Prism", price: 75, max: 20 },
-  'kussen-umber':  { name: "Kussen — Umber", price: 75, max: 20 },
-  'kussen-flare':  { name: "Kussen — Flare", price: 75, max: 20 },
+  'kussen-atlas':  { name: "Kussen — Atlas", price: 75, max: 1 },
+  'kussen-fern':   { name: "Kussen — Fern", price: 75, max: 1 },
+  'kussen-cobalt': { name: "Kussen — Cobalt", price: 75, max: 1 },
+  'kussen-sienna': { name: "Kussen — Sienna", price: 75, max: 1 },
+  'kussen-cipher': { name: "Kussen — Cipher", price: 75, max: 1 },
+  'kussen-prism':  { name: "Kussen — Prism", price: 75, max: 1 },
+  'kussen-umber':  { name: "Kussen — Umber", price: 75, max: 1 },
+  'kussen-flare':  { name: "Kussen — Flare", price: 75, max: 1 },
 }
 // </catalog>
 
@@ -72,7 +72,7 @@ exports.handler = async (event) => {
     const line_items = [...perSlug].map(([slug, aantal]) => {
       const ref = CATALOG[slug]
       return {
-        // max komt uit de catalogus: unieke stukken 1, overige 20
+        // max komt uit de catalogus: unieke stukken 1 (nu de hele collectie), overige 20
         quantity: Math.max(1, Math.min(ref.max || 20, aantal)),
         price_data: {
           currency: 'eur',

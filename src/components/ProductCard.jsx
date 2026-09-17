@@ -8,7 +8,7 @@ export default function ProductCard({ product, delay }) {
   const { add } = useCart()
   const { status } = useVoorraad()
   const to = `/product/${product.slug}`
-  // Alleen unieke stukken kunnen op zijn; kussens blijven gewoon te koop.
+  // Alleen unieke stukken kunnen op zijn (nu: alles).
   const stand = product.unique ? status(product.slug) : 'beschikbaar'
   const weg = stand !== 'beschikbaar'
 
