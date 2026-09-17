@@ -9,11 +9,13 @@ import PaymentMethods from '../components/PaymentMethods.jsx'
 import { getProduct, products, formatPrice } from '../data/products.js'
 import { shop } from '../data/site.js'
 import { useCart } from '../context/CartContext.jsx'
+import { useVoorraad, STATUS_TEKST } from '../context/VoorraadContext.jsx'
 
 export default function Product() {
   const { slug } = useParams()
   const product = getProduct(slug)
   const { add, items, open } = useCart()
+  const { status } = useVoorraad()
   const [qty, setQty] = useState(1)
   const [beeld, setBeeld] = useState(0)
   // De component wordt hergebruikt tussen producten: aantal en gekozen foto
@@ -55,6 +57,8 @@ export default function Product() {
   /* Een uniek stuk dat al in de winkelwagen zit, kan er niet nog eens in:
      de knop opent dan de winkelwagen in plaats van niets te doen. */
   const inCart = product.unique && items.some((i) => i.slug === product.slug)
+  const stand = product.unique ? status(product.slug) : 'beschikbaar'
+  const weg = stand !== 'beschikbaar'
   const addToCart = () =>
     inCart
       ? open()
@@ -106,19 +110,29 @@ export default function Product() {
             </ul>
 
             <div className="pdp__cta" ref={ctaRef}>
+              {weg && (
+                <p className="pdp__weg" role="status">
+                  <strong>{STATUS_TEKST[stand]}.</strong>{' '}
+                  {stand === 'verkocht'
+                    ? 'Dit stuk heeft een nieuwe eigenaar. Er is er maar één van, dus hij komt niet terug.'
+                    : 'Iemand anders is dit stuk op dit moment aan het afrekenen. Rondt die het niet af, dan komt het binnen een half uur weer vrij.'}
+                </p>
+              )}
               {/* Unieke stukken bestaan één keer — dan is een aantal-keuze onzin */}
-              {!product.unique && (
+              {!product.unique && !weg && (
                 <div className="qty" style={{ border: '1px solid var(--line)', borderRadius: 100, padding: '0.4rem 0.6rem' }}>
                   <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Minder">−</button>
                   <span style={{ minWidth: 24, textAlign: 'center' }}>{qty}</span>
                   <button onClick={() => setQty((q) => q + 1)} aria-label="Meer">+</button>
                 </div>
               )}
-              <button className="btn btn--terracotta" onClick={addToCart}>
-                {ctaLabel} <span className="btn__icon" aria-hidden>{inCart ? '→' : '+'}</span>
-              </button>
+              {weg
+                ? <Link to="/shop" className="btn btn--ghost">Bekijk de andere stukken <span className="btn__icon" aria-hidden>→</span></Link>
+                : <button className="btn btn--terracotta" onClick={addToCart}>
+                    {ctaLabel} <span className="btn__icon" aria-hidden>{inCart ? '→' : '+'}</span>
+                  </button>}
             </div>
-            {product.unique && (
+            {product.unique && !weg && (
               <p className="pdp__stock">Uniek stuk — er is er maar één van</p>
             )}
 

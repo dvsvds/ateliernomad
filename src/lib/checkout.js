@@ -32,6 +32,13 @@ export async function startCheckout(items) {
       body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty })) }),
     })
 
+    if (res.status === 409) {
+      // Een uniek stuk is intussen verkocht of gereserveerd. De winkelwagen
+      // handelt dit af: verwijdert het stuk en legt uit wat er gebeurde.
+      const d = await res.json()
+      return { nietBeschikbaar: { verkocht: d.verkocht || [], gereserveerd: d.gereserveerd || [] } }
+    }
+
     if (!res.ok) {
       console.error(await res.text())
       alert(MELDING)

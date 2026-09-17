@@ -6,6 +6,7 @@ import SmartImage from './SmartImage.jsx'
 import PaymentMethods from './PaymentMethods.jsx'
 import { shop } from '../data/site.js'
 import { startCheckout } from '../lib/checkout.js'
+import { useVoorraad } from '../context/VoorraadContext.jsx'
 
 export default function CartDrawer() {
   const { items, isOpen, close, remove, setQty, subtotal, count } = useCart()
@@ -21,6 +22,8 @@ export default function CartDrawer() {
   // Prijzen zijn inclusief btw, dus de btw zit er al in: bedrag x 21/121.
   const btwInSubtotaal = Math.round((subtotal * shop.btwTarief) / (1 + shop.btwTarief) * 100) / 100
   const [loading, setLoading] = useState(false)
+  const [weg, setWeg] = useState(null) // { verkocht: [...], gereserveerd: [...] }
+  const { ververs } = useVoorraad()
 
   // Escape sluit de winkelwagen, zoals elk overlay hoort te doen.
   useEffect(() => {
@@ -34,8 +37,17 @@ export default function CartDrawer() {
     setLoading(true)
     // Bij een redirect blijft de knop uit tot de pagina weg is; anders kon
     // een tweede klik een tweede Stripe-sessie starten.
-    const doorgestuurd = await startCheckout(items)
-    if (!doorgestuurd) setLoading(false)
+    const uit = await startCheckout(items)
+    if (uit && uit.nietBeschikbaar) {
+      // Net verkocht of door iemand anders gereserveerd: uit de wagen, en
+      // uitleggen waarom het totaal ineens lager is.
+      for (const p of [...uit.nietBeschikbaar.verkocht, ...uit.nietBeschikbaar.gereserveerd]) remove(p.slug)
+      setWeg(uit.nietBeschikbaar)
+      ververs()
+      setLoading(false)
+      return
+    }
+    if (!uit) setLoading(false)
   }
 
   return (
@@ -48,6 +60,16 @@ export default function CartDrawer() {
         </div>
 
         <div className="drawer__body">
+          {weg && (
+            <p className="notice drawer__weg" role="alert">
+              {weg.verkocht.length > 0 && (
+                <>Helaas, net verkocht: <strong>{weg.verkocht.map((p) => p.name).join(', ')}</strong>. Er is er maar één van, dus we hebben het uit je winkelwagen gehaald.{' '}</>
+              )}
+              {weg.gereserveerd.length > 0 && (
+                <>Iemand anders is <strong>{weg.gereserveerd.map((p) => p.name).join(', ')}</strong> op dit moment aan het afrekenen. Rondt die het niet af, dan komt het binnen een half uur weer vrij.</>
+              )}
+            </p>
+          )}
           {items.length === 0 && (
             <div className="drawer__empty">
               <p>Je winkelwagen is nog leeg.<br />Ontdek de collectie en voeg iets moois toe.</p>

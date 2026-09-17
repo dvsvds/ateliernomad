@@ -1,6 +1,7 @@
 const Stripe = require('stripe')
 const nodemailer = require('nodemailer')
 const { maakBevestiging, bestelcode } = require('../lib/bestelmail.cjs')
+const { markeerVerkocht, geefVrij } = require('../lib/voorraad.cjs')
 
 /* ============================================================
    stripe-webhook — na elke geslaagde betaling:
@@ -25,7 +26,8 @@ const { maakBevestiging, bestelcode } = require('../lib/bestelmail.cjs')
 
    Stripe-webhook: Developers → Webhooks → Add endpoint
      URL:    https://xn--ateliernomd-h7a.be/.netlify/functions/stripe-webhook
-     Events: checkout.session.completed, checkout.session.async_payment_succeeded
+     Events: checkout.session.completed, checkout.session.async_payment_succeeded,
+             checkout.session.expired (geeft een reservering vrij)
 
    Testbetalingen (Stripe in testmodus) sturen de klantmail naar
    MAIL_USER in plaats van naar het testadres, met [TEST] in het onderwerp.
@@ -141,8 +143,26 @@ exports.handler = async (event) => {
     (stripeEvent.type === 'checkout.session.completed' && session.payment_status === 'paid') ||
     stripeEvent.type === 'checkout.session.async_payment_succeeded'
 
+  const slugs = String(session.metadata?.slugs || '').split(',').filter(Boolean)
+
+  if (stripeEvent.type === 'checkout.session.expired') {
+    // Niet betaald binnen 30 minuten: het stuk mag weer verkocht worden.
+    await geefVrij(event, slugs, session.id).catch((err) => console.error('vrijgeven mislukt:', err.message))
+    return { statusCode: 200, body: JSON.stringify({ vrijgegeven: session.id }) }
+  }
+
   if (!betaald) {
     return { statusCode: 200, body: JSON.stringify({ genegeerd: stripeEvent.type }) }
+  }
+
+  // Eerst de voorraad: vanaf nu staat het stuk overal als "Verkocht". Dit
+  // gaat vóór de mails, want een gemiste mail is te herstellen, een dubbele
+  // verkoop niet.
+  try {
+    await markeerVerkocht(event, slugs, session.id)
+  } catch (err) {
+    console.error('verkocht markeren mislukt:', err.message)
+    return { statusCode: 500, body: 'Voorraad bijwerken mislukt' }
   }
 
   const test = !stripeEvent.livemode

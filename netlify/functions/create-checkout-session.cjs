@@ -1,4 +1,5 @@
 const Stripe = require('stripe')
+const { reserveer, draagOver, geefVrij, RESERVERING_MS } = require('../lib/voorraad.cjs')
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 // Geen terugval op localhost: een productie-deploy zonder SITE_URL zou
@@ -89,9 +90,34 @@ exports.handler = async (event) => {
 
     if (line_items.length === 0) return { statusCode: 400, body: JSON.stringify({ error: 'Lege of ongeldige winkelwagen' }) }
 
-    const session = await stripe.checkout.sessions.create({
+    // Unieke stukken: eerst kijken of ze nog vrij zijn, en meteen vastzetten
+    // voor deze klant. Zo kunnen twee mensen niet dezelfde pouf afrekenen.
+    const uniek = [...perSlug.keys()].filter((slug) => CATALOG[slug].max === 1)
+    const tijdelijkId = 'aanmaak_' + Date.now() + '_' + Math.random().toString(36).slice(2)
+    const r = await reserveer(event, uniek, tijdelijkId)
+    if (!r.ok) {
+      const naam = (s) => CATALOG[s].name
+      if (r.onbeschikbaar) console.error('voorraad onbereikbaar: unieke stukken tijdelijk geweigerd')
+      return {
+        statusCode: 409,
+        body: JSON.stringify({
+          error: 'Niet meer beschikbaar',
+          verkocht: r.verkocht.map((s) => ({ slug: s, name: naam(s) })),
+          gereserveerd: r.gereserveerd.map((s) => ({ slug: s, name: naam(s) })),
+        }),
+      }
+    }
+
+    let session
+    try {
+      session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
+      // Zelfde levensduur als de reservering: verloopt de sessie, dan komt
+      // het stuk vrij (via de webhook checkout.session.expired, of vanzelf).
+      expires_at: Math.floor((Date.now() + RESERVERING_MS) / 1000),
+      // De webhook leest hier welke stukken verkocht zijn.
+      metadata: { slugs: [...perSlug.keys()].join(','), reservering: tijdelijkId },
       // Stripe Tax rekent pas mee als de sessie er expliciet om vraagt.
       automatic_tax: { enabled: true },
       success_url: `${SITE_URL}/bedankt?session_id={CHECKOUT_SESSION_ID}`,
@@ -102,6 +128,17 @@ exports.handler = async (event) => {
         { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 2 }, maximum: { unit: 'business_day', value: 4 } } } },
       ],
     })
+
+    } catch (err) {
+      // Stripe weigerde: reservering meteen weer vrij, anders staat het stuk
+      // een half uur voor niets vast.
+      await geefVrij(event, uniek, tijdelijkId).catch(() => {})
+      throw err
+    }
+
+    // Reservering overzetten op de echte sessie-id, zodat de webhook hem
+    // bij een verlopen sessie kan vrijgeven.
+    await draagOver(event, r.etags || {}, tijdelijkId, session.id).catch((err) => console.error('overdracht reservering mislukt:', err.message))
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id, url: session.url }) }
   } catch (err) {

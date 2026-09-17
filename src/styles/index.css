@@ -686,3 +686,15 @@ p { margin: 0 0 1.1rem; }
 .pdp__gallery .thumb.is-active { border-color: var(--terracotta); }
 .pdp__gallery .thumb:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
 
+/* Verkochte of gereserveerde stukken: zichtbaar, maar duidelijk weg */
+.card--weg .card__media img { filter: saturate(0.35) brightness(1.04); }
+.card--weg .card__name, .card--weg .card__price { color: var(--muted); }
+.card__tag--verkocht { background: var(--ink); color: var(--cream); }
+.card__tag--gereserveerd { background: var(--sand); color: var(--ink); }
+.pdp__weg {
+  margin: 0 0 1rem; padding: 0.9rem 1.1rem; border-radius: var(--radius-lg);
+  background: var(--cream-deep); color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55;
+}
+.pdp__weg strong { color: var(--ink); }
+.drawer__weg { margin-bottom: 1.2rem; }
+

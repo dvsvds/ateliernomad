@@ -1,3 +1,6 @@
+// LET OP: deze Vercel-kopie heeft GEEN voorraadbeheer. De live shop draait
+// op Netlify (netlify/functions/create-checkout-session.cjs); alleen daar
+// worden unieke stukken gereserveerd en als verkocht gemarkeerd.
 import Stripe from 'stripe'
 import { CATALOG } from './_catalog.js'
 
