@@ -1,0 +1,16 @@
+# Beveiligingsheaders voor alle pagina's. Netlify leest dit bestand bij
+# elke deploy. De site laadt eigen bestanden, Google Fonts en Stripe.js
+# (dat laadt zichzelf op elke pagina, ook al betalen we via een
+# doorverwijzing naar de betaalpagina van Stripe).
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://api.stripe.com https://r.stripe.com https://m.stripe.com https://m.stripe.network; frame-src https://js.stripe.com https://hooks.stripe.com https://m.stripe.network; form-action 'self' https://checkout.stripe.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+
+# Gebouwde bestanden hebben een hash in de naam en mogen lang gecachet worden.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
