@@ -65,7 +65,7 @@ function leesSessie(session, regels) {
   }
 }
 
-function maakBevestiging({ session, regels, siteUrl, siteNaam = 'ateliernomàd.be' }) {
+function maakBevestiging({ session, regels, siteUrl, siteNaam = 'ateliernomad.eu' }) {
   const d = leesSessie(session, regels)
   const heeftPouf = d.artikelen.some((a) => /pouf/i.test(a.naam || ''))
   const onderwerp = `Bedankt voor je bestelling ${d.code} — Atelier Nomàd`

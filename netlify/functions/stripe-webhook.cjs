@@ -25,7 +25,7 @@ const { markeerVerkocht, geefVrij } = require('../lib/voorraad.cjs')
    deploy door aan functies.
 
    Stripe-webhook: Developers → Webhooks → Add endpoint
-     URL:    https://xn--ateliernomd-h7a.be/.netlify/functions/stripe-webhook
+     URL:    https://ateliernomad.eu/.netlify/functions/stripe-webhook
      Events: checkout.session.completed, checkout.session.async_payment_succeeded,
              checkout.session.expired (geeft een reservering vrij)
 

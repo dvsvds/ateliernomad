@@ -60,7 +60,7 @@ console.log(`✓ ${products.length} producten weggeschreven naar api/_catalog.js
    producten er automatisch in of uit gaan. Alleen zichtbare producten:
    verborgen artikelen horen niet in zoekmachines.
    ------------------------------------------------------------------ */
-const DOMEIN = 'https://xn--ateliernomd-h7a.be'
+const DOMEIN = 'https://ateliernomad.eu'
 const vast = ['/', '/shop', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
 const paden = [...vast, ...zichtbareProducten.map((p) => `/product/${p.slug}`)]
 const sitemap =

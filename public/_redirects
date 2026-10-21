@@ -1,5 +1,16 @@
-# Het oude netlify-adres stuurt door naar het eigen domein. Deze regel
-# moet boven de SPA-regel staan, anders wint die.
-https://ateliernomad-be.netlify.app/* https://xn--ateliernomd-h7a.be/:splat 301!
+# Domeinen. Het hoofddomein is ateliernomad.eu; het oude accent-domein
+# en het netlify-adres sturen door (301, dus Google neemt de posities mee).
+# Regels gelden in volgorde: de eerste die past, wint.
 
+# De Stripe-webhook mag op het oude domein blijven werken (Stripe volgt
+# geen doorverwijzingen), dus functies worden niet doorgestuurd.
+https://xn--ateliernomd-h7a.be/.netlify/functions/*      /.netlify/functions/:splat  200
+https://www.xn--ateliernomd-h7a.be/.netlify/functions/*  /.netlify/functions/:splat  200
+
+https://xn--ateliernomd-h7a.be/*       https://ateliernomad.eu/:splat  301!
+https://www.xn--ateliernomd-h7a.be/*   https://ateliernomad.eu/:splat  301!
+https://ateliernomad-be.netlify.app/*  https://ateliernomad.eu/:splat  301!
+https://www.ateliernomad.eu/*          https://ateliernomad.eu/:splat  301!
+
+# Alles wat geen bestand is, gaat naar de app (client-side routing).
 /*    /index.html   200
