@@ -2,11 +2,6 @@
 # en het netlify-adres sturen door (301, dus Google neemt de posities mee).
 # Regels gelden in volgorde: de eerste die past, wint.
 
-# De Stripe-webhook mag op het oude domein blijven werken (Stripe volgt
-# geen doorverwijzingen), dus functies worden niet doorgestuurd.
-https://xn--ateliernomd-h7a.be/.netlify/functions/*      /.netlify/functions/:splat  200
-https://www.xn--ateliernomd-h7a.be/.netlify/functions/*  /.netlify/functions/:splat  200
-
 https://xn--ateliernomd-h7a.be/*       https://ateliernomad.eu/:splat  301!
 https://www.xn--ateliernomd-h7a.be/*   https://ateliernomad.eu/:splat  301!
 https://ateliernomad-be.netlify.app/*  https://ateliernomad.eu/:splat  301!
