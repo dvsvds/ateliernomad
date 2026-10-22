@@ -19,7 +19,7 @@ export const brand = {
    Analytics laadt pas nadat de bezoeker op "Accepteren" klikt (AVG/GDPR);
    wie weigert, wordt niet gemeten. */
 export const analytics = {
-  ga4Id: '',
+  ga4Id: 'G-54077HDHHF',
 }
 
 /* Winkelinfo die op productpagina, winkelwagen en footer terugkomt.
