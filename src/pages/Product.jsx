@@ -11,6 +11,22 @@ import { shop } from '../data/site.js'
 import { useCart } from '../context/CartContext.jsx'
 import { useVoorraad, STATUS_TEKST } from '../context/VoorraadContext.jsx'
 
+/* Zoektitel: wat mensen intypen ("marokkaanse poef", "berber kussen")
+   plus de naam van het stuk. "Vloerpouf — Haze" → "Berber poef Haze". */
+const kruimel = (product) =>
+  product.type === 'poufs' ? { name: 'Poefs', pad: '/poefs' }
+  : product.type === 'kussens' ? { name: 'Kussens', pad: '/kussens' }
+  : { name: 'Shop', pad: '/shop' }
+
+function seoTitel(product) {
+  const naam = product.name.split('— ').pop()
+  return product.type === 'poufs'
+    ? `Berber poef ${naam} · vintage Marokkaanse poef`
+    : product.type === 'kussens'
+      ? `Berber kussen ${naam} · handgeweven Marokkaans kussen`
+      : product.name
+}
+
 /* Structured data voor Google: product met prijs, beschikbaarheid,
    verzending en retour, plus het kruimelpad. */
 function productLd(product, verkocht) {
@@ -57,7 +73,7 @@ function productLd(product, verkocht) {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: 'Shop', item: `${SITE_URL}/shop` },
+        { '@type': 'ListItem', position: 2, name: kruimel(product).name, item: SITE_URL + kruimel(product).pad },
         { '@type': 'ListItem', position: 3, name: product.name, item: url },
       ],
     },
@@ -95,8 +111,8 @@ export default function Product() {
   }, [slug])
   const verkocht = product?.unique && status(product.slug) === 'verkocht'
   useSeo(product ? {
-    title: `${product.name} · ${formatPrice(product.price)}`,
-    description: `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek stuk — verzending binnen de EU in ${shop.deliveryTime}.`,
+    title: seoTitel(product),
+    description: `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek stuk, ${formatPrice(product.price)} — verzending in België en de EU in ${shop.deliveryTime}.`,
     image: product.images?.[0],
     type: 'product',
     jsonLd: productLd(product, verkocht),
@@ -129,7 +145,7 @@ export default function Product() {
     <>
       <div className="container" style={{ paddingTop: '1.5rem' }}>
         <p style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>
-          <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to="/shop">Shop</Link> &nbsp;/&nbsp; <span>{product.name}</span>
+          <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to={kruimel(product).pad}>{kruimel(product).name}</Link> &nbsp;/&nbsp; <span>{product.name}</span>
         </p>
       </div>
 
@@ -148,7 +164,7 @@ export default function Product() {
                 aria-label={i === 0 ? 'Voorkant tonen' : 'Achterkant tonen'}
                 aria-pressed={i === beeld}
               >
-                <SmartImage src={src} alt="" label="" sublabel="" />
+                <SmartImage src={src} alt={`${product.name} — foto ${i + 1}`} label="" sublabel="" />
               </button>
             ))}
           </div>
@@ -165,6 +181,11 @@ export default function Product() {
                 <li key={k}><span>{k}</span><span style={{ marginLeft: 'auto', textAlign: 'right' }}>{v}</span></li>
               ))}
             </ul>
+            {product.type === 'poufs' && (
+              <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
+                Hoe vul je een poef? <Link to="/poef-vullen" className="link-underline">Lees onze stap-voor-stap uitleg</Link>.
+              </p>
+            )}
 
             <div className="pdp__cta" ref={ctaRef}>
               {weg && (

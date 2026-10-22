@@ -1,5 +1,5 @@
 import { Fragment, useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
 import useGehydrateerd from '../hooks/useGehydrateerd.js'
@@ -12,21 +12,56 @@ const chips = categories.filter(
   (c) => c.as !== 'type' || c.id === 'all' || products.some((p) => p.type === c.id)
 )
 
-export default function Shop() {
-  const [params, setParams] = useSearchParams()
+/* Poefs en kussens hebben elk een eigen landingspagina (/poefs, /kussens),
+   zodat ze in Google kunnen ranken op "marokkaanse poef" en "marokkaanse
+   kussens". De rest van de filters blijft een parameter op /shop. */
+export const SOORT_PAD = { all: '/shop', poufs: '/poefs', kussens: '/kussens' }
+
+const aantal = (type) => products.filter((p) => p.type === type).length
+
+const PAGINA = {
+  all: {
+    seo: {
+      title: 'Shop Marokkaanse poefs & Berber kussens',
+      description: `Unieke Marokkaanse poefs, geknoopt uit vintage Berberkleden, en handgeweven wollen Berber kussens. ${products.length} stukken, elk maar één keer. Verzending in België en de EU.`,
+    },
+    eyebrow: `Collectie ${collectie.nummer}`,
+    titel: collectie.naam,
+  },
+  poufs: {
+    seo: {
+      title: 'Marokkaanse poef kopen · vintage Berber poefs',
+      description: `${aantal('poufs')} unieke Marokkaanse poefs, met de hand geknoopt uit vintage Berberkleden, boucherouite en kelim. Elk stuk bestaat maar één keer. Vanaf € 120, verzending in België en de EU.`,
+    },
+    eyebrow: 'Poefs',
+    titel: 'Marokkaanse Berber poefs',
+    intro: `${aantal('poufs')} vintage poefs, elk met de hand geknoopt uit een oud Berberkleed, boucherouite of kelim uit Marokko. Omdat elk kleed anders is, bestaat elke poef maar één keer: wat je op de foto ziet, is precies wat je ontvangt. We versturen ze ongevuld, als hoes met rits — zo blijft verzenden betaalbaar en vul je hem zelf zo stevig als je wil.`,
+  },
+  kussens: {
+    seo: {
+      title: 'Marokkaanse kussens · handgeweven Berber kussens',
+      description: `${aantal('kussens')} handgeweven Marokkaanse kussens van Berberwol uit de Atlas: hoogpolig, met franjes of geborduurde motieven. Elk kussen is uniek. Verzending in België en de EU.`,
+    },
+    eyebrow: 'Kussens',
+    titel: 'Marokkaanse Berber kussens',
+    intro: `${aantal('kussens')} handgeweven kussens van schapenwol, gemaakt op smalle weefgetouwen in de Atlas. Ongeverfde wol, geverfde banen, franjes en geborduurde tekens: geen twee zijn gelijk, en elk kussen bestaat maar één keer.`,
+  },
+}
+
+export default function Shop({ soort }) {
+  const [params] = useSearchParams()
+  const navigate = useNavigate()
   /* De URL is de bron van waarheid — zo werkt een link naar
      /shop?cat=poufs ook als je al op de shoppagina staat. */
   // De vooraf gerenderde HTML toont de hele collectie; de filter uit de
   // URL komt er pas na het overnemen door React bij.
   const gehydrateerd = useGehydrateerd()
-  const gevraagd = gehydrateerd ? params.get('cat') : null
+  const gevraagd = soort || (gehydrateerd ? params.get('cat') : null)
   // Een oude of verzonnen link (?cat=interieur, ?cat=foo) toont anders een lege shop.
   const active = categories.some((c) => c.id === gevraagd) ? gevraagd : 'all'
   useReveal([active])
-  useSeo({
-    title: 'Shop Marokkaanse poufs & kussens',
-    description: 'De volledige collectie van Atelier Nomàd: 29 unieke vintage Marokkaanse vloerpoufs, plus acht handgeweven wollen kussens.',
-  })
+  const pagina = PAGINA[soort || 'all']
+  useSeo(pagina.seo)
 
   /* Twee filterassen door één chiprij: 'poufs'/'kussens'/'interieur' filtert op
      productsoort, de kleurchips op kleurfamilie. Welke van de twee een
@@ -37,21 +72,23 @@ export default function Shop() {
     return products.filter((p) => p[veld] === active)
   }, [active])
 
-  const choose = (id) => {
-    if (id === 'all') setParams({})
-    else setParams({ cat: id })
-  }
+  // `behoudScroll`: van /shop naar /poefs wisselen is een filterklik, geen
+  // nieuwe pagina — dan niet naar boven springen (zie ScrollToTop in App).
+  const choose = (id) =>
+    navigate(SOORT_PAD[id] || `/shop?cat=${id}`, { state: { behoudScroll: true } })
 
   return (
     <>
       <section className="page-hero container">
-        <span className="eyebrow reveal">Collectie {collectie.nummer}</span>
-        <h1 className="display reveal" data-delay="1">{collectie.naam}</h1>
+        <span className="eyebrow reveal">{pagina.eyebrow}</span>
+        <h1 className="display reveal" data-delay="1">{pagina.titel}</h1>
         <p className="lead measure reveal" data-delay="2">
-          {products.length} stukken, in één keer geselecteerd in Marokko: negenentwintig vintage
-          vloerpoufs en acht handgeweven kussens.
-          Alles met de hand gemaakt en elk stuk uniek — wat je op de foto ziet, is precies
-          wat je ontvangt. Is het weg, dan komt het niet terug.
+          {pagina.intro || <>
+            {products.length} stukken, in één keer geselecteerd in Marokko: {aantal('poufs')} vintage
+            Marokkaanse poefs en {aantal('kussens')} handgeweven Berber kussens.
+            Alles met de hand gemaakt en elk stuk uniek — wat je op de foto ziet, is precies
+            wat je ontvangt. Is het weg, dan komt het niet terug.
+          </>}
         </p>
       </section>
 
