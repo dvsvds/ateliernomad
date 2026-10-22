@@ -13,8 +13,8 @@ import { testimonials, instagram } from '../data/site.js'
 export default function Home() {
   useReveal()
   useSeo({
-    title: 'Marokkaanse vloerpoufs & handgeweven kussens',
-    description: 'Atelier Nomàd — unieke vintage Marokkaanse vloerpoufs, geknoopt uit Berberkleden, plus handgeweven wollen kussens. Elk stuk bestaat maar één keer.',
+    title: 'Marokkaanse poefs & Berber kussens',
+    description: 'Unieke vintage Marokkaanse poefs, met de hand geknoopt uit Berberkleden, en handgeweven wollen Berber kussens. Elk stuk bestaat maar één keer. Verzending in België en de EU.',
   })
 
   return (

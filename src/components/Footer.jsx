@@ -21,8 +21,8 @@ export default function Footer() {
           <div>
             <h4>Shop</h4>
             <Link to="/shop">Volledige collectie</Link>
-            <Link to="/shop?cat=poufs">Vloerpoufs</Link>
-            <Link to="/shop?cat=kussens">Kussens</Link>
+            <Link to="/poefs">Marokkaanse poefs</Link>
+            <Link to="/kussens">Berber kussens</Link>
             <Link to="/shop?cat=geweven">Geweven</Link>
           </div>
 
@@ -31,6 +31,7 @@ export default function Footer() {
             <Link to="/over">Over Atelier Nomàd</Link>
             <Link to="/ambacht">Ambacht & Herkomst</Link>
             <Link to="/faq">Veelgestelde vragen</Link>
+            <Link to="/poef-vullen">Je poef vullen</Link>
             <Link to="/contact">Contact</Link>
           </div>
 

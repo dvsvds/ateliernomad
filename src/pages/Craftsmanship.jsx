@@ -72,7 +72,7 @@ export default function Craftsmanship() {
           <p className="lead measure mx-auto" style={{ marginBottom: '2rem' }}>
             Ontdek stukken die warmte, textuur en verhaal toevoegen aan je interieur.
           </p>
-          <Link to="/shop" className="btn btn--terracotta">Shop Collection <span className="btn__icon" aria-hidden>→</span></Link>
+          <Link to="/shop" className="btn btn--terracotta">Shop de collectie <span className="btn__icon" aria-hidden>→</span></Link>
         </div>
       </section>
     </>

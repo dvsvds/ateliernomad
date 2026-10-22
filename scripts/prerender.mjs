@@ -21,7 +21,7 @@ const SITE_URL = 'https://ateliernomad.eu'
 const { render, productSlugs } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 const sjabloon = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
-const vast = ['/', '/shop', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
+const vast = ['/', '/shop', '/poefs', '/kussens', '/poef-vullen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
 const pagina = [...vast, ...productSlugs.map((s) => `/product/${s}`)]
 
 const SEO = /<!--seo-->[\s\S]*?<!--\/seo-->/

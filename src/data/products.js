@@ -65,7 +65,7 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
   type: 'poufs',
   unique: true, // er bestaat precies één exemplaar — max 1 in de winkelwagen
   category,
-  categoryLabel: 'Vloerpouf',
+  categoryLabel: 'Berber poef',
   price,
   tag,
   short,
@@ -244,7 +244,7 @@ export const products = [
   q({
     slug: 'kussen-atlas',
     name: 'Kussen — Atlas',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'authentiek',
     price: 75,
@@ -263,7 +263,7 @@ export const products = [
   q({
     slug: 'kussen-fern',
     name: 'Kussen — Fern',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
     price: 75,
@@ -282,7 +282,7 @@ export const products = [
   q({
     slug: 'kussen-cobalt',
     name: 'Kussen — Cobalt',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
     price: 75,
@@ -301,7 +301,7 @@ export const products = [
   q({
     slug: 'kussen-sienna',
     name: 'Kussen — Sienna',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
     price: 75,
@@ -320,7 +320,7 @@ export const products = [
   q({
     slug: 'kussen-cipher',
     name: 'Kussen — Cipher',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
     price: 75,
@@ -339,7 +339,7 @@ export const products = [
   q({
     slug: 'kussen-prism',
     name: 'Kussen — Prism',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'modern',
     price: 75,
@@ -358,7 +358,7 @@ export const products = [
   q({
     slug: 'kussen-umber',
     name: 'Kussen — Umber',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
     price: 75,
@@ -377,7 +377,7 @@ export const products = [
   q({
     slug: 'kussen-flare',
     name: 'Kussen — Flare',
-    label: 'Kussen',
+    label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
     price: 75,

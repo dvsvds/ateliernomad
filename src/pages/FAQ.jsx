@@ -43,6 +43,9 @@ export default function FAQ() {
               </div>
             ))}
           </div>
+          <p className="notice reveal" style={{ marginTop: '2.5rem' }}>
+            Je poef zelf vullen? <Link to="/poef-vullen" className="link-underline">Zo doe je dat, stap voor stap.</Link>
+          </p>
         </div>
       </section>
     </>

@@ -7,20 +7,22 @@ export default function Hero() {
     <section className="hero container">
       <div className="hero__grid">
         <div>
-          <span className="eyebrow reveal">Handgemaakt in Marokko</span>
-          <h1 className="display hero__title reveal" data-delay="1">
+          {/* De h1 is de zoekterm (klein, als eyebrow); de grote tagline is
+              beeldtaal en daarom geen kop. */}
+          <h1 className="eyebrow reveal">Marokkaanse poefs &amp; Berber kussens</h1>
+          <p className="display hero__title reveal" data-delay="1">
             Handcrafted<br /><span className="serif-italic">Moroccan</span> Living
-          </h1>
+          </p>
           <p className="lead hero__sub reveal" data-delay="2">
-            Authentieke interieurstukken, met de hand gemaakt met ziel en
-            geselecteerd voor tijdloze interieurs.
+            Vintage Berber poefs en handgeweven wollen kussens, met de hand gemaakt
+            in Marokko. Elk stuk bestaat maar één keer.
           </p>
           <div className="hero__cta reveal" data-delay="3">
             <Link to="/shop" className="btn btn--terracotta">
-              Shop Collection <span className="btn__icon" aria-hidden>&#8594;</span>
+              Shop de collectie <span className="btn__icon" aria-hidden>&#8594;</span>
             </Link>
             <Link to="/over" className="btn btn--ghost">
-              Discover Our Story <span className="btn__icon" aria-hidden>&#8594;</span>
+              Ons verhaal <span className="btn__icon" aria-hidden>&#8594;</span>
             </Link>
           </div>
 
@@ -53,7 +55,7 @@ export default function Hero() {
           </div>
 
           <div className="frame-sub" style={{ overflow: 'hidden' }}>
-            <SmartImage src={heroImages.sub} alt="Marokkaanse vloerpouf" label="Vloerpouf" sublabel="" />
+            <SmartImage src={heroImages.sub} alt="Marokkaanse Berber poef" label="Berber poef" sublabel="" />
           </div>
           <span className="hero__badge">Vintage &amp; uniek</span>
         </div>

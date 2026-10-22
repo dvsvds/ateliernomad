@@ -58,10 +58,10 @@ export const heroImages = {
 export const testimonials = []
 
 export const lifestyle = [
-  { src: '/images/lifestyle/inter-1.jpg', label: 'Loungehoek met poufs' },
+  { src: '/images/lifestyle/inter-1.jpg', label: 'Loungehoek met Marokkaanse poefs' },
   { src: '/images/lifestyle/inter-3.jpg', label: 'Woonkamer met bogen' },
   { src: '/images/lifestyle/inter-2.jpg', label: 'Slaapkamer met zicht' },
-  { src: '/images/lifestyle/inter-4.jpg', label: 'Poufs in een kleurrijk interieur' },
+  { src: '/images/lifestyle/inter-4.jpg', label: 'Berber poefs in een kleurrijk interieur' },
 ]
 
 /* Foto's voor de Instagram-galerij op de homepage. Leeg = de sectie wordt
@@ -71,10 +71,10 @@ export const instagram = []
 
 export const faqs = [
   { q: 'Zijn alle stukken echt handgemaakt?', a: 'Ja. Elk stuk wordt met de hand vervaardigd door ambachtslieden in Marokko, volgens technieken die generaties lang zijn doorgegeven. Daardoor is geen enkel exemplaar exact hetzelfde — kleine variaties horen bij het ambacht.' },
-  { q: 'Zijn de vloerpoufs uniek?', a: 'Onze boucherouite- en kapsa-poufs worden gemaakt van vintage Berberkleden. Elk patroon en kleurenspel is daardoor eenmalig — wat je op de foto ziet, is precies het stuk dat je ontvangt.' },
-  { q: 'Hoe lang duurt de levering?', a: 'Omdat elke pouf al op voorraad ligt, versturen we binnen 2–4 werkdagen. Je ontvangt altijd een track & trace. Ongevuld verzenden houdt het pakket klein, dus ook binnen Europa gaat het snel.' },
+  { q: 'Zijn de poefs uniek?', a: 'Onze boucherouite- en kapsa-poefs worden gemaakt van vintage Berberkleden. Elk patroon en kleurenspel is daardoor eenmalig — wat je op de foto ziet, is precies het stuk dat je ontvangt.' },
+  { q: 'Hoe lang duurt de levering?', a: 'Omdat elke poef al op voorraad ligt, versturen we binnen 2–4 werkdagen. Je ontvangt altijd een track & trace. Ongevuld verzenden houdt het pakket klein, dus ook binnen Europa gaat het snel.' },
   { q: 'Verzenden jullie internationaal?', a: 'We verzenden binnen heel Europa. Verzending binnen de EU kost € 9,95 per bestelling, hoeveel stukken je ook bestelt. Voor bestemmingen buiten de EU kun je contact met ons opnemen.' },
-  { q: 'Worden de poufs gevuld geleverd?', a: 'Nee, je ontvangt de pouf als hoes, zonder vulling. Dat houdt de verzendkosten laag — een gevulde pouf is vooral lucht. Vullen doe je zelf met bijvoorbeeld textielresten, oude kussens of vulkorrels; reken op ongeveer 100 liter per pouf. De hoes sluit met een rits.' },
+  { q: 'Worden de poefs gevuld geleverd?', a: 'Nee, je ontvangt de poef als hoes, zonder vulling. Dat houdt de verzendkosten laag — een gevulde pouf is vooral lucht. Vullen doe je zelf met bijvoorbeeld textielresten, oude kussens of vulkorrels; reken op ongeveer 100 liter per pouf. De hoes sluit met een rits.' },
   { q: 'Wat is jullie retourbeleid?', a: 'Niet helemaal tevreden? Je hebt 14 dagen bedenktijd na ontvangst, ook op unieke stukken. Mail ons met je bestelnummer en stuur het stuk ongebruikt en in de originele verpakking terug; alleen maatwerk op jouw vraag is uitgesloten.' },
 ]
 
