@@ -12,7 +12,8 @@ import About from './pages/About.jsx'
 import Craftsmanship from './pages/Craftsmanship.jsx'
 import Contact from './pages/Contact.jsx'
 import FAQ from './pages/FAQ.jsx'
-import PoefVullen from './pages/PoefVullen.jsx'
+import Gids, { Gidsen } from './pages/Gids.jsx'
+import { gidsen } from './data/gidsen.js'
 import Success from './pages/Success.jsx'
 import Legal from './pages/Legal.jsx'
 import NotFound from './pages/NotFound.jsx'
@@ -39,7 +40,8 @@ export default function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/poefs" element={<Shop soort="poufs" />} />
           <Route path="/kussens" element={<Shop soort="kussens" />} />
-          <Route path="/poef-vullen" element={<PoefVullen />} />
+          <Route path="/gidsen" element={<Gidsen />} />
+          {gidsen.map((g) => <Route key={g.slug} path={`/${g.slug}`} element={<Gids slug={g.slug} />} />)}
           <Route path="/product/:slug" element={<Product />} />
           <Route path="/over" element={<About />} />
           <Route path="/ambacht" element={<Craftsmanship />} />

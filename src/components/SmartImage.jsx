@@ -5,7 +5,15 @@ import { useEffect, useState } from 'react'
  * een nette, merkkleurige placeholder met de productnaam — zo ziet de
  * site er altijd af uit, ook voordat je je beelden hebt toegevoegd.
  */
-export default function SmartImage({ src, alt = '', label, sublabel = 'Atelier Nomàd', loading = 'lazy' }) {
+/* Productfoto's bestaan ook in 700 px (scripts/kleine-fotos.mjs, alleen in
+   de build). De browser kiest zelf: klein voor kaartjes, groot waar nodig. */
+const KLEIN = /^\/images\/products\/(?!klein\/)([^/]+)$/
+const srcSetVoor = (src) => {
+  const m = import.meta.env.PROD && src && src.match(KLEIN)
+  return m ? `/images/products/klein/${m[1]} 700w, ${src} 1400w` : undefined
+}
+
+export default function SmartImage({ src, alt = '', label, sublabel = 'Atelier Nomàd', loading = 'lazy', sizes = '(max-width: 560px) 100vw, (max-width: 1024px) 50vw, 420px' }) {
   const [failed, setFailed] = useState(!src)
   // Dezelfde component wordt hergebruikt tussen producten: een mislukt beeld
   // van het vorige product mag het volgende niet als plaatshouder tonen.
@@ -14,7 +22,7 @@ export default function SmartImage({ src, alt = '', label, sublabel = 'Atelier N
   return (
     <span className="smart-img">
       {!failed && (
-        <img src={src} alt={alt || label || ''} loading={loading} onError={() => setFailed(true)} />
+        <img src={src} srcSet={srcSetVoor(src)} sizes={srcSetVoor(src) && sizes} alt={alt || label || ''} loading={loading} decoding="async" onError={() => setFailed(true)} />
       )}
       {failed && (
         <span className="smart-img__ph" aria-label={alt || label || 'afbeelding'}>

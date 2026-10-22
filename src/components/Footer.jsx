@@ -31,7 +31,7 @@ export default function Footer() {
             <Link to="/over">Over Atelier Nomàd</Link>
             <Link to="/ambacht">Ambacht & Herkomst</Link>
             <Link to="/faq">Veelgestelde vragen</Link>
-            <Link to="/poef-vullen">Je poef vullen</Link>
+            <Link to="/gidsen">Gidsen</Link>
             <Link to="/contact">Contact</Link>
           </div>
 

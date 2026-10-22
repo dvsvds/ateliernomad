@@ -18,11 +18,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
 const SITE_URL = 'https://ateliernomad.eu'
 
-const { render, productSlugs } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
+const { render, productSlugs, zichtbareSlugs, gidsSlugs } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 const sjabloon = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
-const vast = ['/', '/shop', '/poefs', '/kussens', '/poef-vullen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
-const pagina = [...vast, ...productSlugs.map((s) => `/product/${s}`)]
+const vast = ['/', '/shop', '/poefs', '/kussens', '/gidsen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
+const pagina = [...vast, ...gidsSlugs.map((s) => `/${s}`), ...productSlugs.map((s) => `/product/${s}`)]
 
 const SEO = /<!--seo-->[\s\S]*?<!--\/seo-->/
 
@@ -43,7 +43,8 @@ const inSitemap = []
 for (const url of pagina) {
   const r = render(url)
   schrijf(bestandVoor(url), r)
-  if (!r.noindex) inSitemap.push(url)
+  const verborgen = url.startsWith('/product/') && !zichtbareSlugs.includes(url.slice(9))
+  if (!r.noindex && !verborgen) inSitemap.push(url)
 }
 
 // Echte 404-pagina (Netlify geeft dan ook status 404, geen "zachte" 404).
