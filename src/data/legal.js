@@ -1,3 +1,5 @@
+import { analytics } from './site.js'
+
 /* ============================================================
    JURIDISCHE PAGINA'S — Atelier Nomàd
    ------------------------------------------------------------
@@ -167,6 +169,7 @@ export const documenten = {
           'Onze vervoerder — om het pakket te bezorgen.',
           'Netlify — de hosting van deze website, de opslag van berichten uit het contactformulier en inschrijvingen op de nieuwsbrief, en een kopie van je bestelling voor onze bestelmelding.',
           'Google (Gmail) — voor het versturen van je bestelbevestiging.',
+          ...(analytics.ga4Id ? ['Google (Analytics) — anonieme bezoekersstatistieken, alleen als je cookies accepteert.'] : []),
           'Onze boekhouder — voor de verplichte administratie.',
         ],
         p: ['Verder niemand. We verkopen geen gegevens en doen niet aan advertentieprofielen.'],
@@ -187,7 +190,10 @@ export const documenten = {
       {
         h: 'Cookies',
         p: [
-          'Deze site zet geen trackingcookies en gebruikt geen advertentienetwerken. Je winkelwagen wordt lokaal in je eigen browser bewaard, zodat die er nog is als je terugkomt. Die gegevens verlaten je toestel niet.',
+          analytics.ga4Id
+            ? 'We gebruiken Google Analytics om te zien hoe bezoekers de site gebruiken (welke pagina\'s, van waar ze komen), zodat we de site kunnen verbeteren. Dat gebeurt alleen als je in de cookiebanner op "Accepteren" klikt; je IP-adres wordt daarbij niet bewaard, de gegevens worden maximaal 14 maanden bijgehouden en we gebruiken ze niet voor advertenties. Weiger je, dan wordt er niets gemeten. Je keuze aanpassen kan altijd via "Cookie-instellingen" onderaan elke pagina.'
+            : 'Deze site zet geen trackingcookies en gebruikt geen advertentienetwerken.',
+          'Je winkelwagen en je cookiekeuze worden lokaal in je eigen browser bewaard, zodat ze er nog zijn als je terugkomt. Die gegevens verlaten je toestel niet.',
         ],
       },
     ],

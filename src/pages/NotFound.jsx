@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import useSeo from '../hooks/useSeo.js'
 
 export default function NotFound() {
-  useSeo({ title: 'Pagina niet gevonden' })
+  useSeo({ title: 'Pagina niet gevonden', noindex: true })
   return (
     <section className="section container center" style={{ minHeight: '60vh', display: 'grid', placeContent: 'center' }}>
       <span className="eyebrow">404</span>

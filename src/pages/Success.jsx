@@ -4,7 +4,7 @@ import useSeo from '../hooks/useSeo.js'
 import { useCart } from '../context/CartContext.jsx'
 
 export default function Success() {
-  useSeo({ title: 'Bedankt voor je bestelling' })
+  useSeo({ title: 'Bedankt voor je bestelling', noindex: true })
   const { clear } = useCart()
   const [params] = useSearchParams()
   // Stripe stuurt de klant hierheen mét session_id. Zonder die parameter

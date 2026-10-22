@@ -13,7 +13,7 @@ import { testimonials, instagram } from '../data/site.js'
 export default function Home() {
   useReveal()
   useSeo({
-    title: 'Handcrafted Moroccan Living',
+    title: 'Marokkaanse vloerpoufs & handgeweven kussens',
     description: 'Atelier Nomàd — unieke vintage Marokkaanse vloerpoufs, geknoopt uit Berberkleden, plus handgeweven wollen kussens. Elk stuk bestaat maar één keer.',
   })
 

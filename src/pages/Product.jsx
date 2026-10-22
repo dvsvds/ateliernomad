@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import useReveal from '../hooks/useReveal.js'
-import useSeo from '../hooks/useSeo.js'
+import useSeo, { SITE_URL } from '../hooks/useSeo.js'
 import SmartImage from '../components/SmartImage.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import Price from '../components/Price.jsx'
@@ -10,6 +10,59 @@ import { getProduct, products, formatPrice } from '../data/products.js'
 import { shop } from '../data/site.js'
 import { useCart } from '../context/CartContext.jsx'
 import { useVoorraad, STATUS_TEKST } from '../context/VoorraadContext.jsx'
+
+/* Structured data voor Google: product met prijs, beschikbaarheid,
+   verzending en retour, plus het kruimelpad. */
+function productLd(product, verkocht) {
+  const url = `${SITE_URL}/product/${product.slug}`
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      description: product.description,
+      image: (product.images || []).map((src) => SITE_URL + src),
+      sku: product.slug,
+      category: product.categoryLabel,
+      brand: { '@type': 'Brand', name: 'Atelier Nomàd' },
+      offers: {
+        '@type': 'Offer',
+        url,
+        price: product.price.toFixed(2),
+        priceCurrency: 'EUR',
+        availability: verkocht ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@id': `${SITE_URL}/#winkel` },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: { '@type': 'MonetaryAmount', value: shop.shippingCost.toFixed(2), currency: 'EUR' },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'BE' },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 2, maxValue: 4, unitCode: 'DAY' },
+          },
+        },
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'BE',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: shop.returnDays,
+          returnMethod: 'https://schema.org/ReturnByMail',
+        },
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: 'Shop', item: `${SITE_URL}/shop` },
+        { '@type': 'ListItem', position: 3, name: product.name, item: url },
+      ],
+    },
+  ]
+}
 
 export default function Product() {
   const { slug } = useParams()
@@ -40,10 +93,14 @@ export default function Product() {
     if (footer) io.observe(footer)
     return () => { io.disconnect(); setShowSticky(false) }
   }, [slug])
-  useSeo({
-    title: product ? product.name : 'Product',
-    description: product ? product.short : 'Atelier Nomàd product',
-  })
+  const verkocht = product?.unique && status(product.slug) === 'verkocht'
+  useSeo(product ? {
+    title: `${product.name} · ${formatPrice(product.price)}`,
+    description: `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek stuk — verzending binnen de EU in ${shop.deliveryTime}.`,
+    image: product.images?.[0],
+    type: 'product',
+    jsonLd: productLd(product, verkocht),
+  } : { title: 'Product niet gevonden', noindex: true })
 
   if (!product) {
     return (
