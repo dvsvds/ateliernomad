@@ -2,6 +2,7 @@ import { Fragment, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
+import useGehydrateerd from '../hooks/useGehydrateerd.js'
 import ProductCard from '../components/ProductCard.jsx'
 import { products, categories, collectie } from '../data/products.js'
 
@@ -15,12 +16,15 @@ export default function Shop() {
   const [params, setParams] = useSearchParams()
   /* De URL is de bron van waarheid — zo werkt een link naar
      /shop?cat=poufs ook als je al op de shoppagina staat. */
-  const gevraagd = params.get('cat')
+  // De vooraf gerenderde HTML toont de hele collectie; de filter uit de
+  // URL komt er pas na het overnemen door React bij.
+  const gehydrateerd = useGehydrateerd()
+  const gevraagd = gehydrateerd ? params.get('cat') : null
   // Een oude of verzonnen link (?cat=interieur, ?cat=foo) toont anders een lege shop.
   const active = categories.some((c) => c.id === gevraagd) ? gevraagd : 'all'
   useReveal([active])
   useSeo({
-    title: 'De eerste collectie',
+    title: 'Shop Marokkaanse poufs & kussens',
     description: 'De volledige collectie van Atelier Nomàd: 29 unieke vintage Marokkaanse vloerpoufs, plus acht handgeweven wollen kussens.',
   })
 

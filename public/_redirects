@@ -7,5 +7,6 @@ https://www.xn--ateliernomd-h7a.be/*   https://ateliernomad.eu/:splat  301!
 https://ateliernomad-be.netlify.app/*  https://ateliernomad.eu/:splat  301!
 https://www.ateliernomad.eu/*          https://ateliernomad.eu/:splat  301!
 
-# Alles wat geen bestand is, gaat naar de app (client-side routing).
-/*    /index.html   200
+# Geen "alles naar index.html"-regel meer: elke pagina bestaat als eigen
+# HTML-bestand (scripts/prerender.mjs). Een onbekend adres krijgt zo
+# 404.html met een echte 404-status, in plaats van de homepage.

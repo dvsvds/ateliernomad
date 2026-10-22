@@ -9,6 +9,15 @@ export default function FAQ() {
   useSeo({
     title: 'Veelgestelde vragen',
     description: 'Antwoorden op veelgestelde vragen over Atelier Nomàd: handwerk, levering, verzending, retour en onderhoud.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
   })
   const [open, setOpen] = useState(0)
 

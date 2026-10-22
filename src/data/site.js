@@ -13,6 +13,15 @@ export const brand = {
   city: 'België · Marrakech',
 }
 
+/* Google Analytics 4. Plak hier je Measurement ID (begint met "G-"),
+   te vinden in Analytics → Beheer → Gegevensstreams → je webstream.
+   Leeg = geen Analytics en geen cookiebanner.
+   Analytics laadt pas nadat de bezoeker op "Accepteren" klikt (AVG/GDPR);
+   wie weigert, wordt niet gemeten. */
+export const analytics = {
+  ga4Id: 'G-54077HDHHF',
+}
+
 /* Winkelinfo die op productpagina, winkelwagen en footer terugkomt.
    Moet kloppen met netlify/functions/create-checkout-session.cjs
    (verzendkosten) en met de pagina Verzending & retour (legal.js). */

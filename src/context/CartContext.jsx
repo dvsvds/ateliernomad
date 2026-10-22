@@ -1,8 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { verversWinkelwagen } from '../lib/cartSync.js'
 
 const CartContext = createContext(null)
 const STORAGE_KEY = 'atelier-nomad-cart'
+// useLayoutEffect geeft een waarschuwing bij het vooraf renderen op de server.
+const useLaadEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 function reducer(state, action) {
   switch (action.type) {
@@ -32,12 +34,14 @@ function reducer(state, action) {
         .filter((i) => i.qty > 0)
     case 'clear':
       return []
+    case 'load':
+      return action.items
     default:
       return state
   }
 }
 
-function init() {
+function laad() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     // Nooit klakkeloos laden: verkochte stukken en oude prijzen eruit.
@@ -48,10 +52,22 @@ function init() {
 }
 
 export function CartProvider({ children }) {
-  const [items, dispatch] = useReducer(reducer, undefined, init)
+  /* Begint leeg en laadt de bewaarde wagen pas na de eerste render: de
+     pagina's worden vooraf als HTML gerenderd (zonder winkelwagen), en de
+     eerste render in de browser moet daar exact mee overeenkomen. */
+  const [items, dispatch] = useReducer(reducer, [])
   const [isOpen, setIsOpen] = useState(false)
+  const geladen = useRef(false)
+
+  // Layout-effect: loopt vóór de gewone effects van de pagina's, zodat
+  // bv. het legen van de wagen op /bedankt ná het laden gebeurt.
+  useLaadEffect(() => {
+    dispatch({ type: 'load', items: laad() })
+  }, [])
 
   useEffect(() => {
+    // De eerste keer staat hier nog de lege beginwagen: niet over de bewaarde heen schrijven.
+    if (!geladen.current) { geladen.current = true; return }
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)) } catch {}
   }, [items])
 

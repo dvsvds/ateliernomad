@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { brand } from '../data/site.js'
 import PaymentMethods from './PaymentMethods.jsx'
+import { analyticsAan } from '../lib/analytics.js'
 
 export default function Footer() {
   return (
@@ -55,6 +56,9 @@ export default function Footer() {
             <Link to="/voorwaarden">Algemene voorwaarden</Link>
             <Link to="/privacy">Privacy</Link>
             <Link to="/verzending">Verzending &amp; retour</Link>
+            {analyticsAan && (
+              <button type="button" className="footer__cookies" onClick={() => window.dispatchEvent(new Event('cookies-openen'))}>Cookie-instellingen</button>
+            )}
           </small>
           <small>Website door <a href="https://web-makers.be" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>WebMakers</a></small>
         </div>

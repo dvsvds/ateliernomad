@@ -5,46 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Primary SEO -->
+    <meta name="theme-color" content="#FAF6EF" />
+
+    <!-- SEO: per pagina ingevuld door scripts/prerender.mjs (bij de build)
+         en door src/hooks/useSeo.js (tijdens het surfen). -->
+    <!--seo-->
     <title>Atelier Nomàd — Handcrafted Moroccan Living</title>
     <meta name="description" content="Atelier Nomàd biedt handgemaakte Marokkaanse interieurstukken: vintage vloerpoufs en handgeweven wollen kussens. Authentiek, ambachtelijk en tijdloos." />
-    <meta name="theme-color" content="#FAF6EF" />
     <link rel="canonical" href="https://ateliernomad.eu/" />
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Atelier Nomàd" />
-    <meta property="og:title" content="Atelier Nomàd — Handcrafted Moroccan Living" />
-    <meta property="og:description" content="Authentieke Marokkaanse interieurstukken, handgemaakt met ziel en geselecteerd voor tijdloze interieurs." />
-    <meta property="og:image" content="https://ateliernomad.eu/images/brand/og-image.jpg" />
-    <meta property="og:url" content="https://ateliernomad.eu/" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Atelier Nomàd — Handcrafted Moroccan Living" />
-    <meta name="twitter:description" content="Luxe, handgemaakte Marokkaanse interieurstukken voor tijdloze interieurs." />
-    <meta name="twitter:image" content="https://ateliernomad.eu/images/brand/og-image.jpg" />
+    <!--/seo-->
 
     <!-- Fonts: Cormorant Garamond (serif display) + Jost (sans body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-    <!-- Structured data: Organization -->
+    <!-- Structured data: de winkel zelf (op elke pagina) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Store",
+      "@type": "OnlineStore",
+      "@id": "https://ateliernomad.eu/#winkel",
       "name": "Atelier Nomàd",
       "description": "Handgemaakte Marokkaanse interieurstukken: vintage vloerpoufs en handgeweven wollen kussens.",
       "url": "https://ateliernomad.eu/",
+      "logo": "https://ateliernomad.eu/favicon.svg",
       "image": "https://ateliernomad.eu/images/brand/og-image.jpg",
+      "email": "ateliernomad01@gmail.com",
+      "vatID": "BE1035137874",
+      "areaServed": "EU",
       "sameAs": ["https://www.instagram.com/ateliernomad__/"]
     }
     </script>
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "WebSite", "name": "Atelier Nomàd", "url": "https://ateliernomad.eu/", "inLanguage": "nl-BE" }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app--></div>
 
     <!-- Netlify Forms: verborgen kopieën van de React-formulieren, zodat
          Netlify ze bij het deployen herkent. De veldnamen moeten gelijk

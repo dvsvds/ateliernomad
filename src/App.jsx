@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
+import CookieBanner from './components/CookieBanner.jsx'
 
 import Home from './pages/Home.jsx'
 import Shop from './pages/Shop.jsx'
@@ -45,6 +46,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <CookieBanner />
     </>
   )
 }
