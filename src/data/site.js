@@ -10,7 +10,7 @@ export const brand = {
                // e-mail en het contactformulier er zijn.
   instagram: 'https://www.instagram.com/ateliernomad__/',
   instagramHandle: '@ateliernomad__',
-  city: 'België · Marrakech',
+  city: 'Antwerpen · Marrakech',
 }
 
 /* Google Analytics 4. Plak hier je Measurement ID (begint met "G-"),
