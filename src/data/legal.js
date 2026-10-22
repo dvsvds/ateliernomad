@@ -25,6 +25,7 @@ export const bedrijf = {
   btw: 'BE 1035.137.874',
   straat: '',            // straat en huisnummer
   postcode: '',          // postcode en gemeente
+  gemeente: 'Antwerpen', // staat er zolang straat en postcode nog leeg zijn
   land: 'België',
   email: 'ateliernomad01@gmail.com',
   telefoon: '',          // optioneel; leeg = de regel verdwijnt
@@ -45,7 +46,7 @@ const ADRES = () => `${bedrijf.straat}, ${bedrijf.postcode}, ${bedrijf.land}`
 const ZETEL = () =>
   heeftAdres()
     ? `, met maatschappelijke zetel te ${ADRES()}`
-    : ''
+    : bedrijf.gemeente ? `, gevestigd in ${bedrijf.gemeente}, ${bedrijf.land}` : ''
 
 export const documenten = {
   voorwaarden: {
