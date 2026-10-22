@@ -31,4 +31,21 @@ export function render(url) {
 export const productSlugs = alleProducten.map((p) => p.slug)
 // Verborgen producten krijgen wel een pagina, maar horen niet in de sitemap.
 export const zichtbareSlugs = products.map((p) => p.slug)
+/* Productgegevens voor de Google Shopping-feed (netlify/functions/shopping-feed.cjs).
+   De feed vult de beschikbaarheid live aan uit de voorraad. */
+export const feedProducten = products.map((p) => ({
+  id: p.slug,
+  titel: p.type === 'poufs'
+    ? `Marokkaanse Berber poef ${p.name.split('— ').pop()} – vintage, handgeknoopt, uniek`
+    : p.type === 'kussens'
+      ? `Marokkaans Berber kussen ${p.name.split('— ').pop()} – handgeweven wol, uniek`
+      : p.name,
+  beschrijving: `${p.short} ${p.description} ${p.details.map(([k, v]) => `${k}: ${v}.`).join(' ')}`,
+  pad: `/product/${p.slug}`,
+  fotos: p.images || [],
+  prijs: p.price,
+  soort: p.type,
+  label: p.categoryLabel,
+}))
+
 export const gidsSlugs = gidsen.map((g) => g.slug)
