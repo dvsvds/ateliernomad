@@ -1,5 +1,5 @@
 import { Fragment, useMemo } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
 import useGehydrateerd from '../hooks/useGehydrateerd.js'
@@ -35,6 +35,7 @@ const PAGINA = {
     },
     eyebrow: 'Poefs',
     titel: 'Marokkaanse Berber poefs',
+    gids: { to: '/berber-poef', tekst: 'Wol, boucherouite of kelim: wat is het verschil?' },
     intro: `${aantal('poufs')} vintage poefs, elk met de hand geknoopt uit een oud Berberkleed, boucherouite of kelim uit Marokko. Omdat elk kleed anders is, bestaat elke poef maar één keer: wat je op de foto ziet, is precies wat je ontvangt. We versturen ze ongevuld, als hoes met rits — zo blijft verzenden betaalbaar en vul je hem zelf zo stevig als je wil.`,
   },
   kussens: {
@@ -90,6 +91,11 @@ export default function Shop({ soort }) {
             wat je ontvangt. Is het weg, dan komt het niet terug.
           </>}
         </p>
+        {pagina.gids && (
+          <p className="reveal" data-delay="3">
+            <Link to={pagina.gids.to} className="link-underline">{pagina.gids.tekst}</Link>
+          </p>
+        )}
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>

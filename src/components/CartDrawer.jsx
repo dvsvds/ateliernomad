@@ -80,7 +80,7 @@ export default function CartDrawer() {
           {items.map((i) => (
             <div className="cart-item" key={i.slug}>
               <div className="cart-item__media">
-                <SmartImage src={i.image} alt={i.name} label="" sublabel="" />
+                <SmartImage src={i.image} alt={i.name} label="" sublabel="" sizes="120px" />
               </div>
               <div>
                 <div className="cart-item__name">{i.name}</div>

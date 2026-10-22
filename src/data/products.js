@@ -96,154 +96,154 @@ const q = ({ slug, name, label, type = 'interieur', category, price, tag, short,
 })
 
 export const products = [
-  p('pouf-haze', 'Vloerpouf — Haze', 'modern', 130, 'Bestseller',
+  p('pouf-haze', 'Berber poef — Haze', 'modern', 130, 'Bestseller',
     'Rookblauw vlak op ongeverfde ecru wol.',
     'Een rustig stuk: een breed rookblauw vlak dat overloopt in ongeverfde, hoogpolige schapenwol. De kleur is zacht en ingehouden, alsof je er door een ochtendmist naar kijkt. Past in interieurs waar je niet nóg een felle kleur wil.',
     'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
-  p('pouf-poppy', 'Vloerpouf — Poppy', 'modern', 130, null,
+  p('pouf-poppy', 'Berber poef — Poppy', 'modern', 130, null,
     'Fel rood met zwarte baan en gele hoek.',
     'Weinig subtiliteit, en dat is precies de bedoeling. Een diep klaproosrood beslaat het grootste deel van het vlak, doorsneden door een zwarte baan en afgesloten met een gele hoek. Het rood is met de hand geverfd, waardoor de tint over het vlak subtiel verspringt — dieper waar de pool dichter geknoopt zit.',
     'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
-  p('pouf-heather', 'Vloerpouf — Heather', 'authentiek', 130, null,
+  p('pouf-heather', 'Berber poef — Heather', 'authentiek', 130, null,
     'Zacht paarsroze met gele driehoeken.',
     'Het paarsroze van bloeiende heide, gebroken door twee gele driehoeken en een enkele zwarte lijn. Langs de randen loopt de hoogpolige wol iets lichter van tint, wat het stuk een zachte, ingetogen uitstraling geeft.',
     'Vintage Berberwol, handgeknoopt', 'Hoge Atlas, Marokko'),
 
-  p('pouf-saffron', 'Vloerpouf — Saffron', 'authentiek', 130, null,
+  p('pouf-saffron', 'Berber poef — Saffron', 'authentiek', 130, null,
     'Okergeel met grijs en een roze accent.',
     'Okergeel als saffraan, met een grijs vlak dat de warmte in balans houdt en een klein roze accent langs de rand. Een van de zachtste poufs uit de collectie — dik en losjes geknoopt.',
     'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
-  p('pouf-drift', 'Vloerpouf — Drift', 'authentiek', 130, null,
+  p('pouf-drift', 'Berber poef — Drift', 'authentiek', 130, null,
     'Ecru met smalle strepen in inkt, oker en zwart.',
     'Ongeverfde wol als basis, met een band van smalle strepen in inktblauw, oker en zwart langs één zijde. Ingetogen genoeg voor een rustige kamer, met net genoeg lijnenspel om niet saai te worden.',
     'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
-  p('pouf-indigo', 'Vloerpouf — Indigo', 'authentiek', 130, null,
+  p('pouf-indigo', 'Berber poef — Indigo', 'authentiek', 130, null,
     'Ivoor met kobaltblauw vlak en groene tekens.',
     'Een helder kobaltblauw vlak op ivoren wol, met twee kleine groene tekens die als vlinders op het vlak zitten en een streep roestrood langs de rand. Grafisch en licht — het blauw haalt de warmte uit een kamer vol aardetinten.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-peach', 'Vloerpouf — Peach', 'authentiek', 130, null,
+  p('pouf-peach', 'Berber poef — Peach', 'authentiek', 130, null,
     'Roze en gele ruiten met zwarte krullijn.',
     'Roze en dooiergele ruiten op ivoor, losjes doorsneden door een zwarte krullijn die met de hand is meegeweven. Speels zonder kinderlijk te worden — het gedempte roze houdt het volwassen.',
     'Vintage Berberwol, handgeknoopt', 'Hoge Atlas, Marokko'),
 
-  p('pouf-chalk', 'Vloerpouf — Chalk', 'modern', 120, null,
+  p('pouf-chalk', 'Berber poef — Chalk', 'modern', 120, null,
     'Ongeverfd ivoor met één zwarte kruisstreek.',
     'De soberste pouf uit de collectie: ongeverfde, hoogpolige schapenwol met één zwarte kruisstreek. Verder niets. Voor wie textuur wil zonder kleur — de wol doet al het werk.',
     '100% ongeverfde schapenwol', 'Midden-Atlas, Marokko'),
 
-  p('pouf-tide', 'Vloerpouf — Tide', 'modern', 130, null,
+  p('pouf-tide', 'Berber poef — Tide', 'modern', 130, null,
     'Banen in blauw, geel, wit en zwart.',
     'Brede banen die als eb en vloed over het vlak lopen: kobalt, dooiergeel, wit en zwart naast elkaar. Uit een kleed met een uitgesproken streepdessin, waardoor deze pouf van elke kant anders oogt.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-blush', 'Vloerpouf — Blush', 'authentiek', 140, 'Zeldzaam',
+  p('pouf-blush', 'Berber poef — Blush', 'authentiek', 140, 'Zeldzaam',
     'Verwassen roze ruitjes over het hele vlak.',
     'Een fijn ruitjespatroon in verwassen roze en room, over het volledige vlak doorgeweven. De tint zit precies tussen oudroze en poeder in — met de hand geverfd, en daardoor niet exact na te maken.',
     'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
-  p('pouf-cinnamon', 'Vloerpouf — Cinnamon', 'modern', 130, 'Bestseller',
+  p('pouf-cinnamon', 'Berber poef — Cinnamon', 'modern', 130, 'Bestseller',
     'Oker en ivoor in een groot dambordpatroon.',
     'Een groot dambordpatroon in kaneeloker en ivoor op het bovenvlak, met een grof gevlochten ivoren zijband eromheen. Het patroon is met de hand geknoopt, dus de vakjes lopen niet strak in de pas — dat is precies het verschil met machinewerk.',
     'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
-  p('pouf-dune', 'Vloerpouf — Dune', 'geweven', 140, null,
+  p('pouf-dune', 'Berber poef — Dune', 'geweven', 140, null,
     'Zandkleurig met fijn geweven ruitmotieven.',
     'Zandtinten van ecru tot licht taupe, met fijne geweven ruit- en diamantmotieven die je pas van dichtbij goed ziet. Vlakker geweven dan de hoogpolige poufs, met de zachte glans die oude wol krijgt.',
     'Vintage kelim, dicht geweven', 'Midden-Atlas, Marokko'),
 
-  p('pouf-rust', 'Vloerpouf — Rust', 'geweven', 140, null,
+  p('pouf-rust', 'Berber poef — Rust', 'geweven', 140, null,
     'Verweerd oranje met groene Berbertekens.',
     'Roestoranje dat over het vlak van toon verspringt, met kleine groene Berbertekens langs de randen. Een van de meest karaktervolle stukken uit de collectie — als je van warme, levende kleur houdt, is dit hem.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-pebble', 'Vloerpouf — Pebble', 'authentiek', 130, null,
+  p('pouf-pebble', 'Berber poef — Pebble', 'authentiek', 130, null,
     'Grijs en ecru met kleine donkere spikkels.',
     'Kiezelgrijs naast ongeverfd ecru, met kleine donkere spikkels die door de wol heen zijn meegeweven. Rustig, neutraal en makkelijk te combineren — het soort stuk dat overal past.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-solstice', 'Vloerpouf — Solstice', 'modern', 130, null,
+  p('pouf-solstice', 'Berber poef — Solstice', 'modern', 130, null,
     'Zonnegeel vlak met uitwaaierende lijnen.',
     'Een breed zonnegeel vlak met lichte lijnen die vanuit het midden uitwaaieren als stralen. Het geel is warm en niet schel — dichter bij korenveld dan bij citroen.',
     'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
-  p('pouf-shoal', 'Vloerpouf — Shoal', 'modern', 130, null,
+  p('pouf-shoal', 'Berber poef — Shoal', 'modern', 130, null,
     'Grijsblauw vlak op zandkleurige wol.',
     'Een grijsblauw vlak dat als een ondiepte in zandkleurige wol ligt. Dezelfde rustige familie als Haze, maar met het blauw dichter naar het midden en een koelere ondertoon.',
     'Vintage Berberwol, handgeknoopt', 'Midden-Atlas, Marokko'),
 
-  p('pouf-ember', 'Vloerpouf — Ember', 'modern', 130, null,
+  p('pouf-ember', 'Berber poef — Ember', 'modern', 130, null,
     'Ivoor met roestrode en diepblauwe vlakken.',
     'Op romige, hoogpolige wol liggen een roestrood en een diepblauw vlak naast elkaar, met een dunne zwarte lijn ertussen. De combinatie van die twee kleuren op ivoor maakt dit een van de grafischste stukken uit de collectie.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-quill', 'Vloerpouf — Quill', 'geweven', 120, null,
+  p('pouf-quill', 'Berber poef — Quill', 'geweven', 120, null,
     'Ivoor met zwarte pentekening-motieven.',
     'Ivoren kelim met zwarte motieven die eruitzien alsof ze met een pen zijn getekend: zigzags, ruiten en kleine kruizen. Alleen zwart op ivoor, verder geen kleur — de zuinigste en misschien wel strakste pouf van de collectie.',
     'Vintage kelim, plat geweven', 'Hoge Atlas, Marokko'),
 
-  p('pouf-marigold', 'Vloerpouf — Marigold', 'geweven', 140, null,
+  p('pouf-marigold', 'Berber poef — Marigold', 'geweven', 140, null,
     'Koraaloranje met roze en groene tekens.',
     'Warm koraaloranje met roze en groene motieven die er los overheen zijn geweven. Dicht geknoopt en zwaar, met de ongelijkmatige kleuropname die je alleen bij plantaardig geverfde wol ziet.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-signal', 'Vloerpouf — Signal', 'modern', 140, 'Zeldzaam',
+  p('pouf-signal', 'Berber poef — Signal', 'modern', 140, 'Zeldzaam',
     'Grijs veld met één rood blok en geel accent.',
     'Een rustig duifgrijs veld, gebroken door één fel rood blok, een zwarte grafische vorm en een klein mosterdgeel accent. Veel leegte, weinig ingrepen — het minst drukke en tegelijk het meest uitgesproken stuk uit de collectie.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-basalt', 'Vloerpouf — Basalt', 'modern', 140, null,
+  p('pouf-basalt', 'Berber poef — Basalt', 'modern', 140, null,
     'Zwart, rood en room in strakke blokken.',
     'Zwarte, rode en roomkleurige blokken, strak naast elkaar. De donkerste pouf uit de collectie en daardoor de meest grafische — mooi tegen een lichte muur of op een naturel vloerkleed.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-ash', 'Vloerpouf — Ash', 'authentiek', 130, null,
+  p('pouf-ash', 'Berber poef — Ash', 'authentiek', 130, null,
     'Roomwit met roze en zwart, en franjes.',
     'Roomwitte wol met een roze en een zwart vlak, afgezet met korte zwarte franjes langs de rand. Die franjes komen uit het oorspronkelijke kleed en zijn bewust bewaard gebleven.',
     'Vintage Berberwol, handgeknoopt', 'Marokko'),
 
-  p('pouf-sorrel', 'Vloerpouf — Sorrel', 'geweven', 140, 'Zeldzaam',
+  p('pouf-sorrel', 'Berber poef — Sorrel', 'geweven', 140, 'Zeldzaam',
     'Diep rood, dicht geweven en gevlekt.',
     'Diep zuringrood over het hele vlak, met donkerder en lichter gevlekte zones waar de handgeverfde wol de kleur ongelijk heeft opgenomen. Dicht geweven, zwaar en vol — de meest verzadigde kleur van de collectie.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-coral', 'Vloerpouf — Coral', 'geweven', 140, null,
+  p('pouf-coral', 'Berber poef — Coral', 'geweven', 140, null,
     'Koraalroze met zachtgroene motieven.',
     'Koraalroze met verweerde zachtgroene motieven die door het vlak lopen. Beide kleuren zijn zacht van toon, waardoor ze elkaar niet bijten maar in elkaar overlopen.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-foxglove', 'Vloerpouf — Foxglove', 'geweven', 140, 'Zeldzaam',
+  p('pouf-foxglove', 'Berber poef — Foxglove', 'geweven', 140, 'Zeldzaam',
     'Magenta en zalm met een zwarte ster.',
     'Fel magenta naast zalmroze, met een grote zwarte ster en groene tekens op het vlak. De meest uitbundige pouf van allemaal — koop hem als je iets wil dat de kamer overneemt, niet als je iets zoekt dat meebeweegt.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-apricot', 'Vloerpouf — Apricot', 'geweven', 140, null,
+  p('pouf-apricot', 'Berber poef — Apricot', 'geweven', 140, null,
     'Zalmoranje met kleine groene Berbertekens.',
     'Zalmoranje wol met kleine groene Berbertekens langs de randen en een ivoren zijband. Zachter van toon dan Rust en Marigold, en daardoor makkelijker te combineren met naturel textiel.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-garnet', 'Vloerpouf — Garnet', 'geweven', 140, null,
+  p('pouf-garnet', 'Berber poef — Garnet', 'geweven', 140, null,
     'Granaatrood met roze en een geblokte hoek.',
     'Granaatrood met roze doorschijnend, en één hoek met een klein geblokt motief in gedempte tinten. Het rood is dieper en bruiner dan bij Sorrel — dichter bij wijn dan bij tomaat.',
     'Vintage kelim, dicht geweven', 'Zuid-Marokko'),
 
-  p('pouf-bloom', 'Vloerpouf — Bloom', 'authentiek', 130, null,
+  p('pouf-bloom', 'Berber poef — Bloom', 'authentiek', 130, null,
     'Magenta en groen op koraalroze zijkanten.',
     'Een boucherouite in volle bloei: magenta, grasgroen en zacht roze door elkaar op het bovenvlak, met zijkanten in koraalroze en zwart. Boucherouite wordt met de hand geknoopt uit uiteenlopende garens, dus elke lus heeft een eigen kleur en glans — mat katoen naast dichte wol. Vrolijk zonder kinderlijk te worden.',
     'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
-  p('pouf-kapsa', 'Vloerpouf — Kapsa', 'authentiek', 130, null,
+  p('pouf-kapsa', 'Berber poef — Kapsa', 'authentiek', 130, null,
     'Kobaltblauw hart met rode en gele zigzags.',
     'Een kobaltblauw vlak in het midden, omringd door zigzags in rood, geel en groen op een ecru ondergrond. Van alle poufs is dit de meest grafische: het patroon loopt netjes door over de rand, zodat de zijkant net zo interessant is als de bovenkant.',
     'Vintage boucherouite, handgeknoopt', 'Marokko'),
 
   q({
     slug: 'kussen-atlas',
-    name: 'Kussen — Atlas',
+    name: 'Berber kussen — Atlas',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'authentiek',
@@ -262,7 +262,7 @@ export const products = [
 
   q({
     slug: 'kussen-fern',
-    name: 'Kussen — Fern',
+    name: 'Berber kussen — Fern',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
@@ -281,7 +281,7 @@ export const products = [
 
   q({
     slug: 'kussen-cobalt',
-    name: 'Kussen — Cobalt',
+    name: 'Berber kussen — Cobalt',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
@@ -300,7 +300,7 @@ export const products = [
 
   q({
     slug: 'kussen-sienna',
-    name: 'Kussen — Sienna',
+    name: 'Berber kussen — Sienna',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
@@ -319,7 +319,7 @@ export const products = [
 
   q({
     slug: 'kussen-cipher',
-    name: 'Kussen — Cipher',
+    name: 'Berber kussen — Cipher',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
@@ -338,7 +338,7 @@ export const products = [
 
   q({
     slug: 'kussen-prism',
-    name: 'Kussen — Prism',
+    name: 'Berber kussen — Prism',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'modern',
@@ -357,7 +357,7 @@ export const products = [
 
   q({
     slug: 'kussen-umber',
-    name: 'Kussen — Umber',
+    name: 'Berber kussen — Umber',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',
@@ -376,7 +376,7 @@ export const products = [
 
   q({
     slug: 'kussen-flare',
-    name: 'Kussen — Flare',
+    name: 'Berber kussen — Flare',
     label: 'Berber kussen',
     type: 'kussens',
     category: 'geweven',

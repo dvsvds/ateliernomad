@@ -153,7 +153,7 @@ export default function Product() {
         <div className="pdp">
           <div className="pdp__gallery reveal">
             <div className="main">
-              <SmartImage key={product.images?.[beeld]} src={product.images?.[beeld]} alt={product.name} label={product.name} loading="eager" />
+              <SmartImage key={product.images?.[beeld]} src={product.images?.[beeld]} alt={product.name} label={product.name} loading="eager" sizes="(max-width: 860px) 100vw, 640px" />
             </div>
             {(product.images || []).length > 1 && product.images.map((src, i) => (
               <button
@@ -164,7 +164,7 @@ export default function Product() {
                 aria-label={i === 0 ? 'Voorkant tonen' : 'Achterkant tonen'}
                 aria-pressed={i === beeld}
               >
-                <SmartImage src={src} alt={`${product.name} — foto ${i + 1}`} label="" sublabel="" />
+                <SmartImage src={src} alt={`${product.name} — foto ${i + 1}`} label="" sublabel="" sizes="(max-width: 860px) 50vw, 320px" />
               </button>
             ))}
           </div>
