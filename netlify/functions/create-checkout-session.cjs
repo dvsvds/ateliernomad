@@ -58,7 +58,9 @@ exports.handler = async (event) => {
       return { statusCode: 500, body: JSON.stringify({ error: 'Shop niet geconfigureerd' }) }
     }
 
-    const { items } = JSON.parse(event.body || '{}')
+    const { items, taal } = JSON.parse(event.body || '{}')
+    // Engelse bezoekers: Stripe in het Engels en terug naar de Engelse pagina's.
+    const en = taal === 'en'
     if (!Array.isArray(items)) return { statusCode: 400, body: JSON.stringify({ error: 'Ongeldige winkelwagen' }) }
 
     // Eerst per slug optellen, dan pas begrenzen: twee losse regels van
@@ -120,8 +122,9 @@ exports.handler = async (event) => {
       metadata: { slugs: [...perSlug.keys()].join(','), reservering: tijdelijkId },
       // Stripe Tax rekent pas mee als de sessie er expliciet om vraagt.
       automatic_tax: { enabled: true },
-      success_url: `${SITE_URL}/bedankt?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/shop`,
+      success_url: `${SITE_URL}${en ? '/en/thank-you' : '/bedankt'}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${SITE_URL}${en ? '/en/shop' : '/shop'}`,
+      locale: en ? 'en' : 'nl',
       billing_address_collection: 'auto',
       // Gelijk houden met shop.verzendlanden in src/data/site.js (feed en structured data).
       shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE'] },

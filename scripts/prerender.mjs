@@ -18,17 +18,20 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
 const SITE_URL = 'https://ateliernomad.eu'
 
-const { render, productSlugs, zichtbareSlugs, gidsSlugs, feedProducten, verzendlanden } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
+const { render, productSlugs, zichtbareSlugs, gidsSlugs, feedProducten, feedProductenEn, verzendlanden, lokaal } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 const sjabloon = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
 const vast = ['/', '/shop', '/poefs', '/kussens', '/gidsen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
-const pagina = [...vast, ...gidsSlugs.map((s) => `/${s}`), ...productSlugs.map((s) => `/product/${s}`)]
+const nlPaginas = [...vast, ...gidsSlugs.map((s) => `/${s}`), ...productSlugs.map((s) => `/product/${s}`)]
+// Elke pagina ook in het Engels, onder /en (zie src/i18n.js).
+const pagina = [...nlPaginas, ...nlPaginas.map((u) => lokaal(u, 'en'))]
 
 const SEO = /<!--seo-->[\s\S]*?<!--\/seo-->/
 
-function schrijf(bestand, { html, head }) {
+function schrijf(bestand, { html, head, taal }) {
   if (!SEO.test(sjabloon)) throw new Error('index.html mist de <!--seo--> … <!--/seo--> markering')
   const uit = sjabloon
+    .replace('<html lang="nl-BE">', taal === 'en' ? '<html lang="en">' : '<html lang="nl-BE">')
     .replace(SEO, head)
     .replace('<div id="root"><!--app--></div>', `<div id="root">${html}</div>`)
   const doel = path.join(dist, bestand)
@@ -38,13 +41,15 @@ function schrijf(bestand, { html, head }) {
 
 // /shop → shop.html: Netlify serveert dat op /shop, zonder slash-doorverwijzing.
 const bestandVoor = (url) => (url === '/' ? 'index.html' : `${url.slice(1)}.html`)
+// /en → en.html (Netlify serveert dat op /en)
 
 const inSitemap = []
 for (const url of pagina) {
   const r = render(url)
   schrijf(bestandVoor(url), r)
   const verborgen = url.startsWith('/product/') && !zichtbareSlugs.includes(url.slice(9))
-  if (!r.noindex && !verborgen) inSitemap.push(url)
+  const verborgen2 = url.startsWith('/en/product/') && !zichtbareSlugs.includes(url.slice(12))
+  if (!r.noindex && !verborgen && !verborgen2) inSitemap.push(url)
 }
 
 // Echte 404-pagina (Netlify geeft dan ook status 404, geen "zachte" 404).
@@ -52,10 +57,10 @@ schrijf('404.html', render('/deze-pagina-bestaat-niet'))
 
 // /bedankt hangt af van de Stripe-sessie in de URL: geen vooraf gerenderde
 // inhoud, React bouwt de pagina in de browser op. Wel noindex.
-fs.writeFileSync(
-  path.join(dist, 'bedankt.html'),
-  sjabloon.replace(SEO, (m) => m.replace('<!--/seo-->', '<meta name="robots" content="noindex, follow" />\n    <!--/seo-->')),
-)
+const bedankt = sjabloon.replace(SEO, (m) => m.replace('<!--/seo-->', '<meta name="robots" content="noindex, follow" />\n    <!--/seo-->'))
+fs.writeFileSync(path.join(dist, 'bedankt.html'), bedankt)
+fs.mkdirSync(path.join(dist, 'en'), { recursive: true })
+fs.writeFileSync(path.join(dist, 'en/thank-you.html'), bedankt.replace('<html lang="nl-BE">', '<html lang="en">'))
 
 fs.writeFileSync(
   path.join(dist, 'sitemap.xml'),
@@ -67,7 +72,7 @@ ${inSitemap.map((u) => `  <url><loc>${SITE_URL}${u}</loc></url>`).join('\n')}
 )
 
 // Gegevens voor de Google Shopping-feed (zie netlify/functions/shopping-feed.cjs).
-fs.writeFileSync(path.join(dist, 'feed-data.json'), JSON.stringify({ verzendlanden, producten: feedProducten }))
+fs.writeFileSync(path.join(dist, 'feed-data.json'), JSON.stringify({ verzendlanden, producten: feedProducten, productenEn: feedProductenEn }))
 
 fs.rmSync(path.join(root, 'dist-ssr'), { recursive: true, force: true })
 console.log(`prerender: ${pagina.length} pagina's + 404 + bedankt, sitemap met ${inSitemap.length} URL's`)

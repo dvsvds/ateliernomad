@@ -9,12 +9,15 @@ import Testimonials from '../sections/Testimonials.jsx'
 import InstagramGallery from '../sections/InstagramGallery.jsx'
 import Newsletter from '../components/Newsletter.jsx'
 import { testimonials, instagram } from '../data/site.js'
+import { useTaal } from '../i18n.js'
 
 export default function Home() {
   useReveal()
+  const { t } = useTaal()
   useSeo({
-    title: 'Marokkaanse poefs & Berber kussens',
-    description: 'Unieke vintage Marokkaanse poefs, met de hand geknoopt uit Berberkleden, en handgeweven Berber kussens. Elk stuk bestaat maar één keer.',
+    title: t('Marokkaanse poefs & Berber kussens', 'Moroccan poufs & Berber cushions'),
+    description: t('Unieke vintage Marokkaanse poefs, met de hand geknoopt uit Berberkleden, en handgeweven Berber kussens. Elk stuk bestaat maar één keer.',
+      'Unique vintage Moroccan poufs, hand-knotted from Berber rugs, and hand-woven Berber cushions. Every piece exists only once. Shipping across the EU.'),
   })
 
   return (

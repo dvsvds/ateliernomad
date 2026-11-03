@@ -1,14 +1,19 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '../components/TaalLink.jsx'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
-import { faqs } from '../data/site.js'
+import { faqs as faqsNl } from '../data/site.js'
+import { faqsEn } from '../data/en/site.js'
+import { useTaal } from '../i18n.js'
 
 export default function FAQ() {
   useReveal()
+  const { en, t } = useTaal()
+  const faqs = en ? faqsEn : faqsNl
   useSeo({
-    title: 'Veelgestelde vragen',
-    description: 'Antwoorden op veelgestelde vragen over Atelier Nomàd: handwerk, levering, verzending, retour en onderhoud.',
+    title: t('Veelgestelde vragen', 'Frequently asked questions'),
+    description: t('Antwoorden op veelgestelde vragen over Atelier Nomàd: handwerk, levering, verzending, retour en onderhoud.',
+      'Answers to frequently asked questions about Atelier Nomàd: craftsmanship, delivery, shipping, returns and care.'),
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
@@ -25,9 +30,9 @@ export default function FAQ() {
     <>
       <section className="page-hero container">
         <span className="eyebrow reveal">FAQ</span>
-        <h1 className="display reveal" data-delay="1">Veelgestelde vragen</h1>
+        <h1 className="display reveal" data-delay="1">{t('Veelgestelde vragen', 'Frequently asked questions')}</h1>
         <p className="lead measure reveal" data-delay="2">
-          Niet gevonden wat je zoekt? <Link to="/contact" className="link-underline">Neem gerust contact op.</Link>
+          {t('Niet gevonden wat je zoekt?', 'Can’t find what you’re looking for?')} <Link to="/contact" className="link-underline">{t('Neem gerust contact op.', 'Feel free to get in touch.')}</Link>
         </p>
       </section>
 
@@ -44,7 +49,7 @@ export default function FAQ() {
             ))}
           </div>
           <p className="notice reveal" style={{ marginTop: '2.5rem' }}>
-            Je poef zelf vullen? <Link to="/poef-vullen" className="link-underline">Zo doe je dat, stap voor stap.</Link>
+            {t('Je poef zelf vullen?', 'Filling your pouf yourself?')} <Link to="/poef-vullen" className="link-underline">{t('Zo doe je dat, stap voor stap.', 'Here’s how, step by step.')}</Link>
           </p>
         </div>
       </section>

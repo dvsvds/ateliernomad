@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { taalVan, tegenhanger } from '../i18n.js'
 
 export const SITE = 'Atelier Nomàd'
 export const SITE_URL = 'https://ateliernomad.eu'
 export const STANDAARD = {
   description: 'Atelier Nomàd biedt handgemaakte Marokkaanse interieurstukken: vintage vloerpoufs en handgeweven wollen kussens. Authentiek, ambachtelijk en tijdloos.',
+  descriptionEn: 'Atelier Nomàd: handmade Moroccan interior pieces — vintage Berber poufs and hand-woven wool cushions. Authentic, crafted by hand and timeless.',
   image: '/images/brand/og-image.jpg',
 }
 
@@ -17,11 +19,19 @@ const absoluut = (pad) => (/^https?:/.test(pad) ? pad : SITE_URL + pad)
 
 /** Alles wat in de <head> van een pagina hoort, uit wat de pagina opgeeft. */
 export function seoGegevens({ title, description, image, type, noindex, jsonLd }, pathname) {
+  const taal = taalVan(pathname)
+  const pad = pathname === '/' ? '/' : pathname.replace(/\/+$/, '')
+  const ander = noindex ? null : tegenhanger(pad)
+  const nl = taal === 'nl' ? pad : ander
+  const en = taal === 'en' ? pad : ander
   return {
+    taal,
     title: title ? `${title} — ${SITE}` : `${SITE} — Handcrafted Moroccan Living`,
-    description: description || STANDAARD.description,
+    description: description || (taal === 'en' ? STANDAARD.descriptionEn : STANDAARD.description),
     // Zonder queryparameters: /shop?cat=poufs is inhoudelijk /shop.
-    canonical: SITE_URL + (pathname === '/' ? '/' : pathname.replace(/\/+$/, '')),
+    canonical: SITE_URL + pad,
+    // hreflang: welke Nederlandse en Engelse pagina bij elkaar horen.
+    alternates: nl && en ? [['nl-BE', SITE_URL + nl], ['en', SITE_URL + en], ['x-default', SITE_URL + nl]] : [],
     image: absoluut(image || STANDAARD.image),
     type: type || 'website',
     noindex: Boolean(noindex),
@@ -42,7 +52,8 @@ export function headHtml(g) {
     `<link rel="canonical" href="${esc(g.canonical)}" />`,
     `<meta property="og:type" content="${esc(g.type)}" />`,
     `<meta property="og:site_name" content="${SITE}" />`,
-    '<meta property="og:locale" content="nl_BE" />',
+    `<meta property="og:locale" content="${g.taal === 'en' ? 'en_GB' : 'nl_BE'}" />`,
+    ...g.alternates.map(([hl, href]) => `<link rel="alternate" hreflang="${hl}" href="${esc(href)}" />`),
     `<meta property="og:title" content="${esc(g.title)}" />`,
     `<meta property="og:description" content="${esc(g.description)}" />`,
     `<meta property="og:image" content="${esc(g.image)}" />`,
@@ -76,6 +87,16 @@ export default function useSeo(opties = {}) {
   const sleutel = JSON.stringify(g)
   useEffect(() => {
     document.title = g.title
+    document.documentElement.lang = g.taal === 'en' ? 'en' : 'nl-BE'
+    zetMeta('property', 'og:locale', g.taal === 'en' ? 'en_GB' : 'nl_BE')
+    document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach((l) => l.remove())
+    g.alternates.forEach(([hl, href]) => {
+      const l = document.createElement('link')
+      l.rel = 'alternate'
+      l.hreflang = hl
+      l.href = href
+      document.head.appendChild(l)
+    })
     zetMeta('name', 'description', g.description)
     zetMeta('name', 'robots', g.noindex ? 'noindex, follow' : null)
     zetMeta('property', 'og:type', g.type)

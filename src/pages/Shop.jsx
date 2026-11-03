@@ -1,10 +1,13 @@
 import { Fragment, useMemo } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link } from '../components/TaalLink.jsx'
 import useReveal from '../hooks/useReveal.js'
 import useSeo from '../hooks/useSeo.js'
 import useGehydrateerd from '../hooks/useGehydrateerd.js'
 import ProductCard from '../components/ProductCard.jsx'
 import { products, categories, collectie } from '../data/products.js'
+import { useTaal } from '../i18n.js'
+import { categorieLabel, collectieVoor } from '../data/vertaal.js'
 
 /* Een productsoort zonder stukken (bv. interieur zolang alles uitverkocht is)
    krijgt geen filterknop — anders klikt een bezoeker op een lege shop. */
@@ -49,7 +52,39 @@ const PAGINA = {
   },
 }
 
+const PAGINA_EN = {
+  all: {
+    seo: {
+      title: 'Shop Moroccan poufs & Berber cushions',
+      description: `Unique Moroccan poufs, hand-knotted from vintage Berber rugs, and hand-woven wool Berber cushions. ${products.length} pieces, each one of a kind. Shipping across the EU.`,
+    },
+    eyebrow: `Collection ${collectie.nummer}`,
+    titel: collectieVoor('en').naam,
+    intro: `${products.length} pieces, selected in Morocco all in one go: ${aantal('poufs')} vintage Moroccan poufs and ${aantal('kussens')} hand-woven Berber cushions. All made by hand and every piece unique — what you see in the photo is exactly what you receive. Once it’s gone, it won’t be back.`,
+  },
+  poufs: {
+    seo: {
+      title: 'Moroccan poufs · vintage Berber poufs',
+      description: `${aantal('poufs')} Moroccan poufs, hand-knotted from vintage Berber rugs, boucherouite and kilim. Every piece is one of a kind. From € 120, shipping across the EU.`,
+    },
+    eyebrow: 'Poufs',
+    titel: 'Moroccan Berber poufs',
+    gids: { to: '/berber-poef', tekst: 'Wool, boucherouite or kilim: what’s the difference?' },
+    intro: `${aantal('poufs')} vintage poufs, each hand-knotted from an old Berber rug, boucherouite or kilim from Morocco. Because every rug is different, every pouf exists only once: what you see in the photo is exactly what you receive. We ship them unfilled, as a cover with a zip — that keeps shipping affordable, and you fill it as firmly as you like.`,
+  },
+  kussens: {
+    seo: {
+      title: 'Moroccan cushions · Berber cushions',
+      description: `${aantal('kussens')} hand-woven Moroccan cushions in Berber wool from the Atlas: high-pile, fringed or embroidered. Every cushion is one of a kind. Shipping across the EU.`,
+    },
+    eyebrow: 'Cushions',
+    titel: 'Moroccan Berber cushions',
+    intro: `${aantal('kussens')} hand-woven cushions in sheep’s wool, made on narrow looms in the Atlas. Undyed wool, dyed bands, fringes and embroidered symbols: no two are alike, and every cushion exists only once.`,
+  },
+}
+
 export default function Shop({ soort }) {
+  const { taal, en, t, lp } = useTaal()
   const [params] = useSearchParams()
   const navigate = useNavigate()
   /* De URL is de bron van waarheid — zo werkt een link naar
@@ -61,7 +96,7 @@ export default function Shop({ soort }) {
   // Een oude of verzonnen link (?cat=interieur, ?cat=foo) toont anders een lege shop.
   const active = categories.some((c) => c.id === gevraagd) ? gevraagd : 'all'
   useReveal([active])
-  const pagina = PAGINA[soort || 'all']
+  const pagina = (en ? PAGINA_EN : PAGINA)[soort || 'all']
   useSeo(pagina.seo)
 
   /* Twee filterassen door één chiprij: 'poufs'/'kussens'/'interieur' filtert op
@@ -76,7 +111,7 @@ export default function Shop({ soort }) {
   // `behoudScroll`: van /shop naar /poefs wisselen is een filterklik, geen
   // nieuwe pagina — dan niet naar boven springen (zie ScrollToTop in App).
   const choose = (id) =>
-    navigate(SOORT_PAD[id] || `/shop?cat=${id}`, { state: { behoudScroll: true } })
+    navigate(lp(SOORT_PAD[id] || `/shop?cat=${id}`), { state: { behoudScroll: true } })
 
   return (
     <>
@@ -109,15 +144,15 @@ export default function Shop({ soort }) {
                   className={`chip ${active === c.id ? 'active' : ''}`}
                   onClick={() => choose(c.id)}
                 >
-                  {c.label}
+                  {categorieLabel(c, taal)}
                 </button>
               </Fragment>
             ))}
           </div>
 
           <p className="filters__count reveal" aria-live="polite">
-            {filtered.length} {filtered.length === 1 ? 'stuk' : 'stuks'}
-            {active !== 'all' && ` van ${products.length}`}
+            {filtered.length} {filtered.length === 1 ? t('stuk', 'piece') : t('stuks', 'pieces')}
+            {active !== 'all' && ` ${t('van', 'of')} ${products.length}`}
           </p>
 
           <div className="product-grid">
@@ -126,7 +161,7 @@ export default function Shop({ soort }) {
             ))}
           </div>
 
-          {filtered.length === 0 && <p className="notice">Geen producten in deze categorie.</p>}
+          {filtered.length === 0 && <p className="notice">{t('Geen producten in deze categorie.', 'No products in this category.')}</p>}
         </div>
       </section>
     </>

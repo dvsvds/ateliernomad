@@ -50,3 +50,7 @@ export const STATUS_TEKST = {
   verkocht: 'Verkocht',
   gereserveerd: 'Gereserveerd',
 }
+export const STATUS_TEKST_EN = {
+  verkocht: 'Sold',
+  gereserveerd: 'Reserved',
+}

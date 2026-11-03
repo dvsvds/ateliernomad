@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link as RRLink, useLocation } from 'react-router-dom'
+import { Link, NavLink } from './TaalLink.jsx'
 import { useCart } from '../context/CartContext.jsx'
+import { useTaal, tegenhanger } from '../i18n.js'
 
 const links = [
-  { to: '/shop', label: 'Shop' },
-  { to: '/over', label: 'Over' },
-  { to: '/ambacht', label: 'Ambacht' },
-  { to: '/contact', label: 'Contact' },
-  { to: '/faq', label: 'FAQ' },
+  { to: '/shop', label: 'Shop', en: 'Shop' },
+  { to: '/over', label: 'Over', en: 'About' },
+  { to: '/ambacht', label: 'Ambacht', en: 'Craft' },
+  { to: '/contact', label: 'Contact', en: 'Contact' },
+  { to: '/faq', label: 'FAQ', en: 'FAQ' },
 ]
 
 export default function Navbar() {
   const { count, open } = useCart()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
+  const { en, t } = useTaal()
+  // Taalknop: naar dezelfde pagina in de andere taal (of de homepage).
+  const ander = (tegenhanger(pathname) || (en ? '/' : '/en')) + search
 
   // Ook dicht bij de terugknop of een link buiten het menu; anders bleef
   // het overlay-menu over de nieuwe pagina staan met een geblokkeerde scroll.
@@ -39,17 +44,20 @@ export default function Navbar() {
           <small>Handcrafted Moroccan Living</small>
         </Link>
 
-        <nav className="nav__links" aria-label="Hoofdmenu">
+        <nav className="nav__links" aria-label={t('Hoofdmenu', 'Main menu')}>
           {links.map((l) => (
             <NavLink key={l.to} to={l.to} className={({ isActive }) => `nav__link ${isActive ? 'active' : ''}`}>
-              {l.label}
+              {en ? l.en : l.label}
             </NavLink>
           ))}
         </nav>
 
         <div className="nav__actions">
-          <button className="nav__cart" onClick={open} aria-label="Winkelwagen openen">
-            Winkelwagen
+          <RRLink to={ander} className="nav__taal" hrefLang={en ? 'nl' : 'en'} aria-label={t('English version', 'Nederlandse versie')}>
+            {en ? 'NL' : 'EN'}
+          </RRLink>
+          <button className="nav__cart" onClick={open} aria-label={t('Winkelwagen openen', 'Open cart')}>
+            {t('Winkelwagen', 'Cart')}
             {count > 0 && <span className="nav__cart-count">{count}</span>}
           </button>
           <button
@@ -63,10 +71,10 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav className={`nav__mobile ${menuOpen ? 'open' : ''}`} aria-label="Mobiel menu">
+      <nav className={`nav__mobile ${menuOpen ? 'open' : ''}`} aria-label={t('Mobiel menu', 'Mobile menu')}>
         <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
-        <Link to="/over" onClick={() => setMenuOpen(false)}>Over</Link>
-        <Link to="/ambacht" onClick={() => setMenuOpen(false)}>Ambacht & Herkomst</Link>
+        <Link to="/over" onClick={() => setMenuOpen(false)}>{t('Over', 'About')}</Link>
+        <Link to="/ambacht" onClick={() => setMenuOpen(false)}>{t('Ambacht & Herkomst', 'Craft & Origin')}</Link>
         <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
         <Link to="/faq" onClick={() => setMenuOpen(false)}>FAQ</Link>
       </nav>
