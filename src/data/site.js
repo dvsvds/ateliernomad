@@ -30,6 +30,9 @@ export const shop = {
   btwTarief: 0.21,             // Belgisch standaardtarief; prijzen zijn inclusief btw
   deliveryTime: '2–4 werkdagen',
   returnDays: 14,
+  // Landen waar Stripe naar laat verzenden. Moet gelijk blijven aan
+  // allowed_countries in netlify/functions/create-checkout-session.cjs.
+  verzendlanden: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE'],
 }
 
 /* Betaalmethodes onderaan de site en bij het afrekenen.

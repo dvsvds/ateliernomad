@@ -18,7 +18,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
 const SITE_URL = 'https://ateliernomad.eu'
 
-const { render, productSlugs, zichtbareSlugs, gidsSlugs, feedProducten } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
+const { render, productSlugs, zichtbareSlugs, gidsSlugs, feedProducten, verzendlanden } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 const sjabloon = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
 const vast = ['/', '/shop', '/poefs', '/kussens', '/gidsen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
@@ -67,7 +67,7 @@ ${inSitemap.map((u) => `  <url><loc>${SITE_URL}${u}</loc></url>`).join('\n')}
 )
 
 // Gegevens voor de Google Shopping-feed (zie netlify/functions/shopping-feed.cjs).
-fs.writeFileSync(path.join(dist, 'feed-data.json'), JSON.stringify(feedProducten))
+fs.writeFileSync(path.join(dist, 'feed-data.json'), JSON.stringify({ verzendlanden, producten: feedProducten }))
 
 fs.rmSync(path.join(root, 'dist-ssr'), { recursive: true, force: true })
 console.log(`prerender: ${pagina.length} pagina's + 404 + bedankt, sitemap met ${inSitemap.length} URL's`)
