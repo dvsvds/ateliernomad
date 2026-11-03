@@ -14,7 +14,7 @@ https://www.ateliernomad.eu/*          https://ateliernomad.eu/:splat  301!
 # Google Shopping-feed: productlijst met live beschikbaarheid.
 # In Merchant Center: https://ateliernomad.eu/google-shopping.xml
 /google-shopping.xml      /.netlify/functions/shopping-feed           200
-/google-shopping-en.xml   /.netlify/functions/shopping-feed?taal=en   200
+/google-shopping-en.xml   /.netlify/functions/shopping-feed-en        200
 
 # Geen "alles naar index.html"-regel meer: elke pagina bestaat als eigen
 # HTML-bestand (scripts/prerender.mjs). Een onbekend adres krijgt zo
