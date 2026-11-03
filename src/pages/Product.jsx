@@ -21,9 +21,9 @@ const kruimel = (product) =>
 function seoTitel(product) {
   const naam = product.name.split('— ').pop()
   return product.type === 'poufs'
-    ? `Berber poef ${naam} · vintage Marokkaanse poef`
+    ? `Berber poef ${naam} · Marokkaanse poef`
     : product.type === 'kussens'
-      ? `Berber kussen ${naam} · handgeweven Marokkaans kussen`
+      ? `Berber kussen ${naam} · Marokkaans kussen`
       : product.name
 }
 
@@ -112,7 +112,7 @@ export default function Product() {
   const verkocht = product?.unique && status(product.slug) === 'verkocht'
   useSeo(product ? {
     title: seoTitel(product),
-    description: `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek stuk, ${formatPrice(product.price)} — verzending in België en de EU in ${shop.deliveryTime}.`,
+    description: `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek, ${formatPrice(product.price)}. Verzending in België en de EU in ${shop.deliveryTime}.`,
     image: product.images?.[0],
     type: 'product',
     jsonLd: productLd(product, verkocht),

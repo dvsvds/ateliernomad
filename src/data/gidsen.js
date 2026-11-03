@@ -67,7 +67,7 @@ export const gidsen = [
     slug: 'berber-poef',
     eyebrow: 'Gids',
     titel: 'Berber poefs: wol, boucherouite of kelim',
-    seoTitel: 'Berber poef: boucherouite, kelim of wol — het verschil',
+    seoTitel: 'Berber poef: wol, boucherouite of kelim?',
     description: 'Wat is een Berber poef, en wat is het verschil tussen een poef van hoogpolige Berberwol, boucherouite en kelim? Uitleg over materiaal, gevoel en onderhoud.',
     intro: 'Een Berber poef is gemaakt van een vintage Marokkaans kleed. Welk kleed dat was, bepaalt hoe hij eruitziet, hoe hij aanvoelt en hoe je hem onderhoudt. Dit zijn de drie soorten die je in onze collectie vindt.',
     secties: [
@@ -118,7 +118,7 @@ export const gidsen = [
     slug: 'berber-poef-of-leren-poef',
     eyebrow: 'Gids',
     titel: 'Berber poef of leren poef?',
-    seoTitel: 'Leren poef of Berber poef? Het verschil uitgelegd',
+    seoTitel: 'Leren poef of Berber poef? Het verschil',
     description: 'Twijfel je tussen een Marokkaanse leren poef en een Berber poef van een vintage kleed? Een eerlijke vergelijking van gevoel, uitstraling, onderhoud en prijs.',
     intro: 'Allebei Marokkaans, allebei met de hand gemaakt — maar het zijn heel verschillende stukken. Een eerlijke vergelijking, zodat je kiest wat bij je interieur past.',
     secties: [

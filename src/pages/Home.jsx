@@ -14,7 +14,7 @@ export default function Home() {
   useReveal()
   useSeo({
     title: 'Marokkaanse poefs & Berber kussens',
-    description: 'Unieke vintage Marokkaanse poefs, met de hand geknoopt uit Berberkleden, en handgeweven wollen Berber kussens. Elk stuk bestaat maar één keer. Verzending in België en de EU.',
+    description: 'Unieke vintage Marokkaanse poefs, met de hand geknoopt uit Berberkleden, en handgeweven Berber kussens. Elk stuk bestaat maar één keer.',
   })
 
   return (

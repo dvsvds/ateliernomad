@@ -30,8 +30,8 @@ const PAGINA = {
   },
   poufs: {
     seo: {
-      title: 'Marokkaanse poef kopen · vintage Berber poefs',
-      description: `${aantal('poufs')} unieke Marokkaanse poefs, met de hand geknoopt uit vintage Berberkleden, boucherouite en kelim. Elk stuk bestaat maar één keer. Vanaf € 120, verzending in België en de EU.`,
+      title: 'Marokkaanse poef kopen · Berber poefs',
+      description: `${aantal('poufs')} Marokkaanse poefs, met de hand geknoopt uit vintage Berberkleden, boucherouite en kelim. Elk stuk is uniek. Vanaf € 120, verzending in de EU.`,
     },
     eyebrow: 'Poefs',
     titel: 'Marokkaanse Berber poefs',
@@ -40,8 +40,8 @@ const PAGINA = {
   },
   kussens: {
     seo: {
-      title: 'Marokkaanse kussens · handgeweven Berber kussens',
-      description: `${aantal('kussens')} handgeweven Marokkaanse kussens van Berberwol uit de Atlas: hoogpolig, met franjes of geborduurde motieven. Elk kussen is uniek. Verzending in België en de EU.`,
+      title: 'Marokkaanse kussens · Berber kussens',
+      description: `${aantal('kussens')} handgeweven Marokkaanse kussens van Berberwol uit de Atlas: hoogpolig, met franjes of geborduurde motieven. Elk kussen is uniek. Verzending in de EU.`,
     },
     eyebrow: 'Kussens',
     titel: 'Marokkaanse Berber kussens',
