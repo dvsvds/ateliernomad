@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { Link } from '../components/TaalLink.jsx'
 import useReveal from '../hooks/useReveal.js'
 import useSeo, { SITE_URL } from '../hooks/useSeo.js'
 import SmartImage from '../components/SmartImage.jsx'
@@ -9,28 +10,31 @@ import PaymentMethods from '../components/PaymentMethods.jsx'
 import { getProduct, products, formatPrice } from '../data/products.js'
 import { shop } from '../data/site.js'
 import { useCart } from '../context/CartContext.jsx'
-import { useVoorraad, STATUS_TEKST } from '../context/VoorraadContext.jsx'
+import { useVoorraad, STATUS_TEKST, STATUS_TEKST_EN } from '../context/VoorraadContext.jsx'
+import { useTaal, lokaal } from '../i18n.js'
+import { vertaalProduct } from '../data/vertaal.js'
 
 /* Zoektitel: wat mensen intypen ("marokkaanse poef", "berber kussen")
    plus de naam van het stuk. "Vloerpouf — Haze" → "Berber poef Haze". */
-const kruimel = (product) =>
-  product.type === 'poufs' ? { name: 'Poefs', pad: '/poefs' }
-  : product.type === 'kussens' ? { name: 'Kussens', pad: '/kussens' }
+const kruimel = (product, en) =>
+  product.type === 'poufs' ? { name: en ? 'Poufs' : 'Poefs', pad: '/poefs' }
+  : product.type === 'kussens' ? { name: en ? 'Cushions' : 'Kussens', pad: '/kussens' }
   : { name: 'Shop', pad: '/shop' }
 
-function seoTitel(product) {
+function seoTitel(product, en) {
   const naam = product.name.split('— ').pop()
   return product.type === 'poufs'
-    ? `Berber poef ${naam} · Marokkaanse poef`
+    ? (en ? `Berber pouf ${naam} · Moroccan pouf` : `Berber poef ${naam} · Marokkaanse poef`)
     : product.type === 'kussens'
-      ? `Berber kussen ${naam} · Marokkaans kussen`
+      ? (en ? `Berber cushion ${naam} · Moroccan cushion` : `Berber kussen ${naam} · Marokkaans kussen`)
       : product.name
 }
 
 /* Structured data voor Google: product met prijs, beschikbaarheid,
    verzending en retour, plus het kruimelpad. */
-function productLd(product, verkocht) {
-  const url = `${SITE_URL}/product/${product.slug}`
+function productLd(product, verkocht, taal) {
+  const en = taal === 'en'
+  const url = SITE_URL + lokaal(`/product/${product.slug}`, taal)
   return [
     {
       '@context': 'https://schema.org',
@@ -72,8 +76,8 @@ function productLd(product, verkocht) {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: kruimel(product).name, item: SITE_URL + kruimel(product).pad },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + lokaal('/', taal) },
+        { '@type': 'ListItem', position: 2, name: kruimel(product, en).name, item: SITE_URL + lokaal(kruimel(product, en).pad, taal) },
         { '@type': 'ListItem', position: 3, name: product.name, item: url },
       ],
     },
@@ -82,7 +86,9 @@ function productLd(product, verkocht) {
 
 export default function Product() {
   const { slug } = useParams()
-  const product = getProduct(slug)
+  const { taal, en, t } = useTaal()
+  const origineel = getProduct(slug)
+  const product = vertaalProduct(origineel, taal)
   const { add, items, open } = useCart()
   const { status } = useVoorraad()
   const [qty, setQty] = useState(1)
@@ -111,18 +117,20 @@ export default function Product() {
   }, [slug])
   const verkocht = product?.unique && status(product.slug) === 'verkocht'
   useSeo(product ? {
-    title: seoTitel(product),
-    description: `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek, ${formatPrice(product.price)}. Verzending in België en de EU in ${shop.deliveryTime}.`,
+    title: seoTitel(product, en),
+    description: en
+      ? `${product.short} ${product.categoryLabel}, handmade in Morocco. One of a kind, ${formatPrice(product.price)}. Ships across the EU in 2–4 working days.`
+      : `${product.short} ${product.categoryLabel}, met de hand gemaakt in Marokko. Uniek, ${formatPrice(product.price)}. Verzending in België en de EU in ${shop.deliveryTime}.`,
     image: product.images?.[0],
     type: 'product',
-    jsonLd: productLd(product, verkocht),
-  } : { title: 'Product niet gevonden', noindex: true })
+    jsonLd: productLd(product, verkocht, taal),
+  } : { title: t('Product niet gevonden', 'Product not found'), noindex: true })
 
   if (!product) {
     return (
       <section className="section container center">
-        <h1 className="h2">Product niet gevonden</h1>
-        <p><Link to="/shop" className="btn btn--ghost">Terug naar de shop <span className="btn__icon">→</span></Link></p>
+        <h1 className="h2">{t('Product niet gevonden', 'Product not found')}</h1>
+        <p><Link to="/shop" className="btn btn--ghost">{t('Terug naar de shop', 'Back to the shop')} <span className="btn__icon">→</span></Link></p>
       </section>
     )
   }
@@ -135,8 +143,8 @@ export default function Product() {
   const addToCart = () =>
     inCart
       ? open()
-      : add({ slug: product.slug, name: product.name, price: product.price, image: product.images?.[0], unique: product.unique, qty: product.unique ? 1 : qty })
-  const ctaLabel = inCart ? 'Bekijk winkelwagen' : 'In winkelwagen'
+      : add({ slug: product.slug, name: origineel.name, price: product.price, image: product.images?.[0], unique: product.unique, qty: product.unique ? 1 : qty })
+  const ctaLabel = inCart ? t('Bekijk winkelwagen', 'View cart') : t('In winkelwagen', 'Add to cart')
 
   const related = products.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 3)
   const more = related.length ? related : products.filter((p) => p.slug !== product.slug).slice(0, 3)
@@ -145,7 +153,7 @@ export default function Product() {
     <>
       <div className="container" style={{ paddingTop: '1.5rem' }}>
         <p style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>
-          <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to={kruimel(product).pad}>{kruimel(product).name}</Link> &nbsp;/&nbsp; <span>{product.name}</span>
+          <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to={kruimel(product, en).pad}>{kruimel(product, en).name}</Link> &nbsp;/&nbsp; <span>{product.name}</span>
         </p>
       </div>
 
@@ -161,10 +169,10 @@ export default function Product() {
                 className={`thumb ${i === beeld ? 'is-active' : ''}`}
                 key={src}
                 onClick={() => setBeeld(i)}
-                aria-label={i === 0 ? 'Voorkant tonen' : 'Achterkant tonen'}
+                aria-label={i === 0 ? t('Voorkant tonen', 'Show front') : t('Achterkant tonen', 'Show back')}
                 aria-pressed={i === beeld}
               >
-                <SmartImage src={src} alt={`${product.name} — foto ${i + 1}`} label="" sublabel="" sizes="(max-width: 860px) 50vw, 320px" />
+                <SmartImage src={src} alt={`${product.name} — ${t('foto', 'photo')} ${i + 1}`} label="" sublabel="" sizes="(max-width: 860px) 50vw, 320px" />
               </button>
             ))}
           </div>
@@ -183,44 +191,44 @@ export default function Product() {
             </ul>
             {product.type === 'poufs' && (
               <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
-                Hoe vul je een poef? <Link to="/poef-vullen" className="link-underline">Lees onze stap-voor-stap uitleg</Link>.
+                {t('Hoe vul je een poef?', 'How do you fill a pouf?')} <Link to="/poef-vullen" className="link-underline">{t('Lees onze stap-voor-stap uitleg', 'Read our step-by-step guide')}</Link>.
               </p>
             )}
 
             <div className="pdp__cta" ref={ctaRef}>
               {weg && (
                 <p className="pdp__weg" role="status">
-                  <strong>{STATUS_TEKST[stand]}.</strong>{' '}
+                  <strong>{(en ? STATUS_TEKST_EN : STATUS_TEKST)[stand]}.</strong>{' '}
                   {stand === 'verkocht'
-                    ? 'Dit stuk heeft een nieuwe eigenaar. Er is er maar één van, dus hij komt niet terug.'
-                    : 'Iemand anders is dit stuk op dit moment aan het afrekenen. Rondt die het niet af, dan komt het binnen een half uur weer vrij.'}
+                    ? t('Dit stuk heeft een nieuwe eigenaar. Er is er maar één van, dus hij komt niet terug.', 'This piece has a new owner. There is only one, so it won’t be back.')
+                    : t('Iemand anders is dit stuk op dit moment aan het afrekenen. Rondt die het niet af, dan komt het binnen een half uur weer vrij.', 'Someone else is checking out this piece right now. If they don’t complete the purchase, it becomes available again within half an hour.')}
                 </p>
               )}
               {/* Unieke stukken bestaan één keer — dan is een aantal-keuze onzin */}
               {!product.unique && !weg && (
                 <div className="qty" style={{ border: '1px solid var(--line)', borderRadius: 100, padding: '0.4rem 0.6rem' }}>
-                  <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Minder">−</button>
+                  <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label={t('Minder', 'Less')}>−</button>
                   <span style={{ minWidth: 24, textAlign: 'center' }}>{qty}</span>
-                  <button onClick={() => setQty((q) => q + 1)} aria-label="Meer">+</button>
+                  <button onClick={() => setQty((q) => q + 1)} aria-label={t('Meer', 'More')}>+</button>
                 </div>
               )}
               {weg
-                ? <Link to="/shop" className="btn btn--ghost">Bekijk de andere stukken <span className="btn__icon" aria-hidden>→</span></Link>
+                ? <Link to="/shop" className="btn btn--ghost">{t('Bekijk de andere stukken', 'See the other pieces')} <span className="btn__icon" aria-hidden>→</span></Link>
                 : <button className="btn btn--terracotta" onClick={addToCart}>
                     {ctaLabel} <span className="btn__icon" aria-hidden>{inCart ? '→' : '+'}</span>
                   </button>}
             </div>
             {product.unique && !weg && (
-              <p className="pdp__stock">Uniek stuk — er is er maar één van</p>
+              <p className="pdp__stock">{t('Uniek stuk — er is er maar één van', 'Unique piece — there is only one')}</p>
             )}
 
             {/* Vertrouwen vlak bij de knop: alles hieronder moet kloppen
                 met src/data/site.js (shop) en de pagina Verzending & retour. */}
             <ul className="trust">
-              <li><span className="trust__icon" aria-hidden>✦</span><span><b>Verzonden binnen {shop.deliveryTime}</b>, met track &amp; trace</span></li>
-              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{formatPrice(shop.shippingCost)} verzending</b> binnen de EU, per bestelling</span></li>
-              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{shop.returnDays} dagen bedenktijd</b> — <Link to="/verzending" className="trust__link">zo werkt retour</Link></span></li>
-              <li><span className="trust__icon" aria-hidden>✦</span><span><b>Veilig betalen</b> via Stripe</span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{t(`Verzonden binnen ${shop.deliveryTime}`, 'Ships within 2–4 working days')}</b>{t(', met track & trace', ', with tracking')}</span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{formatPrice(shop.shippingCost)} {t('verzending', 'shipping')}</b> {t('binnen de EU, per bestelling', 'within the EU, per order')}</span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{shop.returnDays} {t('dagen bedenktijd', 'days to return')}</b> — <Link to="/verzending" className="trust__link">{t('zo werkt retour', 'how returns work')}</Link></span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{t('Veilig betalen', 'Secure payment')}</b> {t('via Stripe', 'via Stripe')}</span></li>
             </ul>
             <PaymentMethods className="pdp__pay" />
           </div>
@@ -239,7 +247,7 @@ export default function Product() {
 
       <section className="section section--alt">
         <div className="container">
-          <div className="section-head reveal"><span className="eyebrow">Misschien ook iets voor jou</span><h2 className="h2">Verder ontdekken</h2></div>
+          <div className="section-head reveal"><span className="eyebrow">{t('Misschien ook iets voor jou', 'You might also like')}</span><h2 className="h2">{t('Verder ontdekken', 'Keep exploring')}</h2></div>
           <div className="product-grid">
             {more.map((p, i) => <ProductCard key={p.slug} product={p} delay={(i % 3) + 1} />)}
           </div>

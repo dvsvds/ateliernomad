@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { lokaal } from './i18n.js'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
@@ -28,6 +29,24 @@ function ScrollToTop() {
   return null
 }
 
+const PAGINAS = [
+  ['/', <Home />],
+  ['/shop', <Shop />],
+  ['/poefs', <Shop soort="poufs" />],
+  ['/kussens', <Shop soort="kussens" />],
+  ['/gidsen', <Gidsen />],
+  ...gidsen.map((g) => [`/${g.slug}`, <Gids slug={g.slug} />]),
+  ['/product/:slug', <Product />],
+  ['/over', <About />],
+  ['/ambacht', <Craftsmanship />],
+  ['/contact', <Contact />],
+  ['/faq', <FAQ />],
+  ['/bedankt', <Success />],
+  ['/voorwaarden', <Legal doc="voorwaarden" />],
+  ['/privacy', <Legal doc="privacy" />],
+  ['/verzending', <Legal doc="verzending" />],
+]
+
 export default function App() {
   return (
     <>
@@ -36,21 +55,11 @@ export default function App() {
       <CartDrawer />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/poefs" element={<Shop soort="poufs" />} />
-          <Route path="/kussens" element={<Shop soort="kussens" />} />
-          <Route path="/gidsen" element={<Gidsen />} />
-          {gidsen.map((g) => <Route key={g.slug} path={`/${g.slug}`} element={<Gids slug={g.slug} />} />)}
-          <Route path="/product/:slug" element={<Product />} />
-          <Route path="/over" element={<About />} />
-          <Route path="/ambacht" element={<Craftsmanship />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/bedankt" element={<Success />} />
-          <Route path="/voorwaarden" element={<Legal doc="voorwaarden" />} />
-          <Route path="/privacy" element={<Legal doc="privacy" />} />
-          <Route path="/verzending" element={<Legal doc="verzending" />} />
+          {/* Elke pagina twee keer: Nederlands, en Engels onder /en (zie src/i18n.js). */}
+          {PAGINAS.flatMap(([pad, element]) => [
+            <Route key={pad} path={pad} element={element} />,
+            <Route key={`en${pad}`} path={lokaal(pad, 'en')} element={element} />,
+          ])}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

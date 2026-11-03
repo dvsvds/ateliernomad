@@ -1,15 +1,19 @@
 import SmartImage from '../components/SmartImage.jsx'
-import { lifestyle } from '../data/site.js'
+import { lifestyle as lifestyleNl } from '../data/site.js'
+import { lifestyleLabelsEn } from '../data/en/site.js'
+import { useTaal } from '../i18n.js'
 
 export default function Lifestyle() {
+  const { en, t } = useTaal()
+  const lifestyle = en ? lifestyleNl.map((l) => ({ ...l, label: lifestyleLabelsEn[l.src] || l.label })) : lifestyleNl
   return (
     <section className="section">
       <div className="container">
         <div className="section-head center mx-auto reveal">
-          <span className="eyebrow">Interieurinspiratie</span>
-          <h2 className="h2">Leef met textuur</h2>
+          <span className="eyebrow">{t('Interieurinspiratie', 'Interior inspiration')}</span>
+          <h2 className="h2">{t('Leef met textuur', 'Live with texture')}</h2>
           <p className="lead measure mx-auto">
-            Warme aardetinten, natuurlijke materialen en stukken die je elke dag wilt aanraken.
+            {t('Warme aardetinten, natuurlijke materialen en stukken die je elke dag wilt aanraken.', 'Warm earth tones, natural materials and pieces you want to touch every day.')}
           </p>
         </div>
 

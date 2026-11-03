@@ -25,7 +25,11 @@ const CATEGORIE = {
 exports.handler = async (event) => {
   const res = await fetch(`${SITE}/feed-data.json`)
   if (!res.ok) return { statusCode: 502, body: 'feed-data.json niet gevonden' }
-  const { producten, verzendlanden } = await res.json()
+  const data = await res.json()
+  // /google-shopping-en.xml (zie _redirects) geeft de Engelse versie.
+  const en = event.queryStringParameters?.taal === 'en'
+  const producten = en ? data.productenEn : data.producten
+  const { verzendlanden } = data
 
   let verkocht = []
   try { verkocht = (await stand(event)).verkocht || [] } catch (err) {
@@ -40,7 +44,7 @@ exports.handler = async (event) => {
       <g:description>${esc(p.beschrijving)}</g:description>
       <g:link>${SITE}${esc(p.pad)}</g:link>
       <g:image_link>${SITE}${esc(foto)}</g:image_link>
-${meer.map((f) => `      <g:additional_image_link>${SITE}${esc(f)}</g:additional_image_link>\n`).join('')}      <g:availability>${verkocht.includes(p.id) ? 'out_of_stock' : 'in_stock'}</g:availability>
+${meer.map((f) => `      <g:additional_image_link>${SITE}${esc(f)}</g:additional_image_link>\n`).join('')}      <g:availability>${verkocht.includes(p.slug || p.id) ? 'out_of_stock' : 'in_stock'}</g:availability>
       <g:price>${Number(p.prijs).toFixed(2)} EUR</g:price>
       <g:condition>new</g:condition>
       <g:brand>Atelier Nomàd</g:brand>
@@ -58,8 +62,8 @@ ${verzendlanden.map((land) => `      <g:shipping><g:country>${land}</g:country><
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
     <title>Atelier Nomàd</title>
-    <link>${SITE}</link>
-    <description>Marokkaanse Berber poefs en kussens</description>
+    <link>${SITE}${en ? '/en' : ''}</link>
+    <description>${en ? 'Moroccan Berber poufs and cushions' : 'Marokkaanse Berber poefs en kussens'}</description>
 ${items}
   </channel>
 </rss>

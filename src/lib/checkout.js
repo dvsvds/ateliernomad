@@ -24,12 +24,12 @@ const MELDING = 'Er ging iets mis bij het starten van de betaling. Probeer het l
  * terug (na een melding) als er niets gebeurde — dan kan de klant het
  * opnieuw proberen.
  */
-export async function startCheckout(items) {
+export async function startCheckout(items, taal = 'nl') {
   try {
     const res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty })) }),
+      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty })), taal }),
     })
 
     if (res.status === 409) {

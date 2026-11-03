@@ -250,6 +250,11 @@ p { margin: 0 0 1.1rem; }
   background: none; border: none; color: var(--ink); font-size: 0.82rem;
   letter-spacing: 0.08em;
 }
+.nav__taal {
+  font-size: 0.72rem; letter-spacing: 0.14em; font-weight: 500; color: var(--muted);
+  text-decoration: none; padding: 0.35rem 0.5rem; border: 1px solid var(--line); border-radius: 100px;
+}
+.nav__taal:hover { color: var(--ink); border-color: var(--ink); }
 .nav__cart-count {
   position: absolute; top: -8px; right: -12px;
   background: var(--terracotta); color: var(--cream);
@@ -720,3 +725,9 @@ p { margin: 0 0 1.1rem; }
 .cookiebanner a { text-decoration: underline; }
 .cookiebanner__knoppen { display: flex; gap: 0.6rem; justify-content: flex-end; flex-wrap: wrap; }
 .footer__cookies { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+
+/* Taalknop op smalle schermen: compacter, zodat het merk op één regel blijft. */
+@media (max-width: 560px) {
+  .nav__actions { gap: 0.7rem; }
+  .nav__taal { padding: 0.22rem 0.4rem; font-size: 0.64rem; letter-spacing: 0.1em; }
+}

@@ -8,6 +8,9 @@ import { SeoContext, headHtml } from './hooks/useSeo.js'
 import { alleProducten, products } from './data/products.js'
 import { gidsen } from './data/gidsen.js'
 import { shop } from './data/site.js'
+import { lokaal } from './i18n.js'
+import { vertaalProduct } from './data/vertaal.js'
+export { lokaal }
 
 /* Gebruikt door scripts/prerender.mjs: rendert één pagina naar HTML en
    geeft de bijhorende <head>-tags terug. Zelfde boom als main.jsx. */
@@ -26,7 +29,7 @@ export function render(url) {
       </SeoContext.Provider>
     </StrictMode>,
   )
-  return { html, head: headHtml(seo), noindex: seo.noindex }
+  return { html, head: headHtml(seo), noindex: seo.noindex, taal: seo.taal }
 }
 
 export const productSlugs = alleProducten.map((p) => p.slug)
@@ -50,5 +53,26 @@ export const feedProducten = products.map((p) => ({
   soort: p.type,
   label: p.categoryLabel,
 }))
+
+// Dezelfde feed in het Engels, voor Google Shopping buiten België/Nederland.
+export const feedProductenEn = products.map((origineel) => {
+  const p = vertaalProduct(origineel, 'en')
+  const naam = origineel.name.split('— ').pop()
+  return {
+    id: `${p.slug}-en`,
+    titel: p.type === 'poufs'
+      ? `Moroccan Berber pouf ${naam} – vintage, hand-knotted, one of a kind`
+      : p.type === 'kussens'
+        ? `Moroccan Berber cushion ${naam} – hand-woven wool, one of a kind`
+        : p.name,
+    beschrijving: `${p.short} ${p.description} ${p.details.map(([k, v]) => `${k}: ${v}.`).join(' ')}`,
+    pad: lokaal(`/product/${p.slug}`, 'en'),
+    fotos: p.images || [],
+    prijs: p.price,
+    soort: p.type,
+    label: p.categoryLabel,
+    slug: p.slug,
+  }
+})
 
 export const gidsSlugs = gidsen.map((g) => g.slug)

@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom'
+import { Link } from './TaalLink.jsx'
 import { brand } from '../data/site.js'
 import PaymentMethods from './PaymentMethods.jsx'
 import { analyticsAan } from '../lib/analytics.js'
+import { useTaal } from '../i18n.js'
+import { brandEn } from '../data/en/site.js'
 
 export default function Footer() {
+  const { en, t } = useTaal()
   return (
     <footer className="footer">
       <div className="container">
@@ -14,24 +17,24 @@ export default function Footer() {
               <small>Handcrafted Moroccan Living</small>
             </div>
             <p style={{ maxWidth: '34ch', marginTop: '1.2rem', color: 'rgba(250,246,239,0.7)' }}>
-              Luxe, handgemaakte Marokkaanse interieurstukken — geselecteerd voor tijdloze interieurs.
+              {t('Luxe, handgemaakte Marokkaanse interieurstukken — geselecteerd voor tijdloze interieurs.', 'Handmade Moroccan interior pieces — selected for timeless interiors.')}
             </p>
           </div>
 
           <div>
             <h4>Shop</h4>
-            <Link to="/shop">Volledige collectie</Link>
-            <Link to="/poefs">Marokkaanse poefs</Link>
-            <Link to="/kussens">Berber kussens</Link>
-            <Link to="/shop?cat=geweven">Geweven</Link>
+            <Link to="/shop">{t('Volledige collectie', 'Full collection')}</Link>
+            <Link to="/poefs">{t('Marokkaanse poefs', 'Moroccan poufs')}</Link>
+            <Link to="/kussens">{t('Berber kussens', 'Berber cushions')}</Link>
+            <Link to="/shop?cat=geweven">{t('Geweven', 'Woven')}</Link>
           </div>
 
           <div>
             <h4>Atelier</h4>
-            <Link to="/over">Over Atelier Nomàd</Link>
-            <Link to="/ambacht">Ambacht & Herkomst</Link>
-            <Link to="/faq">Veelgestelde vragen</Link>
-            <Link to="/gidsen">Gidsen</Link>
+            <Link to="/over">{t('Over Atelier Nomàd', 'About Atelier Nomàd')}</Link>
+            <Link to="/ambacht">{t('Ambacht & Herkomst', 'Craft & Origin')}</Link>
+            <Link to="/faq">{t('Veelgestelde vragen', 'FAQ')}</Link>
+            <Link to="/gidsen">{t('Gidsen', 'Guides')}</Link>
             <Link to="/contact">Contact</Link>
           </div>
 
@@ -42,26 +45,26 @@ export default function Footer() {
               <a href={`tel:${brand.phone.replace(/[^+\d]/g, '')}`}>{brand.phone}</a>
             )}
             <a href={brand.instagram} target="_blank" rel="noreferrer">Instagram {brand.instagramHandle}</a>
-            <span style={{ color: 'rgba(250,246,239,0.6)', fontSize: '0.9rem', display: 'block', paddingTop: '0.4rem' }}>{brand.city}</span>
+            <span style={{ color: 'rgba(250,246,239,0.6)', fontSize: '0.9rem', display: 'block', paddingTop: '0.4rem' }}>{en ? brandEn.city : brand.city}</span>
           </div>
         </div>
 
         <div className="footer__pay">
-          <span className="footer__pay-label">Veilig betalen met</span>
+          <span className="footer__pay-label">{t('Veilig betalen met', 'Pay securely with')}</span>
           <PaymentMethods variant="dark" />
         </div>
 
         <div className="footer__bottom">
-          <small>© {new Date().getFullYear()} Atelier Nomàd. Met de hand gemaakt in Marokko.</small>
+          <small>© {new Date().getFullYear()} Atelier Nomàd. {t('Met de hand gemaakt in Marokko.', 'Handmade in Morocco.')}</small>
           <small className="footer__legal">
-            <Link to="/voorwaarden">Algemene voorwaarden</Link>
+            <Link to="/voorwaarden">{t('Algemene voorwaarden', 'Terms & conditions')}</Link>
             <Link to="/privacy">Privacy</Link>
-            <Link to="/verzending">Verzending &amp; retour</Link>
+            <Link to="/verzending">{t('Verzending & retour', 'Shipping & returns')}</Link>
             {analyticsAan && (
-              <button type="button" className="footer__cookies" onClick={() => window.dispatchEvent(new Event('cookies-openen'))}>Cookie-instellingen</button>
+              <button type="button" className="footer__cookies" onClick={() => window.dispatchEvent(new Event('cookies-openen'))}>{t('Cookie-instellingen', 'Cookie settings')}</button>
             )}
           </small>
-          <small>Website door <a href="https://web-makers.be" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>WebMakers</a></small>
+          <small>{t('Website door', 'Website by')} <a href="https://web-makers.be" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>WebMakers</a></small>
         </div>
       </div>
     </footer>
