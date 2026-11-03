@@ -7,6 +7,7 @@ import { VoorraadProvider } from './context/VoorraadContext.jsx'
 import { SeoContext, headHtml } from './hooks/useSeo.js'
 import { alleProducten, products } from './data/products.js'
 import { gidsen } from './data/gidsen.js'
+import { shop } from './data/site.js'
 
 /* Gebruikt door scripts/prerender.mjs: rendert één pagina naar HTML en
    geeft de bijhorende <head>-tags terug. Zelfde boom als main.jsx. */
@@ -33,6 +34,8 @@ export const productSlugs = alleProducten.map((p) => p.slug)
 export const zichtbareSlugs = products.map((p) => p.slug)
 /* Productgegevens voor de Google Shopping-feed (netlify/functions/shopping-feed.cjs).
    De feed vult de beschikbaarheid live aan uit de voorraad. */
+export const verzendlanden = shop.verzendlanden
+
 export const feedProducten = products.map((p) => ({
   id: p.slug,
   titel: p.type === 'poufs'

@@ -25,7 +25,7 @@ const CATEGORIE = {
 exports.handler = async (event) => {
   const res = await fetch(`${SITE}/feed-data.json`)
   if (!res.ok) return { statusCode: 502, body: 'feed-data.json niet gevonden' }
-  const producten = await res.json()
+  const { producten, verzendlanden } = await res.json()
 
   let verkocht = []
   try { verkocht = (await stand(event)).verkocht || [] } catch (err) {
@@ -47,7 +47,7 @@ ${meer.map((f) => `      <g:additional_image_link>${SITE}${esc(f)}</g:additional
       <g:identifier_exists>no</g:identifier_exists>
       <g:google_product_category>${esc(CATEGORIE[p.soort] || 'Home & Garden > Decor')}</g:google_product_category>
       <g:product_type>${esc(p.label)}</g:product_type>
-      <g:shipping><g:country>BE</g:country><g:price>${VERZENDING}</g:price></g:shipping>
+${verzendlanden.map((land) => `      <g:shipping><g:country>${land}</g:country><g:price>${VERZENDING}</g:price></g:shipping>`).join('\n')}
     </item>`
   }).join('\n')
 

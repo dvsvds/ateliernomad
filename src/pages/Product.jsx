@@ -52,7 +52,7 @@ function productLd(product, verkocht) {
         shippingDetails: {
           '@type': 'OfferShippingDetails',
           shippingRate: { '@type': 'MonetaryAmount', value: shop.shippingCost.toFixed(2), currency: 'EUR' },
-          shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'BE' },
+          shippingDestination: shop.verzendlanden.map((land) => ({ '@type': 'DefinedRegion', addressCountry: land })),
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
             handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
@@ -61,7 +61,7 @@ function productLd(product, verkocht) {
         },
         hasMerchantReturnPolicy: {
           '@type': 'MerchantReturnPolicy',
-          applicableCountry: 'BE',
+          applicableCountry: shop.verzendlanden,
           returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
           merchantReturnDays: shop.returnDays,
           returnMethod: 'https://schema.org/ReturnByMail',
