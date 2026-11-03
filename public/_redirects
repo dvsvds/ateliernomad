@@ -7,6 +7,10 @@ https://www.xn--ateliernomd-h7a.be/*   https://ateliernomad.eu/:splat  301!
 https://ateliernomad-be.netlify.app/*  https://ateliernomad.eu/:splat  301!
 https://www.ateliernomad.eu/*          https://ateliernomad.eu/:splat  301!
 
+# Oude filteradressen die al in Google staan: naar de eigen landingspagina.
+/shop  cat=poufs     /poefs     301!
+/shop  cat=kussens   /kussens   301!
+
 # Google Shopping-feed: productlijst met live beschikbaarheid.
 # In Merchant Center: https://ateliernomad.eu/google-shopping.xml
 /google-shopping.xml   /.netlify/functions/shopping-feed   200
