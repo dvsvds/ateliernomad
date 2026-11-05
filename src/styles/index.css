@@ -731,3 +731,14 @@ p { margin: 0 0 1.1rem; }
   .nav__actions { gap: 0.7rem; }
   .nav__taal { padding: 0.22rem 0.4rem; font-size: 0.64rem; letter-spacing: 0.1em; }
 }
+
+/* ---------- Keuze ongevuld / gevuld (poefs) ---------- */
+.vulkeuze { border: 0; padding: 0; margin: 0 0 1.2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.vulkeuze legend { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.vulkeuze label {
+  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 100px; padding: 0.55rem 1rem; font-size: 0.92rem;
+}
+.vulkeuze label.is-actief { border-color: var(--ink); background: var(--cream-deep); }
+.vulkeuze input { accent-color: var(--ink); margin: 0; }
+.vulkeuze small { color: var(--muted); }

@@ -29,7 +29,7 @@ export async function startCheckout(items, taal = 'nl') {
     const res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty })), taal }),
+      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty, gevuld: !!i.gevuld })), taal }),
     })
 
     if (res.status === 409) {

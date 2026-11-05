@@ -93,10 +93,11 @@ export default function Product() {
   const { add, items, open } = useCart()
   const { status } = useVoorraad()
   const [qty, setQty] = useState(1)
+  const [gevuld, setGevuld] = useState(false)
   const [beeld, setBeeld] = useState(0)
   // De component wordt hergebruikt tussen producten: aantal en gekozen foto
   // mogen niet meereizen naar het volgende product.
-  useEffect(() => { setQty(1); setBeeld(0) }, [slug])
+  useEffect(() => { setQty(1); setBeeld(0); setGevuld(false) }, [slug])
   const ctaRef = useRef(null)
   const [showSticky, setShowSticky] = useState(false)
   useReveal([slug])
@@ -141,10 +142,13 @@ export default function Product() {
   const inCart = product.unique && items.some((i) => i.slug === product.slug)
   const stand = product.unique ? status(product.slug) : 'beschikbaar'
   const weg = stand !== 'beschikbaar'
+  // Poefs: ongevuld (standaard) of gevuld tegen shop.vulPrijs extra.
+  const vol = !!product.vulbaar && gevuld
+  const prijs = product.price + (vol ? shop.vulPrijs : 0)
   const addToCart = () =>
     inCart
       ? open()
-      : add({ slug: product.slug, name: origineel.name, price: product.price, image: product.images?.[0], unique: product.unique, qty: product.unique ? 1 : qty })
+      : add({ slug: product.slug, name: origineel.name, price: prijs, image: product.images?.[0], unique: product.unique, qty: product.unique ? 1 : qty, gevuld: vol })
   const ctaLabel = inCart ? t('Bekijk winkelwagen', 'View cart') : t('In winkelwagen', 'Add to cart')
 
   const related = products.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 3)
@@ -181,7 +185,7 @@ export default function Product() {
           <div className="pdp__info reveal" data-delay="1">
             <span className="card__cat">{product.categoryLabel}</span>
             <h1 className="h2" style={{ marginTop: '0.4rem' }}>{product.name}</h1>
-            <Price value={product.price} className="pdp__price" />
+            <Price value={prijs} className="pdp__price" />
             <p className="lead">{product.short}</p>
             <p>{product.description}</p>
 
@@ -194,6 +198,20 @@ export default function Product() {
               <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
                 {t('Hoe vul je een poef?', 'How do you fill a pouf?')} <Link to="/poef-vullen" className="link-underline">{t('Lees onze stap-voor-stap uitleg', 'Read our step-by-step guide')}</Link>.
               </p>
+            )}
+
+            {product.vulbaar && !weg && !inCart && (
+              <fieldset className="vulkeuze">
+                <legend>{t('Levering', 'Delivery')}</legend>
+                <label className={!gevuld ? 'is-actief' : ''}>
+                  <input type="radio" name="vulling" checked={!gevuld} onChange={() => setGevuld(false)} />
+                  <span>{t('Ongevuld, als hoes', 'Unfilled, as a cover')}</span>
+                </label>
+                <label className={gevuld ? 'is-actief' : ''}>
+                  <input type="radio" name="vulling" checked={gevuld} onChange={() => setGevuld(true)} />
+                  <span>{t('Gevuld', 'Filled')} <small>+ {formatPrice(shop.vulPrijs)}</small></span>
+                </label>
+              </fieldset>
             )}
 
             <div className="pdp__cta" ref={ctaRef}>
@@ -239,7 +257,7 @@ export default function Product() {
       <div className={`sticky-cta ${showSticky ? 'is-visible' : ''}`} aria-hidden={!showSticky}>
         <div className="sticky-cta__info">
           <span className="sticky-cta__name">{product.name}</span>
-          <Price value={product.price} className="sticky-cta__price" />
+          <Price value={prijs} className="sticky-cta__price" />
         </div>
         <button className="btn btn--terracotta" onClick={addToCart} tabIndex={showSticky ? 0 : -1}>
           {ctaLabel}

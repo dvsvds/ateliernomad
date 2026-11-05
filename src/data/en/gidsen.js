@@ -14,7 +14,7 @@ export const gidsenEn = [
     titel: 'Filling your pouf',
     seoTitel: 'How to fill a pouf: a step-by-step guide',
     description: 'Filling your Moroccan pouf yourself? How much filling you need (about 100 litres), which filling works best and how to get it firm and full.',
-    intro: 'Our Moroccan poufs arrive unfilled, as a cover with a zip. Filling one takes about fifteen minutes — here is how to get it firm, sturdy and nicely in shape.',
+    intro: 'Our Moroccan poufs arrive unfilled by default, as a cover with a zip (prefer it filled? That’s € 9 extra). Filling one yourself takes about fifteen minutes — here is how to get it firm, sturdy and nicely in shape.',
     secties: [
       {
         h: 'Why we ship our poufs unfilled',

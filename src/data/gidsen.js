@@ -21,7 +21,7 @@ export const gidsen = [
     titel: 'Je poef vullen',
     seoTitel: 'Poef vullen: zo doe je dat, stap voor stap',
     description: 'Je Marokkaanse poef zelf vullen? Hoeveel vulling je nodig hebt (ongeveer 100 liter), welke vulling het best werkt en hoe je hem strak en stevig krijgt.',
-    intro: 'Onze Marokkaanse poefs komen ongevuld bij je aan, als hoes met rits. Vullen is in een kwartier gebeurd — zo krijg je hem strak, stevig en mooi in vorm.',
+    intro: 'Onze Marokkaanse poefs komen standaard ongevuld bij je aan, als hoes met rits (liever gevuld? Dat kan voor € 9 extra). Zelf vullen is in een kwartier gebeurd — zo krijg je hem strak, stevig en mooi in vorm.',
     secties: [
       {
         h: 'Waarom we poefs ongevuld versturen',

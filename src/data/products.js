@@ -54,7 +54,7 @@ export const categories = [
    alleen het kleed waar hij van gemaakt is verschilt. */
 const DETAILS = (materiaal, herkomst) => [
   ['Materiaal', materiaal],
-  ['Levering', 'Ongevuld, als hoes'],
+  ['Levering', 'Ongevuld als hoes, of gevuld (+ € 9)'],
   ['Herkomst', herkomst],
   ['Uniek', 'Eén exemplaar — wat je ziet, ontvang je'],
 ]
@@ -64,6 +64,7 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
   name,
   type: 'poufs',
   unique: true, // er bestaat precies één exemplaar — max 1 in de winkelwagen
+  vulbaar: true, // kan gevuld geleverd worden, tegen shop.vulPrijs extra
   category,
   categoryLabel: 'Berber poef',
   price,

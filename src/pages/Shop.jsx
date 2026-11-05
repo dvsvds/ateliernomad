@@ -39,7 +39,7 @@ const PAGINA = {
     eyebrow: 'Poefs',
     titel: 'Marokkaanse Berber poefs',
     gids: { to: '/berber-poef', tekst: 'Wol, boucherouite of kelim: wat is het verschil?' },
-    intro: `${aantal('poufs')} vintage poefs, elk met de hand geknoopt uit een oud Berberkleed, boucherouite of kelim uit Marokko. Omdat elk kleed anders is, bestaat elke poef maar één keer: wat je op de foto ziet, is precies wat je ontvangt. We versturen ze ongevuld, als hoes met rits — zo blijft verzenden betaalbaar en vul je hem zelf zo stevig als je wil.`,
+    intro: `${aantal('poufs')} vintage poefs, elk met de hand geknoopt uit een oud Berberkleed, boucherouite of kelim uit Marokko. Omdat elk kleed anders is, bestaat elke poef maar één keer: wat je op de foto ziet, is precies wat je ontvangt. We versturen ze standaard ongevuld, als hoes met rits, zodat je hem zelf zo stevig vult als je wil — of je kiest gevuld, voor € 9 extra.`,
   },
   kussens: {
     seo: {
@@ -70,7 +70,7 @@ const PAGINA_EN = {
     eyebrow: 'Poufs',
     titel: 'Moroccan Berber poufs',
     gids: { to: '/berber-poef', tekst: 'Wool, boucherouite or kilim: what’s the difference?' },
-    intro: `${aantal('poufs')} vintage poufs, each hand-knotted from an old Berber rug, boucherouite or kilim from Morocco. Because every rug is different, every pouf exists only once: what you see in the photo is exactly what you receive. We ship them unfilled, as a cover with a zip — that keeps shipping affordable, and you fill it as firmly as you like.`,
+    intro: `${aantal('poufs')} vintage poufs, each hand-knotted from an old Berber rug, boucherouite or kilim from Morocco. Because every rug is different, every pouf exists only once: what you see in the photo is exactly what you receive. We ship them unfilled by default, as a cover with a zip, so you can fill it as firmly as you like — or choose filled, for € 9 extra.`,
   },
   kussens: {
     seo: {

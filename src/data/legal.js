@@ -79,7 +79,7 @@ export const documenten = {
         p: [
           'Elk stuk in de collectie is met de hand gemaakt en bestaat maar één keer. De foto op de productpagina toont het exemplaar dat je ontvangt.',
           'Omdat het om handwerk uit vintage textiel gaat, kunnen kleur, maatvoering en patroon licht afwijken van wat je op je scherm ziet. Die verschillen zijn eigen aan het product en gelden niet als gebrek.',
-          'Vloerpoufs worden ongevuld verstuurd, als hoes met rits. Vullen doe je zelf; reken op ongeveer 100 liter per pouf.',
+          'Poefs worden standaard ongevuld verstuurd, als hoes met rits; vullen doe je zelf (reken op ongeveer 100 liter per poef). Kies je op de productpagina voor gevuld, dan leveren we hem gevuld voor € 9 extra.',
         ],
       },
       {
@@ -224,7 +224,7 @@ export const documenten = {
         h: 'Levertijd',
         p: [
           'Alles ligt op voorraad, dus we versturen binnen twee tot vier werkdagen. Je krijgt een track & trace zodra het pakket onderweg is.',
-          'Poufs gaan ongevuld de deur uit. Dat scheelt fors in volume, dus ook binnen Europa gaat het snel en blijft de verzending betaalbaar.',
+          'Poefs gaan standaard ongevuld de deur uit. Dat scheelt fors in volume, dus ook binnen Europa gaat het snel. Gevuld kan ook, voor € 9 extra; de verzendkosten blijven dezelfde.',
         ],
       },
       {

@@ -21,12 +21,13 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { alleProducten as products } from '../src/data/products.js'
+import { shop } from '../src/data/site.js'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 const breedte = Math.max(...products.map((p) => p.slug.length)) + 3
 const regels = products
-  .map((p) => `  ${`'${p.slug}':`.padEnd(breedte)} { name: ${JSON.stringify(p.name)}, price: ${p.price}, max: ${p.unique ? 1 : 20} },`)
+  .map((p) => `  ${`'${p.slug}':`.padEnd(breedte)} { name: ${JSON.stringify(p.name)}, price: ${p.price}, max: ${p.unique ? 1 : 20}${p.vulbaar ? `, vul: ${shop.vulPrijs}` : ''} },`)
   .join('\n')
 
 const kop = `// Serverprijslijst — DE BRON VAN WAARHEID voor betalingen.
