@@ -44,6 +44,7 @@ function productLd(product, verkocht, taal) {
       image: (product.images || []).map((src) => SITE_URL + src),
       sku: product.slug,
       category: product.categoryLabel,
+      ...(product.afmeting && { size: product.afmeting }),
       brand: { '@type': 'Brand', name: 'Atelier Nomàd' },
       offers: {
         '@type': 'Offer',

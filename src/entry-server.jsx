@@ -39,7 +39,7 @@ export const zichtbareSlugs = products.map((p) => p.slug)
    De feed vult de beschikbaarheid live aan uit de voorraad. */
 export const verzendlanden = shop.verzendlanden
 
-export const feedProducten = products.map((p) => ({
+export const feedProducten = products.map((origineel) => vertaalProduct(origineel, 'nl')).map((p) => ({
   id: p.slug,
   titel: p.type === 'poufs'
     ? `Marokkaanse Berber poef ${p.name.split('— ').pop()} – vintage, handgeknoopt, uniek`

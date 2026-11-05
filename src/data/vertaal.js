@@ -12,13 +12,18 @@ export function productNaam(product, taal) {
   return `${SOORT_EN[product.type]} — ${product.name.split('— ').pop()}`
 }
 
+/* De afmeting als tweede detailregel (na het materiaal). */
+const metAfmeting = (details, afmeting, label) =>
+  afmeting ? [details[0], [label, afmeting], ...details.slice(1)] : details
+
 export function vertaalProduct(product, taal) {
-  if (taal !== 'en' || !product) return product
-  const en = productenEn[product.slug]
-  if (!en) return product
+  if (!product) return product
+  const en = taal === 'en' && productenEn[product.slug]
+  if (!en) return { ...product, details: metAfmeting(product.details, product.afmeting, 'Afmeting') }
   return {
     ...product,
     ...en,
+    details: metAfmeting(en.details, product.afmeting, 'Size'),
     name: productNaam(product, taal),
     categoryLabel: SOORT_EN[product.type] || product.categoryLabel,
     tag: product.tag ? en.tag || product.tag : null,
