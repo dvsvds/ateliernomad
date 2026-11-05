@@ -1,4 +1,5 @@
 import { getProduct } from '../data/products.js'
+import { shop } from '../data/site.js'
 
 /**
  * Ververst een opgeslagen winkelwagen aan de hand van de actuele collectie.
@@ -17,15 +18,19 @@ export function verversWinkelwagen(items) {
   if (!Array.isArray(items)) return []
   // Zelfde artikel twee keer in de opslag? Samenvoegen, dan pas begrenzen.
   const perSlug = new Map()
+  const gevuld = new Set()
   for (const i of items) {
     if (!i || typeof i.slug !== 'string') continue
     perSlug.set(i.slug, (perSlug.get(i.slug) || 0) + (Math.max(0, parseInt(i.qty, 10)) || 0))
+    if (i.gevuld) gevuld.add(i.slug)
   }
   return [...perSlug].flatMap(([slug, aantal]) => {
     const p = getProduct(slug)
     if (!p) return []
     const max = p.unique ? 1 : 20 // zelfde grens als de serverprijslijst
     const qty = Math.min(max, Math.max(1, aantal))
-    return [{ slug: p.slug, name: p.name, price: p.price, image: p.images?.[0], unique: !!p.unique, qty }]
+    // Gevuld kan alleen bij poefs, en kost shop.vulPrijs extra (gelijk aan de server).
+    const vol = !!p.vulbaar && gevuld.has(slug)
+    return [{ slug: p.slug, name: p.name, price: p.price + (vol ? shop.vulPrijs : 0), image: p.images?.[0], unique: !!p.unique, qty, gevuld: vol }]
   })
 }

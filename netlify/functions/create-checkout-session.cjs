@@ -8,35 +8,35 @@ const SITE_URL = process.env.SITE_URL
 
 // <catalog: gegenereerd door scripts/sync-catalog.mjs — niet met de hand aanpassen>
 const CATALOG = {
-  'pouf-haze':     { name: "Berber poef — Haze", price: 130, max: 1 },
-  'pouf-poppy':    { name: "Berber poef — Poppy", price: 130, max: 1 },
-  'pouf-heather':  { name: "Berber poef — Heather", price: 130, max: 1 },
-  'pouf-saffron':  { name: "Berber poef — Saffron", price: 130, max: 1 },
-  'pouf-drift':    { name: "Berber poef — Drift", price: 130, max: 1 },
-  'pouf-indigo':   { name: "Berber poef — Indigo", price: 130, max: 1 },
-  'pouf-peach':    { name: "Berber poef — Peach", price: 130, max: 1 },
-  'pouf-chalk':    { name: "Berber poef — Chalk", price: 120, max: 1 },
-  'pouf-tide':     { name: "Berber poef — Tide", price: 130, max: 1 },
-  'pouf-blush':    { name: "Berber poef — Blush", price: 140, max: 1 },
-  'pouf-cinnamon': { name: "Berber poef — Cinnamon", price: 130, max: 1 },
-  'pouf-dune':     { name: "Berber poef — Dune", price: 140, max: 1 },
-  'pouf-rust':     { name: "Berber poef — Rust", price: 140, max: 1 },
-  'pouf-pebble':   { name: "Berber poef — Pebble", price: 130, max: 1 },
-  'pouf-solstice': { name: "Berber poef — Solstice", price: 130, max: 1 },
-  'pouf-shoal':    { name: "Berber poef — Shoal", price: 130, max: 1 },
-  'pouf-ember':    { name: "Berber poef — Ember", price: 130, max: 1 },
-  'pouf-quill':    { name: "Berber poef — Quill", price: 120, max: 1 },
-  'pouf-marigold': { name: "Berber poef — Marigold", price: 140, max: 1 },
-  'pouf-signal':   { name: "Berber poef — Signal", price: 140, max: 1 },
-  'pouf-basalt':   { name: "Berber poef — Basalt", price: 140, max: 1 },
-  'pouf-ash':      { name: "Berber poef — Ash", price: 130, max: 1 },
-  'pouf-sorrel':   { name: "Berber poef — Sorrel", price: 140, max: 1 },
-  'pouf-coral':    { name: "Berber poef — Coral", price: 140, max: 1 },
-  'pouf-foxglove': { name: "Berber poef — Foxglove", price: 140, max: 1 },
-  'pouf-apricot':  { name: "Berber poef — Apricot", price: 140, max: 1 },
-  'pouf-garnet':   { name: "Berber poef — Garnet", price: 140, max: 1 },
-  'pouf-bloom':    { name: "Berber poef — Bloom", price: 130, max: 1 },
-  'pouf-kapsa':    { name: "Berber poef — Kapsa", price: 130, max: 1 },
+  'pouf-haze':     { name: "Berber poef — Haze", price: 130, max: 1, vul: 9 },
+  'pouf-poppy':    { name: "Berber poef — Poppy", price: 130, max: 1, vul: 9 },
+  'pouf-heather':  { name: "Berber poef — Heather", price: 130, max: 1, vul: 9 },
+  'pouf-saffron':  { name: "Berber poef — Saffron", price: 130, max: 1, vul: 9 },
+  'pouf-drift':    { name: "Berber poef — Drift", price: 130, max: 1, vul: 9 },
+  'pouf-indigo':   { name: "Berber poef — Indigo", price: 130, max: 1, vul: 9 },
+  'pouf-peach':    { name: "Berber poef — Peach", price: 130, max: 1, vul: 9 },
+  'pouf-chalk':    { name: "Berber poef — Chalk", price: 120, max: 1, vul: 9 },
+  'pouf-tide':     { name: "Berber poef — Tide", price: 130, max: 1, vul: 9 },
+  'pouf-blush':    { name: "Berber poef — Blush", price: 140, max: 1, vul: 9 },
+  'pouf-cinnamon': { name: "Berber poef — Cinnamon", price: 130, max: 1, vul: 9 },
+  'pouf-dune':     { name: "Berber poef — Dune", price: 140, max: 1, vul: 9 },
+  'pouf-rust':     { name: "Berber poef — Rust", price: 140, max: 1, vul: 9 },
+  'pouf-pebble':   { name: "Berber poef — Pebble", price: 130, max: 1, vul: 9 },
+  'pouf-solstice': { name: "Berber poef — Solstice", price: 130, max: 1, vul: 9 },
+  'pouf-shoal':    { name: "Berber poef — Shoal", price: 130, max: 1, vul: 9 },
+  'pouf-ember':    { name: "Berber poef — Ember", price: 130, max: 1, vul: 9 },
+  'pouf-quill':    { name: "Berber poef — Quill", price: 120, max: 1, vul: 9 },
+  'pouf-marigold': { name: "Berber poef — Marigold", price: 140, max: 1, vul: 9 },
+  'pouf-signal':   { name: "Berber poef — Signal", price: 140, max: 1, vul: 9 },
+  'pouf-basalt':   { name: "Berber poef — Basalt", price: 140, max: 1, vul: 9 },
+  'pouf-ash':      { name: "Berber poef — Ash", price: 130, max: 1, vul: 9 },
+  'pouf-sorrel':   { name: "Berber poef — Sorrel", price: 140, max: 1, vul: 9 },
+  'pouf-coral':    { name: "Berber poef — Coral", price: 140, max: 1, vul: 9 },
+  'pouf-foxglove': { name: "Berber poef — Foxglove", price: 140, max: 1, vul: 9 },
+  'pouf-apricot':  { name: "Berber poef — Apricot", price: 140, max: 1, vul: 9 },
+  'pouf-garnet':   { name: "Berber poef — Garnet", price: 140, max: 1, vul: 9 },
+  'pouf-bloom':    { name: "Berber poef — Bloom", price: 130, max: 1, vul: 9 },
+  'pouf-kapsa':    { name: "Berber poef — Kapsa", price: 130, max: 1, vul: 9 },
   'kussen-atlas':  { name: "Berber kussen — Atlas", price: 75, max: 1 },
   'kussen-fern':   { name: "Berber kussen — Fern", price: 75, max: 1 },
   'kussen-cobalt': { name: "Berber kussen — Cobalt", price: 75, max: 1 },
@@ -66,23 +66,26 @@ exports.handler = async (event) => {
     // Eerst per slug optellen, dan pas begrenzen: twee losse regels van
     // hetzelfde unieke stuk zouden anders samen 2 exemplaren verkopen.
     const perSlug = new Map()
+    const gevuld = new Set() // poefs die gevuld geleverd worden (vul = meerprijs uit de catalogus)
     for (const i of items) {
       if (!i || typeof i.slug !== 'string' || !CATALOG[i.slug]) continue
       perSlug.set(i.slug, (perSlug.get(i.slug) || 0) + (Math.max(0, parseInt(i.qty, 10)) || 0))
+      if (i.gevuld && CATALOG[i.slug].vul) gevuld.add(i.slug)
     }
 
     const line_items = [...perSlug].map(([slug, aantal]) => {
       const ref = CATALOG[slug]
+      const vol = gevuld.has(slug)
       return {
         // max komt uit de catalogus: unieke stukken 1 (nu de hele collectie), overige 20
         quantity: Math.max(1, Math.min(ref.max || 20, aantal)),
         price_data: {
           currency: 'eur',
-          unit_amount: Math.round(ref.price * 100), // prijs van de SERVER, niet de client
+          unit_amount: Math.round((ref.price + (vol ? ref.vul : 0)) * 100), // prijs van de SERVER, niet de client
           // Prijzen zijn inclusief btw; Stripe Tax rekent de btw eruit.
           tax_behavior: 'inclusive',
           product_data: {
-            name: ref.name,
+            name: vol ? `${ref.name} (${en ? 'filled' : 'gevuld'})` : ref.name,
             // Zo staat de foto op de betaalpagina en in de bevestigingsmail.
             images: [`${SITE_URL}/images/products/${slug}.jpg`],
           },
@@ -119,7 +122,7 @@ exports.handler = async (event) => {
       // het stuk vrij (via de webhook checkout.session.expired, of vanzelf).
       expires_at: Math.floor((Date.now() + RESERVERING_MS) / 1000),
       // De webhook leest hier welke stukken verkocht zijn.
-      metadata: { slugs: [...perSlug.keys()].join(','), reservering: tijdelijkId },
+      metadata: { slugs: [...perSlug.keys()].join(','), gevuld: [...gevuld].join(','), reservering: tijdelijkId },
       // Stripe Tax rekent pas mee als de sessie er expliciet om vraagt.
       automatic_tax: { enabled: true },
       success_url: `${SITE_URL}${en ? '/en/thank-you' : '/bedankt'}?session_id={CHECKOUT_SESSION_ID}`,
