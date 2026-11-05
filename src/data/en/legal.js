@@ -184,6 +184,7 @@ export const documentenEn = {
         h: 'Shipping costs',
         p: [
           'Shipping within the EU costs € 9.95 per order, however many pieces you order. You will see the exact amount at checkout before you pay.',
+          'Delivery within the province of Antwerp (postcodes 2000–2999) is free. Choose "Free delivery — Antwerp province only" at checkout. If your address is outside the province, we will contact you.',
         ],
       },
       {

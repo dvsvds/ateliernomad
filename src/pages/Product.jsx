@@ -227,7 +227,7 @@ export default function Product() {
                 met src/data/site.js (shop) en de pagina Verzending & retour. */}
             <ul className="trust">
               <li><span className="trust__icon" aria-hidden>✦</span><span><b>{t(`Verzonden binnen ${shop.deliveryTime}`, 'Ships within 2–4 working days')}</b>{t(', met track & trace', ', with tracking')}</span></li>
-              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{formatPrice(shop.shippingCost)} {t('verzending', 'shipping')}</b> {t('binnen de EU, per bestelling', 'within the EU, per order')}</span></li>
+              <li><span className="trust__icon" aria-hidden>✦</span><span><b>{formatPrice(shop.shippingCost)} {t('verzending', 'shipping')}</b> {t('binnen de EU, per bestelling', 'within the EU, per order')}{shop.gratisAntwerpen && t(' — gratis in de provincie Antwerpen', ' — free in Antwerp province')}</span></li>
               <li><span className="trust__icon" aria-hidden>✦</span><span><b>{shop.returnDays} {t('dagen bedenktijd', 'days to return')}</b> — <Link to="/verzending" className="trust__link">{t('zo werkt retour', 'how returns work')}</Link></span></li>
               <li><span className="trust__icon" aria-hidden>✦</span><span><b>{t('Veilig betalen', 'Secure payment')}</b> {t('via Stripe', 'via Stripe')}</span></li>
             </ul>

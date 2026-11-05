@@ -114,6 +114,7 @@ export default function CartDrawer() {
               <div><dt>{t('Subtotaal', 'Subtotal')} <small>{t('incl. btw', 'incl. VAT')}</small></dt><dd>{formatPrice(subtotal)}</dd></div>
               <div className="drawer__vat"><dt>{t('waarvan btw', 'of which VAT')} ({Math.round(shop.btwTarief * 100)}%)</dt><dd>{formatPrice(btwInSubtotaal)}</dd></div>
               <div><dt>{t('Verzending (EU)', 'Shipping (EU)')}</dt><dd>{formatPrice(shop.shippingCost)}</dd></div>
+              {shop.gratisAntwerpen && <div className="drawer__vat"><dt>{t('Provincie Antwerpen: gratis levering, kies dit bij het afrekenen', 'Antwerp province: free delivery, choose it at checkout')}</dt><dd></dd></div>}
             </dl>
             <div className="drawer__total">
               <span>{t('Totaal', 'Total')} <small>{t('incl. btw', 'incl. VAT')}</small></span>

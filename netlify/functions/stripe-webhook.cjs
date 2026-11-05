@@ -39,6 +39,10 @@ const SITE_URL = process.env.SITE_URL
 const euro = (centen) =>
   new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR' }).format((centen || 0) / 100)
 
+/* Provincie Antwerpen: Belgische postcodes 2000–2999. */
+const inProvincieAntwerpen = (a) =>
+  a?.country === 'BE' && /^2\d{3}$/.test(String(a.postal_code || '').trim())
+
 const adresTekst = (a) =>
   [a.line1, a.line2, [a.postal_code, a.city].filter(Boolean).join(' '), a.state, a.country]
     .filter(Boolean)
@@ -49,15 +53,20 @@ function maakVelden(session, regels, { test = false, klantmail = 'onbekend' } = 
   const klant = session.customer_details || {}
   const lever = session.collected_information?.shipping_details || session.shipping_details || null
   const adres = lever?.address || klant.address
+  // Gratis levering gekozen buiten de provincie Antwerpen: niet blokkeren
+  // (er is al betaald), wel opvallend melden zodat de eigenaar contact opneemt.
+  const gratis = session.shipping_cost && session.shipping_cost.amount_total === 0
+  const gratisFout = gratis && !inProvincieAntwerpen(lever?.address)
 
   return {
     'form-name': 'bestelling',
-    status: test ? 'TEST — dit is geen echte bestelling' : 'Betaald',
+    status: (test ? 'TEST — dit is geen echte bestelling' : 'Betaald')
+      + (gratisFout ? ' — LET OP: gratis levering Antwerpen gekozen, maar het adres ligt buiten de provincie' : ''),
     bestelcode: bestelcode(session.id),
     bestelnummer: session.id,
     datum: new Date((session.created || Date.now() / 1000) * 1000).toLocaleString('nl-BE', { timeZone: 'Europe/Brussels' }),
     totaal: euro(session.amount_total),
-    verzending: euro(session.shipping_cost?.amount_total),
+    verzending: gratis ? `gratis levering provincie Antwerpen${gratisFout ? ' (ADRES BUITEN PROVINCIE — contacteer de klant)' : ''}` : euro(session.shipping_cost?.amount_total),
     btw: euro(session.total_details?.amount_tax),
     artikelen: regels && regels.length
       ? regels.map((r) => `${r.quantity} × ${r.description} — ${euro(r.amount_total)}`).join('\n')
