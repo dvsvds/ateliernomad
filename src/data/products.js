@@ -12,9 +12,9 @@
        api/_catalog.js opnieuw. Dat is de serverbron waarmee
        Stripe rekent; de front-end kan geen prijs verzinnen.
 
-   ⚠️  AFMETINGEN ONTBREKEN met opzet. Zodra de stukken opgemeten
-       zijn, voeg per product een regel ['Afmeting', '...'] toe
-       aan `details`. Liever geen maat dan een gegokte maat.
+   Afmetingen (`afmeting`): poefs 60 × 60 × 20 cm, kussens 50 × 40 cm,
+   zoals op Instagram. Wijkt één stuk af, geef het dan een eigen
+   `afmeting`. De site toont ze als tweede regel bij de details.
 
    Alle poufs worden ONGEVULD verstuurd (hoes zonder vulling).
    Prijstiers pouf: €120 eenvoudig / €130 kleur / €140 zeldzaam.
@@ -71,13 +71,14 @@ const p = (slug, name, category, price, tag, short, description, materiaal, herk
   short,
   description,
   details: DETAILS(materiaal, herkomst),
+  afmeting: '60 × 60 × 20 cm',
   images: [`/images/products/${slug}.jpg`],
 })
 
 /* Alles wat geen pouf is: andere specs, eigen label. Kussens vormen
    een eigen filtersoort; al de rest valt onder interieur.
    Ze delen wel de kleurfilters, zodat de shop één logica houdt. */
-const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details, images }) => ({
+const q = ({ slug, name, label, type = 'interieur', category, price, tag, short, description, details, images, afmeting = '50 × 40 cm' }) => ({
   slug,
   name,
   type,
@@ -91,6 +92,7 @@ const q = ({ slug, name, label, type = 'interieur', category, price, tag, short,
   short,
   description,
   details: [...details, ['Uniek', 'Eén exemplaar — wat je ziet, ontvang je']],
+  afmeting,
   // meerdere beelden alleen waar het iets toevoegt, zoals een tweezijdig kussen
   images: images || [`/images/products/${slug}.jpg`],
 })
