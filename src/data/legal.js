@@ -210,6 +210,7 @@ export const documenten = {
         h: 'Verzendkosten',
         p: [
           'Verzending binnen de EU kost € 9,95 per bestelling, ongeacht hoeveel stukken je bestelt. Het exacte bedrag zie je bij het afrekenen voordat je betaalt.',
+          'In de provincie Antwerpen (postcodes 2000–2999) leveren we gratis. Kies bij het afrekenen "Gratis levering — alleen provincie Antwerpen". Ligt je adres buiten de provincie, dan nemen we contact met je op.',
         ],
       },
       {
