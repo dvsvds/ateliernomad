@@ -18,10 +18,10 @@ export const gidsen = [
   {
     slug: 'poef-vullen',
     eyebrow: 'Gids',
-    titel: 'Je poef vullen',
-    seoTitel: 'Poef vullen: zo doe je dat, stap voor stap',
-    description: 'Je Marokkaanse poef zelf vullen? Hoeveel vulling je nodig hebt (ongeveer 100 liter), welke vulling het best werkt en hoe je hem strak en stevig krijgt.',
-    intro: 'Onze Marokkaanse poefs komen standaard ongevuld bij je aan, als hoes met rits (liever gevuld? Dat kan voor € 9 extra). Zelf vullen is in een kwartier gebeurd — zo krijg je hem strak, stevig en mooi in vorm.',
+    titel: 'Poef vullen: welke vulling en hoeveel?',
+    seoTitel: 'Poef vullen: welke vulling en hoeveel?',
+    description: 'Voor een poef van 60 × 60 × 20 cm heb je ongeveer 100 liter vulling nodig. Welke poefvulling het best werkt, wat het kost en hoe je hem strak krijgt.',
+    intro: 'Voor een Marokkaanse poef van 60 × 60 × 20 cm heb je ongeveer 100 liter vulling nodig. De beste vulling is een mix: textielresten of oude kussens onderin voor gewicht, en schuimvlokken of een oud dekbed bovenaan voor zitcomfort. Onze poefs komen standaard ongevuld bij je aan, als hoes met rits — of je bestelt ze gevuld, voor € 9 extra.',
     secties: [
       {
         h: 'Waarom we poefs ongevuld versturen',
@@ -54,6 +54,11 @@ export const gidsen = [
       {
         h: 'Na een paar weken bijvullen',
         p: ['Elke vulling zakt in de eerste weken wat in. Voelt je poef zachter of verliest hij zijn vorm, open dan de rits en vul wat bij. Daarna blijft hij lang stevig.'],
+      },
+      {
+        h: 'Liever niet zelf vullen?',
+        p: ['Bij elke poef in onze winkel kies je op de productpagina "Gevuld". Dan vullen wij hem vóór verzending, voor € 9 extra; de verzendkosten blijven dezelfde, en in de provincie Antwerpen leveren we gratis.'],
+        link: { to: '/poefs', tekst: 'Bekijk de Berber poefs' },
       },
       {
         h: 'Je poef onderhouden',

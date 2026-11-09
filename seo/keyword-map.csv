@@ -1,0 +1,28 @@
+query,intent,monthly volume,difficulty,target URL,status,current position,last checked
+poef,commercial,4400,0,/poefs,planned,niet in top 30,2026-11-03
+pouf,transactional,3600,0,/poefs,planned,niet gemeten,2026-11-03
+marokkaanse poef,commercial,390,0,/poefs,live,niet in top 30,2026-11-03
+poef kopen,transactional,260,0,/poefs,live,niet in top 30,2026-11-03
+marokkaanse kussens,transactional,170,0,/kussens,live,niet in top 30,2026-11-03
+leren poef,informational,170,0,/berber-poef-of-leren-poef,live,niet gemeten,2026-11-03
+atelier nomad,navigational,110,0,/,live,3.8 (GSC 28d),2026-11-09
+poef vullen,informational,90,0,/poef-vullen,live,24.7 (GSC 28d),2026-11-09
+vulling poef,informational,90,0,/poef-vullen,live,83 (GSC 28d),2026-11-09
+kelim kussen,transactional,90,0,/kussens,gap,niet gemeten,2026-11-03
+berber kussen,transactional,70,0,/kussens,live,niet in top 30,2026-11-03
+berber kussens,transactional,70,0,/kussens,live,niet gemeten,2026-11-09
+berber poef,informational,50,0,/poefs,live,8.5 (GSC 28d),2026-11-09
+vintage poef,informational,50,32,/poefs,live,niet gemeten,2026-11-03
+wollen kussen,informational,50,40,/kussens,live,niet gemeten,2026-11-03
+kelim poef,transactional,30,0,/berber-poef,planned,niet gemeten,2026-11-09
+marokkaanse leren poef,informational,30,,/berber-poef-of-leren-poef,live,niet gemeten,2026-11-03
+atelier nomad interieur,navigational,,,/,live,10.3 (GSC 28d),2026-11-09
+vulling marokkaanse poef,informational,10,,/poef-vullen,live,10.5 (GSC 28d),2026-11-09
+marokkaanse poef vullen,informational,10,,/poef-vullen,live,niet gemeten,2026-11-09
+poef vulling kopen,transactional,10,,/poef-vullen,live,niet gemeten,2026-11-09
+boucherouite,informational,10,46,/berber-poef,live,niet gemeten,2026-11-03
+moroccan cushions (IE),transactional,20,39,/en/cushions,live,niet gemeten,2026-11-09
+moroccan pouf (IE),transactional,10,29,/en/poufs,live,niet gemeten,2026-11-09
+kilim pouf (IE),transactional,10,,/en/berber-pouf,live,niet gemeten,2026-11-09
+pouf filling (IE),transactional,10,,/en/how-to-fill-a-pouf,live,niet gemeten,2026-11-09
+vintage moroccan pouf (IE),transactional,10,,/en/poufs,live,niet gemeten,2026-11-09

@@ -2,7 +2,7 @@ import { Fragment, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Link } from '../components/TaalLink.jsx'
 import useReveal from '../hooks/useReveal.js'
-import useSeo from '../hooks/useSeo.js'
+import useSeo, { SITE_URL } from '../hooks/useSeo.js'
 import useGehydrateerd from '../hooks/useGehydrateerd.js'
 import ProductCard from '../components/ProductCard.jsx'
 import { products, categories, collectie } from '../data/products.js'
@@ -39,7 +39,7 @@ const PAGINA = {
     eyebrow: 'Poefs',
     titel: 'Marokkaanse Berber poefs',
     gids: { to: '/berber-poef', tekst: 'Wol, boucherouite of kelim: wat is het verschil?' },
-    intro: `${aantal('poufs')} vintage poefs, elk met de hand geknoopt uit een oud Berberkleed, boucherouite of kelim uit Marokko. Omdat elk kleed anders is, bestaat elke poef maar één keer: wat je op de foto ziet, is precies wat je ontvangt. We versturen ze standaard ongevuld, als hoes met rits, zodat je hem zelf zo stevig vult als je wil — of je kiest gevuld, voor € 9 extra.`,
+    intro: `Een Berber poef is een vloerpoef die met de hand geknoopt is uit een vintage Marokkaans Berberkleed. Hier vind je er ${aantal('poufs')}, gemaakt van oude Berberwol, boucherouite of kelim. Omdat elk kleed anders is, bestaat elke poef maar één keer: wat je op de foto ziet, is precies wat je ontvangt. We versturen ze standaard ongevuld, als hoes met rits, zodat je hem zelf zo stevig vult als je wil — of je kiest gevuld, voor € 9 extra.`,
   },
   kussens: {
     seo: {
@@ -97,7 +97,22 @@ export default function Shop({ soort }) {
   const active = categories.some((c) => c.id === gevraagd) ? gevraagd : 'all'
   useReveal([active])
   const pagina = (en ? PAGINA_EN : PAGINA)[soort || 'all']
-  useSeo(pagina.seo)
+  // Landingspagina's: de stukken als lijst voor Google (CollectionPage + ItemList).
+  const lijst = soort ? products.filter((p) => p.type === soort) : []
+  useSeo(soort ? {
+    ...pagina.seo,
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: pagina.titel,
+      url: SITE_URL + lp(SOORT_PAD[soort]),
+      mainEntity: {
+        '@type': 'ItemList',
+        numberOfItems: lijst.length,
+        itemListElement: lijst.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE_URL + lp(`/product/${p.slug}`) })),
+      },
+    },
+  } : pagina.seo)
 
   /* Twee filterassen door één chiprij: 'poufs'/'kussens'/'interieur' filtert op
      productsoort, de kleurchips op kleurfamilie. Welke van de twee een
