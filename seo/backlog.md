@@ -2,7 +2,7 @@
 
 Volgorde: verwachte bestellingen per uur werk. Elk item: zoekwoord → pagina → wijziging.
 
-1. **marokkaanse poef (390/mnd), poef kopen (260)** → /poefs — pagina inhoudelijk sterker maken dan trendcarpet/neda: maatvoering, gevuld/ongevuld, verzending en retour bovenaan, FAQ-blok (3–4 vragen) met FAQPage-structured data. Eerst de top 5 lezen.
+1. ~~marokkaanse poef / poef kopen → /poefs: kort-blok + FAQ~~ — gedaan 2026-11-09. Positie meten bij de volgende Weekly (16 nov).
 2. **berber poef (pos 8,5)** → /poefs — interne links met ankertekst "Berber poefs" vanaf homepage (FeaturedCollection) en de gids /berber-poef. Na 2 weken positie meten.
 3. **kelim kussen (90/mnd)** → /kussens of nieuwe gids — eerst nagaan of er kussens van kelim/vlakgeweven wol zijn (kussen-flare: "wol en katoen, grof van draad"); alleen schrijven als het product het waarmaakt.
 4. **Echte reviews** → producten + Google — vraag de eigenaar om reviews van klanten; dan AggregateRating/Review structured data. Niets verzinnen.
