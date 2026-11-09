@@ -16,7 +16,7 @@ export default function Home() {
   const { t } = useTaal()
   useSeo({
     title: t('Marokkaanse poefs & Berber kussens', 'Moroccan poufs & Berber cushions'),
-    description: t('Unieke vintage Marokkaanse poefs, met de hand geknoopt uit Berberkleden, en handgeweven Berber kussens. Elk stuk bestaat maar één keer.',
+    description: t('Atelier Nomàd, interieurwinkel uit Antwerpen: unieke vintage Marokkaanse poefs, geknoopt uit Berberkleden, en handgeweven Berber kussens.',
       'Unique vintage Moroccan poufs, hand-knotted from Berber rugs, and hand-woven Berber cushions. Every piece exists only once. Shipping across the EU.'),
   })
 

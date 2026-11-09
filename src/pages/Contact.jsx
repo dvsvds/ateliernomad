@@ -10,7 +10,7 @@ export default function Contact() {
   useReveal()
   const { en, t } = useTaal()
   useSeo({
-    title: 'Contact',
+    title: t('Contact', 'Contact us'),
     description: t('Neem contact op met Atelier Nomàd voor vragen over producten, maatwerk, verzending of samenwerking.',
       'Get in touch with Atelier Nomàd with questions about products, custom orders, shipping or collaborations.'),
   })

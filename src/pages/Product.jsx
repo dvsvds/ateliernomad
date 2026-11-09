@@ -17,8 +17,8 @@ import { vertaalProduct } from '../data/vertaal.js'
 /* Zoektitel: wat mensen intypen ("marokkaanse poef", "berber kussen")
    plus de naam van het stuk. "Vloerpouf — Haze" → "Berber poef Haze". */
 const kruimel = (product, en) =>
-  product.type === 'poufs' ? { name: en ? 'Poufs' : 'Poefs', pad: '/poefs' }
-  : product.type === 'kussens' ? { name: en ? 'Cushions' : 'Kussens', pad: '/kussens' }
+  product.type === 'poufs' ? { name: en ? 'Berber poufs' : 'Berber poefs', pad: '/poefs' }
+  : product.type === 'kussens' ? { name: en ? 'Berber cushions' : 'Berber kussens', pad: '/kussens' }
   : { name: 'Shop', pad: '/shop' }
 
 function seoTitel(product, en) {
