@@ -5,7 +5,8 @@ import useReveal from '../hooks/useReveal.js'
 import useSeo, { SITE_URL } from '../hooks/useSeo.js'
 import useGehydrateerd from '../hooks/useGehydrateerd.js'
 import ProductCard from '../components/ProductCard.jsx'
-import { products, categories, collectie } from '../data/products.js'
+import { products, categories, collectie, formatPrice } from '../data/products.js'
+import { shop } from '../data/site.js'
 import { useTaal } from '../i18n.js'
 import { categorieLabel, collectieVoor } from '../data/vertaal.js'
 
@@ -83,6 +84,32 @@ const PAGINA_EN = {
   },
 }
 
+/* Poefs: wat een koper wil weten vóór hij koopt, op de landingspagina zelf
+   (afmeting, vulling, prijs, levering, retour). Alles uit products.js en
+   site.js, zodat het nooit van de rest van de site afwijkt. */
+const poefs = products.filter((p) => p.type === 'poufs')
+const poefPrijs = { min: Math.min(...poefs.map((p) => p.price)), max: Math.max(...poefs.map((p) => p.price)) }
+const poefMaat = poefs[0]?.afmeting
+
+function poefFaq(en) {
+  const prijs = `${formatPrice(poefPrijs.min)}–${formatPrice(poefPrijs.max)}`
+  const vul = formatPrice(shop.vulPrijs)
+  const verz = formatPrice(shop.shippingCost)
+  return en ? [
+    { q: 'How big is a Moroccan pouf?', a: `Our poufs measure ${poefMaat}. Every pouf is made from a different rug, so the pattern differs, but the size is the same.` },
+    { q: 'Is the pouf delivered filled?', a: `By default you receive it unfilled, as a cover with a zip; you fill it with about 100 litres of filling. Prefer it filled? Choose "Filled" on the product page for ${vul} extra.` },
+    { q: 'How much does a Berber pouf cost?', a: `Between ${prijs} including VAT, depending on the rug it was made from. Filled costs ${vul} extra.` },
+    { q: 'How fast is delivery, and can I return it?', a: `We ship within 2–4 working days for ${verz} per order within the EU; delivery in the province of Antwerp is free. You have ${shop.returnDays} days to return it.` },
+    { q: 'Is every pouf really one of a kind?', a: 'Yes. Each pouf is hand-knotted from a single vintage Berber rug, boucherouite or kilim. What you see in the photo is exactly the pouf you receive, and once it is sold it will not come back.' },
+  ] : [
+    { q: 'Hoe groot is een Marokkaanse poef?', a: `Onze poefs meten ${poefMaat}. Elke poef is van een ander kleed gemaakt, dus het patroon verschilt, maar de maat is dezelfde.` },
+    { q: 'Wordt de poef gevuld geleverd?', a: `Standaard krijg je hem ongevuld, als hoes met rits; je vult hem zelf met ongeveer 100 liter vulling. Liever gevuld? Kies op de productpagina "Gevuld", voor ${vul} extra.` },
+    { q: 'Wat kost een Berber poef?', a: `Tussen ${prijs} inclusief btw, afhankelijk van het kleed waar hij van gemaakt is. Gevuld kost ${vul} extra.` },
+    { q: 'Hoe snel is hij in huis, en kan ik hem terugsturen?', a: `We versturen binnen 2–4 werkdagen, voor ${verz} per bestelling binnen de EU; in de provincie Antwerpen leveren we gratis. Je hebt ${shop.returnDays} dagen bedenktijd.` },
+    { q: 'Is elke poef echt uniek?', a: 'Ja. Elke poef is met de hand geknoopt uit één vintage Berberkleed, boucherouite of kelim. Wat je op de foto ziet, is precies de poef die je ontvangt, en is hij verkocht, dan komt hij niet terug.' },
+  ]
+}
+
 export default function Shop({ soort }) {
   const { taal, en, t, lp } = useTaal()
   const [params] = useSearchParams()
@@ -99,9 +126,14 @@ export default function Shop({ soort }) {
   const pagina = (en ? PAGINA_EN : PAGINA)[soort || 'all']
   // Landingspagina's: de stukken als lijst voor Google (CollectionPage + ItemList).
   const lijst = soort ? products.filter((p) => p.type === soort) : []
+  const faq = soort === 'poufs' ? poefFaq(en) : null
   useSeo(soort ? {
     ...pagina.seo,
-    jsonLd: {
+    jsonLd: [...(faq ? [{
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    }] : []), {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: pagina.titel,
@@ -111,7 +143,7 @@ export default function Shop({ soort }) {
         numberOfItems: lijst.length,
         itemListElement: lijst.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE_URL + lp(`/product/${p.slug}`) })),
       },
-    },
+    }],
   } : pagina.seo)
 
   /* Twee filterassen door één chiprij: 'poufs'/'kussens'/'interieur' filtert op
@@ -146,6 +178,15 @@ export default function Shop({ soort }) {
             <Link to={pagina.gids.to} className="link-underline">{pagina.gids.tekst}</Link>
           </p>
         )}
+        {soort === 'poufs' && (
+          <ul className="kort reveal" data-delay="3">
+            <li><b>{t('Afmeting', 'Size')}</b>{poefMaat}</li>
+            <li><b>{t('Prijs', 'Price')}</b>{formatPrice(poefPrijs.min)}–{formatPrice(poefPrijs.max)}</li>
+            <li><b>{t('Vulling', 'Filling')}</b>{t(`Ongevuld, of gevuld + ${formatPrice(shop.vulPrijs)}`, `Unfilled, or filled + ${formatPrice(shop.vulPrijs)}`)}</li>
+            <li><b>{t('Levering', 'Delivery')}</b>{t(`${formatPrice(shop.shippingCost)} in de EU · gratis in prov. Antwerpen`, `${formatPrice(shop.shippingCost)} in the EU · free in Antwerp province`)}</li>
+            <li><b>{t('Retour', 'Returns')}</b>{t(`${shop.returnDays} dagen bedenktijd`, `${shop.returnDays} days`)}</li>
+          </ul>
+        )}
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
@@ -179,6 +220,23 @@ export default function Shop({ soort }) {
           {filtered.length === 0 && <p className="notice">{t('Geen producten in deze categorie.', 'No products in this category.')}</p>}
         </div>
       </section>
+
+      {faq && (
+        <section className="section section--alt">
+          <div className="container" style={{ maxWidth: 820 }}>
+            <h2 className="h2 reveal" style={{ marginBottom: '2rem' }}>{t('Veelgestelde vragen over Berber poefs', 'Questions about Berber poufs')}</h2>
+            {faq.map((f, i) => (
+              <div className="legal-block reveal" key={f.q} data-delay={(i % 3) + 1}>
+                <h3 className="h3">{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+            <p className="reveal">
+              <Link to="/poef-vullen" className="link-underline">{t('Hoe vul je een poef? Lees de gids', 'How to fill a pouf: read the guide')}</Link>
+            </p>
+          </div>
+        </section>
+      )}
     </>
   )
 }
