@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { verversWinkelwagen } from '../lib/cartSync.js'
+import { trackEvent, gaItems, gaWaarde } from '../lib/analytics.js'
 
 const CartContext = createContext(null)
 const STORAGE_KEY = 'atelier-nomad-cart'
@@ -76,7 +77,11 @@ export function CartProvider({ children }) {
     const subtotal = items.reduce((n, i) => n + i.price * i.qty, 0)
     return {
       items, count, subtotal, isOpen,
-      add: (item) => { dispatch({ type: 'add', item }); setIsOpen(true) },
+      add: (item) => {
+        dispatch({ type: 'add', item })
+        setIsOpen(true)
+        trackEvent('add_to_cart', { currency: 'EUR', value: gaWaarde([item]), items: gaItems([item]) })
+      },
       remove: (slug) => dispatch({ type: 'remove', slug }),
       setQty: (slug, qty) => dispatch({ type: 'qty', slug, qty }),
       clear: () => dispatch({ type: 'clear' }),
