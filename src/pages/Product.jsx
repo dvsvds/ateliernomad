@@ -70,6 +70,8 @@ function productLd(product, verkocht, taal) {
           returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
           merchantReturnDays: shop.returnDays,
           returnMethod: 'https://schema.org/ReturnByMail',
+          // De klant betaalt het terugsturen zelf (zie Verzending & retour).
+          returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
         },
       },
     },
