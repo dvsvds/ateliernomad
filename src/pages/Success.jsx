@@ -4,6 +4,8 @@ import { Link } from '../components/TaalLink.jsx'
 import useSeo from '../hooks/useSeo.js'
 import { useCart } from '../context/CartContext.jsx'
 import { useTaal } from '../i18n.js'
+import { trackEvent, gaItems, gaWaarde } from '../lib/analytics.js'
+import { verversWinkelwagen } from '../lib/cartSync.js'
 
 export default function Success() {
   const { t, lp } = useTaal()
@@ -13,7 +15,24 @@ export default function Success() {
   // Stripe stuurt de klant hierheen mét session_id. Zonder die parameter
   // is er niet betaald: dan geen succesbericht en geen lege winkelwagen.
   const sessionId = params.get('session_id')
-  useEffect(() => { if (sessionId) clear() }, [sessionId])
+  useEffect(() => {
+    if (!sessionId) return
+    // Aankoop naar Google Analytics (alleen na cookie-toestemming), één keer
+    // per Stripe-sessie: de wagen is hier nog gevuld, daarna wordt hij leeg.
+    // De waarde is zonder verzending; die kiest de klant pas bij Stripe.
+    let gemeld = false
+    try { gemeld = sessionStorage.getItem('ga-purchase') === sessionId } catch {}
+    // Rechtstreeks uit de opslag: de winkelwagen-context laadt die pas na
+    // de eerste render, dus `items` is hier nog leeg.
+    let items = []
+    try { items = verversWinkelwagen(JSON.parse(localStorage.getItem('atelier-nomad-cart') || '[]')) } catch {}
+    if (!gemeld && items.length) {
+      trackEvent('purchase', { transaction_id: sessionId, currency: 'EUR', value: gaWaarde(items), items: gaItems(items) })
+      try { sessionStorage.setItem('ga-purchase', sessionId) } catch {}
+    }
+    clear()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId])
   if (!sessionId) return <Navigate to={lp('/shop')} replace />
 
   return (

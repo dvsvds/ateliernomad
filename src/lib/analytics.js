@@ -64,3 +64,13 @@ export function trackPagina() {
 export function trackEvent(naam, params) {
   if (geladen) window.gtag('event', naam, params)
 }
+
+/* GA4-e-commerce: artikelen uit de winkelwagen in het formaat van Google. */
+export const gaItems = (items) => items.map((i) => ({
+  item_id: i.slug,
+  item_name: i.name,
+  item_variant: i.gevuld ? 'gevuld' : undefined,
+  price: i.price,
+  quantity: i.qty || 1,
+}))
+export const gaWaarde = (items) => items.reduce((n, i) => n + i.price * (i.qty || 1), 0)

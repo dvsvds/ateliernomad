@@ -22,7 +22,7 @@ Bijgewerkt: 2026-11-09. Elk feit met zijn bron (bestand in deze repo of URL).
 - Betalen via Stripe: Bancontact, Visa, Mastercard, Apple Pay, Google Pay. — `src/data/site.js`
 
 ## Conversie
-Een afgeronde bestelling (Stripe Checkout → `/bedankt` of `/en/thank-you`). GA4: G-54077HDHHF (na cookie-toestemming). — `src/data/site.js`
+Een afgeronde bestelling (Stripe Checkout → `/bedankt` of `/en/thank-you`). GA4: G-54077HDHHF, property 560335107 (na cookie-toestemming). Gemeten: page_view, add_to_cart, begin_checkout, purchase (waarde zonder verzending). — `src/data/site.js`, `src/lib/analytics.js`
 
 ## Koper
 Interieurliefhebbers in België en Nederland (Nederlandstalig) en de rest van de EU (Engelstalig, `/en`) die een uniek, handgemaakt Marokkaans stuk zoeken. Zoekgedrag: "poef" (4.400/mnd BE), "marokkaanse poef", "berber poef", "poef vullen". — OpenSEO, Google BE nl, okt–nov 2026

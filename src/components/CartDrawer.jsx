@@ -8,6 +8,7 @@ import { shop } from '../data/site.js'
 import { startCheckout } from '../lib/checkout.js'
 import { useVoorraad } from '../context/VoorraadContext.jsx'
 import { useTaal } from '../i18n.js'
+import { trackEvent, gaItems, gaWaarde } from '../lib/analytics.js'
 import { getProduct } from '../data/products.js'
 import { productNaam } from '../data/vertaal.js'
 
@@ -41,6 +42,7 @@ export default function CartDrawer() {
 
   const checkout = async () => {
     setLoading(true)
+    trackEvent('begin_checkout', { currency: 'EUR', value: gaWaarde(items), items: gaItems(items) })
     // Bij een redirect blijft de knop uit tot de pagina weg is; anders kon
     // een tweede klik een tweede Stripe-sessie starten.
     const uit = await startCheckout(items, taal)
