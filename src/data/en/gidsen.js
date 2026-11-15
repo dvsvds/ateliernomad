@@ -23,6 +23,7 @@ export const gidsenEn = [
       {
         h: 'How much filling do you need?',
         p: ['Allow for about 100 litres per pouf. That is more than you might think: better to overfill than underfill. A firmly filled pouf keeps its shape, is sturdier to sit on and the wool pulls neatly taut over the edge.'],
+        link: { to: '/en/pouf-filling-calculator', tekst: 'Work out how much filling your pouf needs' },
       },
       {
         h: 'Which filling should you choose?',

@@ -27,6 +27,7 @@ export const PADEN = {
   '/poef-vullen': '/en/how-to-fill-a-pouf',
   '/berber-poef': '/en/berber-pouf',
   '/berber-poef-of-leren-poef': '/en/berber-pouf-vs-leather-pouf',
+  '/poefvulling-berekenen': '/en/pouf-filling-calculator',
 }
 const TERUG = Object.fromEntries(Object.entries(PADEN).map(([nl, en]) => [en, nl]))
 

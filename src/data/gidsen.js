@@ -30,6 +30,7 @@ export const gidsen = [
       {
         h: 'Hoeveel vulling heb je nodig?',
         p: ['Reken op ongeveer 100 liter per poef. Dat is meer dan je denkt: vul liever iets te veel dan te weinig. Een poef die strak gevuld is, houdt zijn vorm, zit steviger en de wol trekt mooier strak over de rand.'],
+        link: { to: '/poefvulling-berekenen', tekst: 'Bereken hoeveel vulling jouw poef nodig heeft' },
       },
       {
         h: 'Welke vulling kies je?',

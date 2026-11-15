@@ -233,6 +233,8 @@ export default function Shop({ soort }) {
             ))}
             <p className="reveal">
               <Link to="/poef-vullen" className="link-underline">{t('Hoe vul je een poef? Lees de gids', 'How to fill a pouf: read the guide')}</Link>
+              {' · '}
+              <Link to="/poefvulling-berekenen" className="link-underline">{t('Poefvulling berekenen', 'Pouf filling calculator')}</Link>
             </p>
           </div>
         </section>

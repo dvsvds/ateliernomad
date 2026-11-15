@@ -15,7 +15,7 @@ export default function Legal({ doc }) {
   useReveal()
   const { en, t } = useTaal()
   const d = (en ? documentenEn : documenten)[doc]
-  useSeo({ title: d.titel, description: d.intro })
+  useSeo({ title: d.titel, description: d.seoDescription || d.intro })
 
   return (
     <>
