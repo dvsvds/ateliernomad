@@ -89,7 +89,7 @@ export const gidsen = [
           'Dikke, geknoopte pool van schapenwol, vaak ongeverfd ecru met grafische lijnen in zwart of bruin, of juist met vlakken in warme kleuren. Dit soort kleden komt uit de Midden- en Hoge Atlas, waar de winters koud zijn en een dik kleed een warme vloer betekent.',
           'Een poef van hoogpolige wol is zacht en warm om op te zitten en voelt het meest "knus". De pool vangt wat stof, dus geregeld uitkloppen en luchten houdt hem fris.',
         ],
-        link: { to: '/poefs', tekst: 'Bekijk de poefs' },
+        link: { to: '/poefs', tekst: 'Bekijk de Berber poefs van wol' },
       },
       {
         h: 'Boucherouite',
@@ -160,7 +160,7 @@ export const gidsen = [
         ],
       },
     ],
-    slot: { tekst: 'Benieuwd hoe ze eruitzien?', to: '/poefs', link: 'Bekijk de collectie' },
+    slot: { tekst: 'Benieuwd hoe ze eruitzien?', to: '/poefs', link: 'Bekijk de Berber poefs' },
   },
 ]
 

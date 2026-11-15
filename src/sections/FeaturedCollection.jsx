@@ -13,7 +13,12 @@ export default function FeaturedCollection() {
             <span className="eyebrow reveal">{t('Collectie', 'Collection')} {collectie.nummer}</span>
             <h2 className="h2 reveal" data-delay="1">{t('Uit de eerste collectie', 'From the first collection')}</h2>
           </div>
-          <Link to="/shop" className="link-underline reveal" data-delay="2">{t('Bekijk de collectie', 'View the collection')}</Link>
+          {/* Beschrijvende ankertekst naar de landingspagina's (zoekwoorden "berber poef", "berber kussen"). */}
+          <p className="reveal" data-delay="2" style={{ display: 'flex', gap: '1.4rem', flexWrap: 'wrap', margin: 0 }}>
+            <Link to="/poefs" className="link-underline">{t('Berber poefs', 'Berber poufs')}</Link>
+            <Link to="/kussens" className="link-underline">{t('Berber kussens', 'Berber cushions')}</Link>
+            <Link to="/shop" className="link-underline">{t('Bekijk de collectie', 'View the collection')}</Link>
+          </p>
         </div>
 
         <div className="product-grid product-grid--4">

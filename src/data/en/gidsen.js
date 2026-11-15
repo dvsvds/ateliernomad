@@ -78,7 +78,7 @@ export const gidsenEn = [
           'A thick, knotted pile of sheep\'s wool, often undyed ecru with graphic lines in black or brown, or with blocks of warm colour instead. Rugs like these come from the Middle and High Atlas, where winters are cold and a thick rug means a warm floor.',
           'A high-pile wool pouf is soft and warm to sit on and feels the cosiest of all. The pile traps some dust, so regular beating and airing keeps it fresh.',
         ],
-        link: { to: '/en/poufs', tekst: 'Browse the poufs' },
+        link: { to: '/en/poufs', tekst: 'Browse the wool Berber poufs' },
       },
       {
         h: 'Boucherouite',
@@ -150,7 +150,7 @@ export const gidsenEn = [
         ],
       },
     ],
-    slot: { tekst: 'Curious what they look like?', to: '/en/poufs', link: 'Browse the collection' },
+    slot: { tekst: 'Curious what they look like?', to: '/en/poufs', link: 'Browse the Berber poufs' },
   },
 ]
 

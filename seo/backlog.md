@@ -3,7 +3,8 @@
 Volgorde: verwachte bestellingen per uur werk. Elk item: zoekwoord → pagina → wijziging.
 
 1. ~~marokkaanse poef / poef kopen → /poefs: kort-blok + FAQ~~ — gedaan 2026-11-09. Positie meten bij de volgende Weekly (16 nov).
-2. **berber poef (pos 8,5)** → /poefs — interne links met ankertekst "Berber poefs" vanaf homepage (FeaturedCollection) en de gids /berber-poef. Na 2 weken positie meten.
+2. ~~berber poef → /poefs: interne links "Berber poefs" vanaf homepage en gidsen~~ — gedaan 2026-11-15. Positie meten eind november (was #20 op 3 nov via /shop?cat=poufs, niet in top 30 op 15 nov).
+2b. **poef vullen (#8)** → /poef-vullen — Google toont voor deze Nederlandse zoekterm de Engelse gids /en/how-to-fill-a-pouf. hreflang klopt; /poef-vullen is sinds 27 okt niet opnieuw gecrawld (oude titel). Eigenaar: indexering aanvragen. Bij de volgende Weekly nagaan of de NL-pagina het overneemt.
 3. **kelim kussen (90/mnd)** → /kussens of nieuwe gids — eerst nagaan of er kussens van kelim/vlakgeweven wol zijn (kussen-flare: "wol en katoen, grof van draad"); alleen schrijven als het product het waarmaakt.
 4. **Echte reviews** → producten + Google — vraag de eigenaar om reviews van klanten; dan AggregateRating/Review structured data. Niets verzinnen.
 5. **Merk "atelier nomad"** → / — Google Bedrijfsprofiel (Antwerpen) aanmaken door de eigenaar; Instagram-bio laten linken naar ateliernomad.eu. (Eigenaar)
