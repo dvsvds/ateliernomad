@@ -14,6 +14,7 @@ import Craftsmanship from './pages/Craftsmanship.jsx'
 import Contact from './pages/Contact.jsx'
 import FAQ from './pages/FAQ.jsx'
 import Gids, { Gidsen } from './pages/Gids.jsx'
+import Vulcalculator from './pages/Vulcalculator.jsx'
 import { gidsen } from './data/gidsen.js'
 import Success from './pages/Success.jsx'
 import Legal from './pages/Legal.jsx'
@@ -37,6 +38,7 @@ const PAGINAS = [
   ['/gidsen', <Gidsen />],
   ...gidsen.map((g) => [`/${g.slug}`, <Gids slug={g.slug} />]),
   ['/product/:slug', <Product />],
+  ['/poefvulling-berekenen', <Vulcalculator />],
   ['/over', <About />],
   ['/ambacht', <Craftsmanship />],
   ['/contact', <Contact />],

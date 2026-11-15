@@ -198,7 +198,7 @@ export default function Product() {
             </ul>
             {product.type === 'poufs' && (
               <p style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
-                {t('Hoe vul je een poef?', 'How do you fill a pouf?')} <Link to="/poef-vullen" className="link-underline">{t('Lees onze stap-voor-stap uitleg', 'Read our step-by-step guide')}</Link>.
+                {t('Hoe vul je een poef?', 'How do you fill a pouf?')} <Link to="/poef-vullen" className="link-underline">{t('Lees onze stap-voor-stap uitleg', 'Read our step-by-step guide')}</Link>{t(' of ', ' or ')}<Link to="/poefvulling-berekenen" className="link-underline">{t('bereken hoeveel vulling je nodig hebt', 'work out how much filling you need')}</Link>.
               </p>
             )}
 

@@ -21,7 +21,7 @@ const SITE_URL = 'https://ateliernomad.eu'
 const { render, productSlugs, zichtbareSlugs, gidsSlugs, feedProducten, feedProductenEn, verzendlanden, lokaal } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 const sjabloon = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
-const vast = ['/', '/shop', '/poefs', '/kussens', '/gidsen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
+const vast = ['/', '/shop', '/poefs', '/kussens', '/gidsen', '/poefvulling-berekenen', '/over', '/ambacht', '/contact', '/faq', '/voorwaarden', '/privacy', '/verzending']
 const nlPaginas = [...vast, ...gidsSlugs.map((s) => `/${s}`), ...productSlugs.map((s) => `/product/${s}`)]
 // Elke pagina ook in het Engels, onder /en (zie src/i18n.js).
 const pagina = [...nlPaginas, ...nlPaginas.map((u) => lokaal(u, 'en'))]

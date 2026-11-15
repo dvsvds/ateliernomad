@@ -52,6 +52,8 @@ export const documenten = {
   voorwaarden: {
     eyebrow: 'Juridisch',
     titel: 'Algemene voorwaarden',
+    // Kortere omschrijving voor Google (max. 160 tekens); de intro hieronder blijft op de pagina.
+    seoDescription: 'De algemene voorwaarden van Atelier Nomàd: bestellen, prijzen, levering, 14 dagen bedenktijd, garantie en klachten. Kort en leesbaar.',
     intro:
       'Deze voorwaarden gelden voor elke bestelling die je bij Atelier Nomàd plaatst. Door te bestellen ga je ermee akkoord. We hebben ze zo kort en leesbaar gehouden als kan.',
     secties: [

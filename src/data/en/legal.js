@@ -30,6 +30,7 @@ export const documentenEn = {
   voorwaarden: {
     eyebrow: 'Legal',
     titel: 'Terms and conditions',
+    seoDescription: 'The terms and conditions of Atelier Nomàd: ordering, prices, delivery, 14-day right of withdrawal, warranty and complaints.',
     intro:
       'These terms apply to every order you place with Atelier Nomàd. By ordering, you agree to them. We have kept them as short and readable as we can.',
     secties: [

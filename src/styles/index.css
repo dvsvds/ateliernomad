@@ -747,3 +747,10 @@ p { margin: 0 0 1.1rem; }
 .kort { list-style: none; padding: 0; margin: 1.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; font-size: 0.92rem; color: var(--ink-soft); }
 .kort li { display: flex; gap: 0.45rem; }
 .kort b { font-weight: 500; color: var(--ink); }
+
+/* ---------- Poefvulling-calculator ---------- */
+.vulcalc { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; max-width: 900px; }
+.vulcalc__uitkomst { background: var(--cream-deep); border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2.2rem); }
+.vulcalc__uitkomst p { color: var(--ink-soft); }
+.vulcalc__getal { font-family: var(--font-serif); font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: 1.1; margin: 0.4rem 0 1rem; color: var(--ink) !important; }
+@media (max-width: 760px) { .vulcalc { grid-template-columns: 1fr; } }
