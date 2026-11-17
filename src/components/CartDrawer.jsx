@@ -11,6 +11,7 @@ import { useTaal } from '../i18n.js'
 import { trackEvent, gaItems, gaWaarde } from '../lib/analytics.js'
 import { getProduct } from '../data/products.js'
 import { productNaam } from '../data/vertaal.js'
+import { actie, actieLoopt, codeGeldig, kortingOp } from '../lib/actie.js'
 
 export default function CartDrawer() {
   const { items, isOpen, close, remove, setQty, subtotal, count } = useCart()
@@ -27,10 +28,22 @@ export default function CartDrawer() {
     if (pathname !== lp('/shop')) navigate(lp('/shop'))
   }
   // Prijzen zijn inclusief btw, dus de btw zit er al in: bedrag x 21/121.
-  const btwInSubtotaal = Math.round((subtotal * shop.btwTarief) / (1 + shop.btwTarief) * 100) / 100
   const [loading, setLoading] = useState(false)
   const [weg, setWeg] = useState(null) // { verkocht: [...], gereserveerd: [...] }
   const { ververs } = useVoorraad()
+  // Kortingscode: alleen zichtbaar tijdens de actie. De server rekent zelf
+  // opnieuw na; dit is enkel om de klant het juiste totaal te tonen.
+  const [codeVeld, setCodeVeld] = useState('')
+  const [code, setCode] = useState('')
+  const [codeFout, setCodeFout] = useState(false)
+  const actief = actieLoopt()
+  const korting = actief && codeGeldig(code) ? kortingOp(items) : 0
+  const btwInSubtotaal = Math.round(((subtotal - korting) * shop.btwTarief) / (1 + shop.btwTarief) * 100) / 100
+  const pasToe = (e) => {
+    e.preventDefault()
+    if (codeGeldig(codeVeld)) { setCode(codeVeld.trim().toUpperCase()); setCodeFout(false) }
+    else { setCode(''); setCodeFout(true) }
+  }
 
   // Escape sluit de winkelwagen, zoals elk overlay hoort te doen.
   useEffect(() => {
@@ -45,7 +58,7 @@ export default function CartDrawer() {
     trackEvent('begin_checkout', { currency: 'EUR', value: gaWaarde(items), items: gaItems(items) })
     // Bij een redirect blijft de knop uit tot de pagina weg is; anders kon
     // een tweede klik een tweede Stripe-sessie starten.
-    const uit = await startCheckout(items, taal)
+    const uit = await startCheckout(items, taal, korting ? code : '')
     if (uit && uit.nietBeschikbaar) {
       // Net verkocht of door iemand anders gereserveerd: uit de wagen, en
       // uitleggen waarom het totaal ineens lager is.
@@ -115,15 +128,26 @@ export default function CartDrawer() {
           <div className="drawer__foot">
             {/* Geen verrassingen bij het afrekenen: verzendkosten staan er al.
                 Vast bedrag per bestelling, gelijk aan de checkout-functie. */}
+            {actief && (
+              <form className="drawer__code" onSubmit={pasToe}>
+                <label htmlFor="kortingscode">{t(`${actie.naam}: ${actie.procent}% met code ${actie.code}`, `${actie.naam}: ${actie.procent}% off with code ${actie.code}`)}</label>
+                <div>
+                  <input id="kortingscode" value={codeVeld} onChange={(e) => setCodeVeld(e.target.value)} placeholder={t('Kortingscode', 'Discount code')} autoComplete="off" />
+                  <button type="submit" className="btn btn--ghost">{t('Toepassen', 'Apply')}</button>
+                </div>
+                {codeFout && <small role="alert">{t('Deze code is niet geldig.', 'This code is not valid.')}</small>}
+              </form>
+            )}
             <dl className="drawer__sum">
               <div><dt>{t('Subtotaal', 'Subtotal')} <small>{t('incl. btw', 'incl. VAT')}</small></dt><dd>{formatPrice(subtotal)}</dd></div>
+              {korting > 0 && <div className="drawer__korting"><dt>{t(`Korting ${actie.code} (−${actie.procent}%)`, `Discount ${actie.code} (−${actie.procent}%)`)}</dt><dd>− {formatPrice(korting)}</dd></div>}
               <div className="drawer__vat"><dt>{t('waarvan btw', 'of which VAT')} ({Math.round(shop.btwTarief * 100)}%)</dt><dd>{formatPrice(btwInSubtotaal)}</dd></div>
               <div><dt>{t('Verzending (EU)', 'Shipping (EU)')}</dt><dd>{formatPrice(shop.shippingCost)}</dd></div>
               {shop.gratisAntwerpen && <div className="drawer__vat"><dt>{t('Provincie Antwerpen: gratis levering, kies dit bij het afrekenen', 'Antwerp province: free delivery, choose it at checkout')}</dt><dd></dd></div>}
             </dl>
             <div className="drawer__total">
               <span>{t('Totaal', 'Total')} <small>{t('incl. btw', 'incl. VAT')}</small></span>
-              <b>{formatPrice(subtotal + shop.shippingCost)}</b>
+              <b>{formatPrice(subtotal - korting + shop.shippingCost)}</b>
             </div>
             <button className="btn btn--terracotta btn--block" onClick={checkout} disabled={loading}>
               {loading ? t('Even geduld…', 'One moment…') : t('Veilig afrekenen', 'Secure checkout')}
