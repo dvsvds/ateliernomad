@@ -90,6 +90,29 @@ const PAGINA_EN = {
 const poefs = products.filter((p) => p.type === 'poufs')
 const poefPrijs = { min: Math.min(...poefs.map((p) => p.price)), max: Math.max(...poefs.map((p) => p.price)) }
 const poefMaat = poefs[0]?.afmeting
+const kussens = products.filter((p) => p.type === 'kussens')
+const kussenPrijs = { min: Math.min(...kussens.map((p) => p.price)), max: Math.max(...kussens.map((p) => p.price)) }
+const kussenMaat = kussens[0]?.afmeting
+const prijsBereik = ({ min, max }) => (min === max ? formatPrice(min) : `${formatPrice(min)}–${formatPrice(max)}`)
+
+/* Kussens: dezelfde aanpak, zodat /kussens zelf antwoord geeft op
+   "berber kussen" in plaats van een losse productpagina. */
+function kussenFaq(en) {
+  const verz = formatPrice(shop.shippingCost)
+  return en ? [
+    { q: 'How big is a Berber cushion?', a: `Our cushions measure ${kussenMaat}. Each one is woven separately, so the pattern differs from cushion to cushion.` },
+    { q: 'How much does a Berber cushion cost?', a: `${prijsBereik(kussenPrijs)} including VAT.` },
+    { q: 'What are they made of?', a: 'Wool, hand-woven in Morocco — most of them sheep’s wool from the Middle and High Atlas, woven on narrow looms: some high-pile and undyed, others with dyed bands, fringes or embroidered symbols. Every product page lists the exact material.' },
+    { q: 'How do I care for a wool cushion?', a: 'Air it and beat it out now and then. Dab a stain locally with a damp cloth — don’t rub, and don’t put it in the washing machine.' },
+    { q: 'How fast is delivery, and can I return it?', a: `We ship within 2–4 working days for ${verz} per order within the EU; delivery in the province of Antwerp is free. You have ${shop.returnDays} days to return it.` },
+  ] : [
+    { q: 'Hoe groot is een Berber kussen?', a: `Onze kussens meten ${kussenMaat}. Elk kussen is apart geweven, dus het patroon verschilt van kussen tot kussen.` },
+    { q: 'Wat kost een Berber kussen?', a: `${prijsBereik(kussenPrijs)} inclusief btw.` },
+    { q: 'Waarvan zijn ze gemaakt?', a: 'Van wol, met de hand geweven in Marokko — de meeste van schapenwol uit de Midden- en Hoge Atlas, op smalle weefgetouwen: hoogpolig en ongeverfd, of met geverfde banen, franjes of geborduurde tekens. Op elke productpagina staat het exacte materiaal.' },
+    { q: 'Hoe onderhoud je een wollen kussen?', a: 'Geregeld luchten en uitkloppen. Een vlek dep je plaatselijk met een vochtige doek — niet wrijven, en niet in de wasmachine.' },
+    { q: 'Hoe snel is het in huis, en kan ik het terugsturen?', a: `We versturen binnen 2–4 werkdagen, voor ${verz} per bestelling binnen de EU; in de provincie Antwerpen leveren we gratis. Je hebt ${shop.returnDays} dagen bedenktijd.` },
+  ]
+}
 
 function poefFaq(en) {
   const prijs = `${formatPrice(poefPrijs.min)}–${formatPrice(poefPrijs.max)}`
@@ -126,7 +149,7 @@ export default function Shop({ soort }) {
   const pagina = (en ? PAGINA_EN : PAGINA)[soort || 'all']
   // Landingspagina's: de stukken als lijst voor Google (CollectionPage + ItemList).
   const lijst = soort ? products.filter((p) => p.type === soort) : []
-  const faq = soort === 'poufs' ? poefFaq(en) : null
+  const faq = soort === 'poufs' ? poefFaq(en) : soort === 'kussens' ? kussenFaq(en) : null
   useSeo(soort ? {
     ...pagina.seo,
     jsonLd: [...(faq ? [{
@@ -187,6 +210,15 @@ export default function Shop({ soort }) {
             <li><b>{t('Retour', 'Returns')}</b>{t(`${shop.returnDays} dagen bedenktijd`, `${shop.returnDays} days`)}</li>
           </ul>
         )}
+        {soort === 'kussens' && (
+          <ul className="kort reveal" data-delay="3">
+            <li><b>{t('Afmeting', 'Size')}</b>{kussenMaat}</li>
+            <li><b>{t('Prijs', 'Price')}</b>{prijsBereik(kussenPrijs)}</li>
+            <li><b>{t('Materiaal', 'Material')}</b>{t('Handgeweven wol', 'Hand-woven wool')}</li>
+            <li><b>{t('Levering', 'Delivery')}</b>{t(`${formatPrice(shop.shippingCost)} in de EU · gratis in prov. Antwerpen`, `${formatPrice(shop.shippingCost)} in the EU · free in Antwerp province`)}</li>
+            <li><b>{t('Retour', 'Returns')}</b>{t(`${shop.returnDays} dagen bedenktijd`, `${shop.returnDays} days`)}</li>
+          </ul>
+        )}
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
@@ -224,18 +256,18 @@ export default function Shop({ soort }) {
       {faq && (
         <section className="section section--alt">
           <div className="container" style={{ maxWidth: 820 }}>
-            <h2 className="h2 reveal" style={{ marginBottom: '2rem' }}>{t('Veelgestelde vragen over Berber poefs', 'Questions about Berber poufs')}</h2>
+            <h2 className="h2 reveal" style={{ marginBottom: '2rem' }}>{soort === 'kussens' ? t('Veelgestelde vragen over Berber kussens', 'Questions about Berber cushions') : t('Veelgestelde vragen over Berber poefs', 'Questions about Berber poufs')}</h2>
             {faq.map((f, i) => (
               <div className="legal-block reveal" key={f.q} data-delay={(i % 3) + 1}>
                 <h3 className="h3">{f.q}</h3>
                 <p>{f.a}</p>
               </div>
             ))}
-            <p className="reveal">
+            {soort === 'poufs' && <p className="reveal">
               <Link to="/poef-vullen" className="link-underline">{t('Hoe vul je een poef? Lees de gids', 'How to fill a pouf: read the guide')}</Link>
               {' · '}
               <Link to="/poefvulling-berekenen" className="link-underline">{t('Poefvulling berekenen', 'Pouf filling calculator')}</Link>
-            </p>
+            </p>}
           </div>
         </section>
       )}
