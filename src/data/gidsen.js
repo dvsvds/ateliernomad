@@ -19,8 +19,8 @@ export const gidsen = [
     slug: 'poef-vullen',
     eyebrow: 'Gids',
     titel: 'Poef vullen: welke vulling en hoeveel?',
-    seoTitel: 'Poef vullen: welke vulling en hoeveel?',
-    description: 'Voor een poef van 60 × 60 × 20 cm heb je ongeveer 100 liter vulling nodig. Welke poefvulling het best werkt, wat het kost en hoe je hem strak krijgt.',
+    seoTitel: 'Marokkaanse poef vullen: welke vulling en hoeveel?',
+    description: 'Een Marokkaanse poef van 60 × 60 × 20 cm vullen? Reken op ongeveer 100 liter vulling. Welke poefvulling het best werkt en hoe je hem strak krijgt.',
     intro: 'Voor een Marokkaanse poef van 60 × 60 × 20 cm heb je ongeveer 100 liter vulling nodig. De beste vulling is een mix: textielresten of oude kussens onderin voor gewicht, en schuimvlokken of een oud dekbed bovenaan voor zitcomfort. Onze poefs komen standaard ongevuld bij je aan, als hoes met rits — of je bestelt ze gevuld, voor € 9 extra.',
     secties: [
       {
