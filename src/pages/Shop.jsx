@@ -9,6 +9,7 @@ import { products, categories, collectie, formatPrice } from '../data/products.j
 import { shop } from '../data/site.js'
 import { useTaal } from '../i18n.js'
 import { categorieLabel, collectieVoor } from '../data/vertaal.js'
+import { actie, actieLoopt } from '../lib/actie.js'
 
 /* Een productsoort zonder stukken (bv. interieur zolang alles uitverkocht is)
    krijgt geen filterknop — anders klikt een bezoeker op een lege shop. */
@@ -196,6 +197,12 @@ export default function Shop({ soort }) {
             wat je ontvangt. Is het weg, dan komt het niet terug.
           </>}
         </p>
+        {/* Actie: pas na het hydrateren, want de datum hoort niet in de vooraf gerenderde HTML. */}
+        {gehydrateerd && actieLoopt() && (
+          <p className="notice drawer__actie">
+            <strong>{actie.naam}:</strong> {t(`${actie.procent}% korting op alle poefs en kussens met code ${actie.code}, t/m 1 december.`, `${actie.procent}% off all poufs and cushions with code ${actie.code}, until 1 December.`)}
+          </p>
+        )}
         {pagina.gids && (
           <p className="reveal" data-delay="3">
             <Link to={pagina.gids.to} className="link-underline">{pagina.gids.tekst}</Link>

@@ -754,3 +754,13 @@ p { margin: 0 0 1.1rem; }
 .vulcalc__uitkomst p { color: var(--ink-soft); }
 .vulcalc__getal { font-family: var(--font-serif); font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: 1.1; margin: 0.4rem 0 1rem; color: var(--ink) !important; }
 @media (max-width: 760px) { .vulcalc { grid-template-columns: 1fr; } }
+
+/* Kortingscode in de winkelwagen (alleen tijdens een actie) */
+.drawer__code { margin: 0 0 0.9rem; }
+.drawer__code label { display: block; font-size: 0.8rem; color: var(--terracotta, #b4532a); margin-bottom: 0.35rem; letter-spacing: 0.02em; }
+.drawer__code div { display: flex; gap: 0.5rem; }
+.drawer__code input { flex: 1; min-width: 0; padding: 0.55rem 0.7rem; border: 1px solid var(--line); background: transparent; font: inherit; font-size: 0.9rem; text-transform: uppercase; }
+.drawer__code .btn { padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+.drawer__code small { display: block; margin-top: 0.3rem; font-size: 0.78rem; color: #a33; }
+.drawer__sum .drawer__korting { color: var(--ink); }
+.drawer__actie { margin-top: 0.8rem; font-size: 0.9rem; }

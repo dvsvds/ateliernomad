@@ -1,5 +1,12 @@
 const Stripe = require('stripe')
 const { reserveer, draagOver, geefVrij, RESERVERING_MS } = require('../lib/voorraad.cjs')
+const ACTIE = require('../lib/actie.json')
+
+// Kortingscode (netlify/lib/actie.json): geldig van `van` t/m `tot`, Belgische tijd.
+function codeGeldig(code) {
+  const d = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Brussels' })
+  return d >= ACTIE.van && d <= ACTIE.tot && String(code || '').trim().toUpperCase() === ACTIE.code
+}
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 // Geen terugval op localhost: een productie-deploy zonder SITE_URL zou
@@ -58,7 +65,9 @@ exports.handler = async (event) => {
       return { statusCode: 500, body: JSON.stringify({ error: 'Shop niet geconfigureerd' }) }
     }
 
-    const { items, taal } = JSON.parse(event.body || '{}')
+    const { items, taal, code } = JSON.parse(event.body || '{}')
+    // Korting alleen op de prijs van het stuk, niet op vulling of verzending.
+    const korting = codeGeldig(code) ? ACTIE.procent : 0
     // Engelse bezoekers: Stripe in het Engels en terug naar de Engelse pagina's.
     const en = taal === 'en'
     if (!Array.isArray(items)) return { statusCode: 400, body: JSON.stringify({ error: 'Ongeldige winkelwagen' }) }
@@ -81,11 +90,12 @@ exports.handler = async (event) => {
         quantity: Math.max(1, Math.min(ref.max || 20, aantal)),
         price_data: {
           currency: 'eur',
-          unit_amount: Math.round((ref.price + (vol ? ref.vul : 0)) * 100), // prijs van de SERVER, niet de client
+          // prijs van de SERVER, niet de client
+          unit_amount: Math.round(ref.price * (100 - korting)) + (vol ? ref.vul * 100 : 0),
           // Prijzen zijn inclusief btw; Stripe Tax rekent de btw eruit.
           tax_behavior: 'inclusive',
           product_data: {
-            name: vol ? `${ref.name} (${en ? 'filled' : 'gevuld'})` : ref.name,
+            name: (vol ? `${ref.name} (${en ? 'filled' : 'gevuld'})` : ref.name) + (korting ? ` — ${ACTIE.naam} −${korting}%` : ''),
             // Zo staat de foto op de betaalpagina en in de bevestigingsmail.
             images: [`${SITE_URL}/images/products/${slug}.jpg`],
           },
@@ -122,7 +132,7 @@ exports.handler = async (event) => {
       // het stuk vrij (via de webhook checkout.session.expired, of vanzelf).
       expires_at: Math.floor((Date.now() + RESERVERING_MS) / 1000),
       // De webhook leest hier welke stukken verkocht zijn.
-      metadata: { slugs: [...perSlug.keys()].join(','), gevuld: [...gevuld].join(','), reservering: tijdelijkId },
+      metadata: { slugs: [...perSlug.keys()].join(','), gevuld: [...gevuld].join(','), reservering: tijdelijkId, ...(korting ? { kortingscode: ACTIE.code } : {}) },
       // Stripe Tax rekent pas mee als de sessie er expliciet om vraagt.
       automatic_tax: { enabled: true },
       success_url: `${SITE_URL}${en ? '/en/thank-you' : '/bedankt'}?session_id={CHECKOUT_SESSION_ID}`,
