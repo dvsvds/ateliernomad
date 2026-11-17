@@ -14,6 +14,9 @@ export { actie }
 
 const vandaag = (nu = new Date()) => nu.toLocaleDateString('sv-SE', { timeZone: 'Europe/Brussels' })
 
+/** Einddatum leesbaar: "30 november" / "30 November". */
+export const totDatum = (taal) => new Date(actie.tot + 'T12:00:00').toLocaleDateString(taal === 'en' ? 'en-GB' : 'nl-BE', { day: 'numeric', month: 'long' })
+
 export const actieLoopt = (nu) => { const d = vandaag(nu); return d >= actie.van && d <= actie.tot }
 
 export const codeGeldig = (code, nu) => actieLoopt(nu) && String(code || '').trim().toUpperCase() === actie.code
