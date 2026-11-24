@@ -54,7 +54,7 @@ export const documentenEn = {
         p: [
           'Every piece in the collection is handmade and exists only once. The photo on the product page shows the exact piece you will receive.',
           'Because these are handmade from vintage textiles, colour, dimensions and pattern may differ slightly from what you see on your screen. Such differences are inherent to the product and do not count as a defect.',
-          'Poufs are shipped unfilled by default, as a cover with a zip; you fill them yourself (allow for about 100 litres per pouf). If you choose filled on the product page, we deliver it filled for € 9 extra.',
+          'Poufs are shipped unfilled by default, as a cover with a zip; you fill them yourself (allow for about 100 litres per pouf). If you choose filled on the product page, we deliver it filled for € 9 extra. Filled delivery is only available in Belgium and the Netherlands.',
         ],
       },
       {
@@ -199,7 +199,7 @@ export const documentenEn = {
         h: 'Delivery time',
         p: [
           'Everything is in stock, so we ship within two to four working days. You will receive a tracking link as soon as your parcel is on its way.',
-          'Poufs leave us unfilled by default. That saves a lot of volume, so delivery is quick across Europe too. Filled is also possible, for € 9 extra; shipping costs stay the same.',
+          'Poufs leave us unfilled by default. That saves a lot of volume, so delivery is quick across Europe too. Filled is also possible, for € 9 extra, but only for delivery in Belgium or the Netherlands; shipping costs stay the same.',
         ],
       },
       {

@@ -211,7 +211,7 @@ export default function Product() {
                 </label>
                 <label className={gevuld ? 'is-actief' : ''}>
                   <input type="radio" name="vulling" checked={gevuld} onChange={() => setGevuld(true)} />
-                  <span>{t('Gevuld', 'Filled')} <small>+ {formatPrice(shop.vulPrijs)}</small></span>
+                  <span>{t('Gevuld', 'Filled')} <small>+ {formatPrice(shop.vulPrijs)} · {t('alleen levering in België en Nederland', 'delivery in Belgium and the Netherlands only')}</small></span>
                 </label>
               </fieldset>
             )}

@@ -107,7 +107,7 @@ export default function CartDrawer() {
                 <div className="cart-item__name">{naam(i)}</div>
                 <div className="cart-item__meta">{formatPrice(i.price)}</div>
                 {getProduct(i.slug)?.vulbaar && (
-                  <div className="cart-item__meta">{i.gevuld ? t(`Gevuld (+ ${formatPrice(shop.vulPrijs)})`, `Filled (+ ${formatPrice(shop.vulPrijs)})`) : t('Ongevuld, als hoes', 'Unfilled, as a cover')}</div>
+                  <div className="cart-item__meta">{i.gevuld ? t(`Gevuld (+ ${formatPrice(shop.vulPrijs)}) — alleen levering in België en Nederland`, `Filled (+ ${formatPrice(shop.vulPrijs)}) — delivery in Belgium and the Netherlands only`) : t('Ongevuld, als hoes', 'Unfilled, as a cover')}</div>
                 )}
                 {i.unique ? (
                   <div className="cart-item__meta">{t('Uniek stuk — 1 beschikbaar', 'Unique piece — 1 available')}</div>

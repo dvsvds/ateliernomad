@@ -8,6 +8,10 @@ function codeGeldig(code) {
   return d >= ACTIE.van && d <= ACTIE.tot && String(code || '').trim().toUpperCase() === ACTIE.code
 }
 
+// Gevulde poefs alleen naar België en Nederland (shop.vulLanden in src/data/site.js).
+const VUL_LANDEN = ['BE', 'NL']
+const LANDEN = ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE','HU']
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 // Geen terugval op localhost: een productie-deploy zonder SITE_URL zou
 // klanten na het betalen naar een dood adres sturen.
@@ -164,7 +168,9 @@ exports.handler = async (event) => {
       locale: en ? 'en' : 'nl',
       billing_address_collection: 'auto',
       // Gelijk houden met shop.verzendlanden in src/data/site.js (feed en structured data).
-      shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE','HU'] },
+      // Zit er een gevulde poef in de wagen, dan kan Stripe enkel een adres in
+      // België of Nederland aanvaarden.
+      shipping_address_collection: { allowed_countries: gevuld.size ? VUL_LANDEN : LANDEN },
       shipping_options: [
         { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: en ? 'Standard shipping (EU)' : 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 2 }, maximum: { unit: 'business_day', value: 4 } } } },
         // Gratis, maar alleen voor adressen in de provincie Antwerpen (postcode
