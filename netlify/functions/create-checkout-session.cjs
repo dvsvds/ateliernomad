@@ -164,7 +164,7 @@ exports.handler = async (event) => {
       locale: en ? 'en' : 'nl',
       billing_address_collection: 'auto',
       // Gelijk houden met shop.verzendlanden in src/data/site.js (feed en structured data).
-      shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE'] },
+      shipping_address_collection: { allowed_countries: ['NL','BE','DE','FR','LU','AT','ES','IT','PT','DK','SE','FI','IE','HU'] },
       shipping_options: [
         { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: en ? 'Standard shipping (EU)' : 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 2 }, maximum: { unit: 'business_day', value: 4 } } } },
         // Gratis, maar alleen voor adressen in de provincie Antwerpen (postcode

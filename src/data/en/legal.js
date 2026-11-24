@@ -191,7 +191,7 @@ export const documentenEn = {
       {
         h: 'Where we deliver',
         p: [
-          'Belgium, the Netherlands, Luxembourg, Germany, France, Austria, Spain, Italy, Portugal, Denmark, Sweden, Finland and Ireland.',
+          'Belgium, the Netherlands, Luxembourg, Germany, France, Austria, Spain, Italy, Portugal, Denmark, Sweden, Finland, Ireland and Hungary.',
           'Live elsewhere? Email us and we will see what is possible.',
         ],
       },
