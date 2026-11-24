@@ -34,7 +34,7 @@ export const shop = {
   returnDays: 14,
   // Landen waar Stripe naar laat verzenden. Moet gelijk blijven aan
   // allowed_countries in netlify/functions/create-checkout-session.cjs.
-  verzendlanden: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE'],
+  verzendlanden: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE', 'HU'],
 }
 
 /* Betaalmethodes onderaan de site en bij het afrekenen.

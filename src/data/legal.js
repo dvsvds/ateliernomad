@@ -218,7 +218,7 @@ export const documenten = {
       {
         h: 'Waar we leveren',
         p: [
-          'België, Nederland, Luxemburg, Duitsland, Frankrijk, Oostenrijk, Spanje, Italië, Portugal, Denemarken, Zweden, Finland en Ierland.',
+          'België, Nederland, Luxemburg, Duitsland, Frankrijk, Oostenrijk, Spanje, Italië, Portugal, Denemarken, Zweden, Finland, Ierland en Hongarije.',
           'Woon je daarbuiten? Mail ons, dan bekijken we wat mogelijk is.',
         ],
       },

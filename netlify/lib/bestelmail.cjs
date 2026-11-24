@@ -25,7 +25,7 @@ const SANS = "'Helvetica Neue', Helvetica, Arial, sans-serif"
 
 const LANDEN = {
   BE: 'België', NL: 'Nederland', DE: 'Duitsland', FR: 'Frankrijk', LU: 'Luxemburg', AT: 'Oostenrijk',
-  ES: 'Spanje', IT: 'Italië', PT: 'Portugal', DK: 'Denemarken', SE: 'Zweden', FI: 'Finland', IE: 'Ierland',
+  ES: 'Spanje', IT: 'Italië', PT: 'Portugal', DK: 'Denemarken', SE: 'Zweden', FI: 'Finland', IE: 'Ierland', HU: 'Hongarije',
 }
 
 const euro = (centen) =>

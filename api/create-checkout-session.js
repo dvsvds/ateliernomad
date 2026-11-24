@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       cancel_url: `${SITE_URL}/shop`,
       billing_address_collection: 'auto',
       shipping_address_collection: {
-        allowed_countries: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE'],
+        allowed_countries: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE', 'HU'],
       },
       shipping_options: [
         { shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: 995, currency: 'eur' }, tax_behavior: 'inclusive', display_name: 'Standaard verzending (EU)', delivery_estimate: { minimum: { unit: 'business_day', value: 2 }, maximum: { unit: 'business_day', value: 4 } } } },
