@@ -1,4 +1,5 @@
 import { loadStripe } from '@stripe/stripe-js'
+import { eigenCheckout, onthoudCheckout } from './eigenCheckout.js'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
 // Deze site draait op Netlify, dus dat is de standaard. Stond hier het
@@ -29,7 +30,9 @@ export async function startCheckout(items, taal = 'nl', code = '') {
     const res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty, gevuld: !!i.gevuld })), taal, code }),
+      // `vorige`: een eerder afgebroken betaling van deze browser. De server
+      // sluit die sessie en geeft de stukken vrij voor deze nieuwe poging.
+      body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty, gevuld: !!i.gevuld })), taal, code, vorige: eigenCheckout()?.id }),
     })
 
     if (res.status === 409) {
@@ -46,6 +49,7 @@ export async function startCheckout(items, taal = 'nl', code = '') {
     }
 
     const data = await res.json()
+    if (data.id) onthoudCheckout(data.id, items.map((i) => i.slug), data.tot)
 
     // Voorkeur: redirect via sessie-URL (eenvoudigst).
     if (data.url) { window.location.href = data.url; return true }

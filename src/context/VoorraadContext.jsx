@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { eigenCheckout } from '../lib/eigenCheckout.js'
 
 /**
  * Welke stukken zijn verkocht of gereserveerd. Komt van de server
@@ -34,9 +35,12 @@ export function VoorraadProvider({ children }) {
   }, [ververs])
 
   const value = useMemo(() => ({
+    // Een reservering van een betaling die deze browser zelf startte (en
+    // afbrak) geldt hier als beschikbaar: de klant mag gewoon opnieuw
+    // afrekenen; de server geeft die oude reservering dan vrij.
     status: (slug) =>
       stand.verkocht.includes(slug) ? 'verkocht'
-      : stand.gereserveerd.includes(slug) ? 'gereserveerd'
+      : stand.gereserveerd.includes(slug) && !eigenCheckout()?.slugs.includes(slug) ? 'gereserveerd'
       : 'beschikbaar',
     ververs,
   }), [stand, ververs])
