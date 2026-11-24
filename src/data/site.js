@@ -34,6 +34,9 @@ export const shop = {
   returnDays: 14,
   // Landen waar Stripe naar laat verzenden. Moet gelijk blijven aan
   // allowed_countries in netlify/functions/create-checkout-session.cjs.
+  // Gevulde poefs zijn groot en duur om ver te versturen: alleen hierheen.
+  // Moet gelijk blijven aan VUL_LANDEN in create-checkout-session.cjs.
+  vulLanden: ['BE', 'NL'],
   verzendlanden: ['NL', 'BE', 'DE', 'FR', 'LU', 'AT', 'ES', 'IT', 'PT', 'DK', 'SE', 'FI', 'IE', 'HU'],
 }
 
