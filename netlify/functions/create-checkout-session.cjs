@@ -55,6 +55,29 @@ const CATALOG = {
 }
 // </catalog>
 
+/* Dezelfde klant probeert opnieuw na een afgebroken betaling. Zonder dit
+   stond het stuk een half uur op "Gereserveerd", ook voor die klant zelf.
+   De browser stuurt de id van zijn vorige Stripe-sessie mee (die kent
+   alleen de klant). Is die sessie nog open, dan sluiten we ze, zodat ze
+   niet alsnog betaald kan worden, en geven we de stukken vrij. Een
+   betaalde sessie blijft onaangeroerd: die stukken zijn verkocht. */
+async function sluitVorige(event, id) {
+  if (typeof id !== 'string' || !/^cs_[A-Za-z0-9_]+$/.test(id)) return
+  try {
+    let s = await stripe.checkout.sessions.retrieve(id)
+    if (s.status === 'complete') return
+    if (s.status === 'open') s = await stripe.checkout.sessions.expire(id)
+    if (s.status !== 'expired') return
+    const slugs = String(s.metadata?.slugs || '').split(',').filter((x) => CATALOG[x] && CATALOG[x].max === 1)
+    await geefVrij(event, slugs, id)
+    // Mislukte de overdracht destijds, dan staat de reservering nog op het tijdelijke id.
+    if (s.metadata?.reservering) await geefVrij(event, slugs, s.metadata.reservering)
+  } catch (err) {
+    // Onbekende of al gesloten sessie: gewoon verder, de reservering beslist.
+    console.error('vorige sessie sluiten mislukt:', err.message)
+  }
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) }
@@ -65,7 +88,7 @@ exports.handler = async (event) => {
       return { statusCode: 500, body: JSON.stringify({ error: 'Shop niet geconfigureerd' }) }
     }
 
-    const { items, taal, code } = JSON.parse(event.body || '{}')
+    const { items, taal, code, vorige } = JSON.parse(event.body || '{}')
     // Korting alleen op de prijs van het stuk, niet op vulling of verzending.
     const korting = codeGeldig(code) ? ACTIE.procent : 0
     // Engelse bezoekers: Stripe in het Engels en terug naar de Engelse pagina's.
@@ -108,6 +131,7 @@ exports.handler = async (event) => {
     // Unieke stukken: eerst kijken of ze nog vrij zijn, en meteen vastzetten
     // voor deze klant. Zo kunnen twee mensen niet dezelfde pouf afrekenen.
     const uniek = [...perSlug.keys()].filter((slug) => CATALOG[slug].max === 1)
+    await sluitVorige(event, vorige)
     const tijdelijkId = 'aanmaak_' + Date.now() + '_' + Math.random().toString(36).slice(2)
     const r = await reserveer(event, uniek, tijdelijkId)
     if (!r.ok) {
@@ -161,7 +185,7 @@ exports.handler = async (event) => {
     // bij een verlopen sessie kan vrijgeven.
     await draagOver(event, r.etags || {}, tijdelijkId, session.id).catch((err) => console.error('overdracht reservering mislukt:', err.message))
 
-    return { statusCode: 200, body: JSON.stringify({ id: session.id, url: session.url }) }
+    return { statusCode: 200, body: JSON.stringify({ id: session.id, url: session.url, tot: session.expires_at * 1000 }) }
   } catch (err) {
     console.error(err)
     // Geen foutdetails naar de browser; die staan in de functielogs.

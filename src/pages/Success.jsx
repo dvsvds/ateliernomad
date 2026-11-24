@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext.jsx'
 import { useTaal } from '../i18n.js'
 import { trackEvent, gaItems, gaWaarde } from '../lib/analytics.js'
 import { verversWinkelwagen } from '../lib/cartSync.js'
+import { vergeetCheckout } from '../lib/eigenCheckout.js'
 
 export default function Success() {
   const { t, lp } = useTaal()
@@ -31,6 +32,7 @@ export default function Success() {
       try { sessionStorage.setItem('ga-purchase', sessionId) } catch {}
     }
     clear()
+    vergeetCheckout()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId])
   if (!sessionId) return <Navigate to={lp('/shop')} replace />
